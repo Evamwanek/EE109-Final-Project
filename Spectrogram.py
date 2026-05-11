@@ -3,9 +3,20 @@ import numpy as np
 from pathlib import Path
 import random
 
+import time
+from sklearn.metrics import confusion_matrix
+
 import torch
 import torch.nn as nn
 from torch.utils.data import TensorDataset, DataLoader
+
+######################## PERFORMANCE #########################
+
+fft_total_time = 0  # Time to make a spectrogram for each song (10 total songs)
+inference_total_time = 0 
+e2e_time = 0
+correct_predictions = 0 
+total_predictions = 0 
 
 ########################### FFT ###############################
 
@@ -81,12 +92,18 @@ for label, song_path in enumerate(songs_folder.glob("*.wav")):
         sr=44100
     )
 
+    fft_start = time.time() 
+
     # Generate FFTs 
     spectrogram, freqs, times = my_spectrogram(
         audio,
         m=1024,
         fs=sample_rate
     )
+
+    fft_end = time.time()
+
+    fft_total_time += (fft_end - fft_start)
 
     # (time_steps, freq_bins)
     spectrogram = spectrogram.T
@@ -184,9 +201,14 @@ for epoch in range(epochs):
 
 model.eval()
 
+predicted_labels = []
+actual_labels = []
+
+e2e_start = time.time()
+
 with torch.no_grad():
 
-    # Tests predictions with 100 chunks 
+    # Tests predictions with 100 chunks, 17040 total 
     for z in range(100):
 
         # Choose random chunk 
@@ -195,11 +217,23 @@ with torch.no_grad():
         # Adds batch dimension for LSTM
         x = X_tensor[i].unsqueeze(0)
 
+        # Number of chunks 
+        #print(len(X))
+
+        inference_start = time.time()
+
         prediction = model(x)
+
+        inference_end = time.time()
+
+        inference_total_time += (inference_end - inference_start)
 
         predicted_class = torch.argmax(prediction, dim=1).item()
 
         actual_class = Y_tensor[i].item()
+
+        predicted_labels.append(predicted_class)
+        actual_labels.append(actual_class)
 
         predicted_song = song_names[predicted_class]
         actual_song = song_names[actual_class]
@@ -211,5 +245,40 @@ with torch.no_grad():
 
         if predicted_class == actual_class:
             print("Correct!")
+            correct_predictions += 1
         else:
             print("Incorrect")
+        total_predictions += 1
+
+e2e_end = time.time() 
+e2e_time += (e2e_end - e2e_start)
+
+###################### PERFORMANCE ############################
+
+accuracy = (correct_predictions / total_predictions) * 100
+avg_fft_time = fft_total_time / len(song_names)
+avg_inference_time = inference_total_time / total_predictions
+throughput = total_predictions / e2e_time
+
+print(f"FFT Total Time: {fft_total_time:.2f} sec")
+print("--------------------------------")
+print(f"Avg FFT Time: {avg_fft_time*1000:.2f} ms")
+print("--------------------------------")
+print(f"Accuracy: {accuracy:.2f}%")
+print("--------------------------------")
+print(f"Inference Total Time: {inference_total_time:.2f} sec")
+print("--------------------------------")
+print(f"Avg Total Time: {avg_inference_time*1000:.2f} ms")
+print("--------------------------------")
+print(f"End to end latency: {e2e_time:.2f} seconds")
+print("--------------------------------")
+print(f"Throughput: {throughput:.2f} chunks/sec")
+print("--------------------------------")
+
+cm = confusion_matrix(
+    actual_labels,
+    predicted_labels
+)
+
+print("\nConfusion Matrix:")
+print(cm)
