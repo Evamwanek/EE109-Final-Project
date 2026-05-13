@@ -1,0 +1,2 @@
+Here, we do genre classification over 10 classes. 
+For inference, go to the final "Inference" block in the lstm_training.ipynb notebook and run the single block, replacing file path with your chosen .wav file. 
