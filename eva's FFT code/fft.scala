@@ -8,7 +8,7 @@ of audio input. A Hamming window is used on time domain samples,
 @spatial class Butterfly extends SpatialTest {
     val N = 1024 
     val numStages = 10  // log2(1024), as defined by Cooley Tookey alg
-    type T = FixPt[TRUE, _24, _16]
+    type T = FixPt[TRUE, _16, _24]  // fine precision
 
 def main(args: Array[String]): Unit = {
     val n = 1024
@@ -33,6 +33,10 @@ def main(args: Array[String]): Unit = {
     val twIList = List.tabulate(n/2){ k =>
         scala.math.sin(-2.0 * scala.math.Pi * k / n).to[T]
     }
+    // src: https://graphics.stanford.edu/~seander/bithacks.html#BitReverseObvious
+    val bitRevList = List.tabulate[Int](n) { i =>
+        (Integer.reverse(i) >>> (32 - numStages)).to[Int]
+    }
     
     // precomute butterfly parameters
     val halfStrides = List.tabulate(nStages)(s => (1 << s).to[Int]) // 2^s
@@ -54,6 +58,7 @@ def main(args: Array[String]): Unit = {
         val halfStrideLUT = LUT[Int](numStages)(halfStrides :_*)
         val strideLUT = LUT[Int](numStages)(strides :_*)
         val twStepLUT = LUT[Int](numStages)(twSteps :_*)
+        val bitRevLUT = LUT[Int](N)(bitRevList :_*)
         
         val inReal  = SRAM[T](N)
         val inImag  = SRAM[T](N)
@@ -74,18 +79,15 @@ def main(args: Array[String]): Unit = {
             inImag(i) = inImag(i) * hammingLUT(i)
         }
         
-        // bit reversal, neccessity for alg 
-        // src: https://graphics.stanford.edu/~seander/bithacks.html#BitReverseObvious
-        Sequential {
-            Foreach(N by 1){ i =>
-                // temp regs 
-                val rev = Reg[Int](0)
+        Sequential.Foreach(N by 1){ i =>
+            val rev = bitRevLUT(i)
+            tmpReal(rev) = inReal(i)
+            tmpImag(rev) = inImag(i)
+        }
 
-                Foreach(numStages by 1){ b =>
-                    rev := (rev << 1) | ((i >> b) & 1)
-                }
-                tmpReal(rev.value) = inReal(i)
-                tmpImag(rev.value) = inImag(i)
+        Foreach(N by 1){ i =>
+            inReal(i) = tmpReal(i)
+            inImag(i) = tmpImag(i)
         }
 
         // 0-9 stages 
@@ -131,8 +133,8 @@ def main(args: Array[String]): Unit = {
         }
     }
 
-    outputRealDRAM store outReal
-    outputImagDRAM store outImag
+    outputRealDRAM store inReal
+    outputImagDRAM store inImag
     }
 
     val resultReal = getMem(outputRealDRAM)
@@ -142,10 +144,10 @@ def main(args: Array[String]): Unit = {
     writeCSV1D(resultReal, "fft_real.csv")
     writeCSV1D(resultImag, "fft_imag.csv")
 
-    println("======== FFT Output (first 8 bins) =========")
-    (0 until 8) foreach { i =>
-    println("X[" + i + "] = " + resultReal(i) + " + " + resultImag(i) + "j")
-    }
+    //println("======== FFT Output (first 8 bins) =========")
+    //(0 until 8) foreach { i =>
+    //println("X[" + i + "] = " + resultReal(i) + " + " + resultImag(i) + "j")
+    //}
 
     val cksum = resultReal(0) == resultReal(0)  //  always true 
     println("PASS: " + cksum)
