@@ -2,3 +2,4 @@ logs/
 gen/
 target/
 *.log
+project/target/
