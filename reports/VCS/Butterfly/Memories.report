@@ -1,0 +1,1358 @@
+---------------------------
+Estimated Total Memories: 
+---------------------------
+  RAM36: 8.0
+---------------------------
+
+
+
+---------------------------------------------------------------------
+Name: x596
+Type: StreamOut[BurstCmd]
+Src:  fft.scala:136:20
+Src:      outputRealDRAM store inReal
+---------------------------------------------------------------------
+Symbol:     x596 = StreamOutNew(BurstCmdBus)
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {0}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x602 = StreamOutBankedWrite(x596,ArrayBuffer(x600),ArrayBuffer(Set(x601))) {}
+             outputRealDRAM store inReal (fft.scala:136:20)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+
+
+
+Control Tree: 
+x603: UnitPipe (-1) [Level: InnerControl, Loop: Single, Schedule: Sequenced]
+  x602: StreamOutBankedWrite
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: x620
+Type: StreamIn[Bit]
+Src:  fft.scala:137:20
+Src:      outputImagDRAM store inImag
+---------------------------------------------------------------------
+Symbol:     x620 = StreamInNew(BurstAckBus)
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {0}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x636 = StreamInBankedRead(x620,ArrayBuffer(Set())) {}
+             outputImagDRAM store inImag (fft.scala:137:20)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x638: UnitPipe (-1) [Level: InnerControl, Loop: Single, Schedule: Sequenced]
+  x636: StreamInBankedRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: x598
+Type: StreamIn[Bit]
+Src:  fft.scala:136:20
+Src:      outputRealDRAM store inReal
+---------------------------------------------------------------------
+Symbol:     x598 = StreamInNew(BurstAckBus)
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {0}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x614 = StreamInBankedRead(x598,ArrayBuffer(Set())) {}
+             outputRealDRAM store inReal (fft.scala:136:20)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x616: UnitPipe (-1) [Level: InnerControl, Loop: Single, Schedule: Sequenced]
+  x614: StreamInBankedRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: inImag_1 (x440)
+Type: SRAM1[Fix[TRUE,_16,_24]]
+Src:  fft.scala:64:30
+Src:          val inImag  = SRAM[T](N)
+---------------------------------------------------------------------
+Symbol:     x440 = SRAMNew(List(Const(1024)),SRAM1[Fix[TRUE,_16,_24]])
+Instances: 1
+  RAM36: 1.0
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: BRAM
+     Depth:    1
+     Padding:  List(0)
+     Accum:    Fold
+     Banks:    1 <Flat>
+       Dims {0}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x478 = SRAMBankedWrite(x440,Vector(x476),Vector(List(Const(0))),Vector(x672),Vector(Set(x673))) {}
+             inImag load inputImagDRAM (fft.scala:74:16)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+           - Mux Port #1: 
+             x496 = SRAMBankedWrite(x440,Vector(x494),Vector(List(Const(0))),Vector(x676),Vector(Set(x677))) {}
+             inImag(i) = inImag(i) * hammingLUT(i) (fft.scala:79:23)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+           - Mux Port #2: 
+             x522 = SRAMBankedWrite(x440,Vector(x520),Vector(List(Const(0))),Vector(x681),Vector(Set(x682))) {}
+             inImag(i) = tmpImag(i) (fft.scala:90:23)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+           - Mux Port #3: 
+             x592 = SRAMBankedWrite(x440,Vector(x590),Vector(List(Const(0))),Vector(x711),Vector(Set(x712))) {}
+             inImag(i) = outImag(i) (fft.scala:131:23)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x562 = SRAMBankedRead(x440,Vector(List(Const(0))),Vector(x663),Vector(Set(x693)),Vec[Fix[TRUE,_16,_24]]) {}
+             val a_imag = inImag(topIdx) (fft.scala:117:32)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x667: AccelScope (-1) [Level: OuterControl, Loop: Single, Schedule: Sequenced]
+  x665: ParallelPipe (-1) [Level: OuterControl, Loop: Single, Schedule: ForkJoin]
+    x480: UnitPipe (-1) [Level: OuterControl, Loop: Single, Schedule: Streaming]
+      x479: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+        x478: SRAMBankedWrite
+  x497: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+    x496: SRAMBankedWrite
+  x523: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+    x522: SRAMBankedWrite
+  x595: UnrolledForeach (-1) [Level: OuterControl, Loop: Looped, Schedule: Sequenced]
+    x594: UnitPipe (-1) [Level: OuterControl, Loop: Single, Schedule: Sequenced]
+      x580: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+        x562: SRAMBankedRead
+      x593: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+        x592: SRAMBankedWrite
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: tmpReal_0 (x443)
+Type: SRAM1[Fix[TRUE,_16,_24]]
+Src:  fft.scala:70:30
+Src:          val tmpReal = SRAM[T](N)
+---------------------------------------------------------------------
+Symbol:     x443 = SRAMNew(List(Const(1024)),SRAM1[Fix[TRUE,_16,_24]])
+Instances: 1
+  RAM36: 1.0
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: BRAM
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {0}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x506 = SRAMBankedWrite(x443,Vector(x505),Vector(List(Const(0))),Vector(x679),Vector(Set(x680))) {}
+             tmpReal(rev) = inReal(i) (fft.scala:84:26)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x515 = SRAMBankedRead(x443,Vector(List(Const(0))),Vector(b513),Vector(Set(b514)),Vec[Fix[TRUE,_16,_24]]) {}
+             inReal(i) = tmpReal(i) (fft.scala:89:32)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x667: AccelScope (-1) [Level: OuterControl, Loop: Single, Schedule: Sequenced]
+  x510: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Sequenced]
+    x506: SRAMBankedWrite
+  x523: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+    x515: SRAMBankedRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: halfStrideLUT_0 (x433)
+Type: LUT1[Fix[TRUE,_32,_0]]
+Src:  fft.scala:58:48
+Src:          val halfStrideLUT = LUT[Int](numStages)(halfStrides :_*)
+---------------------------------------------------------------------
+Symbol:     x433 = LUTNew(List(Const(10)),List(Const(1), Const(2), Const(4), Const(8), Const(16), Const(32), Const(64), Const(128), Const(256), Const(512)),LUT1[Fix[TRUE,_32,_0]])
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    10 <Hierarchical>
+       Dims {0}: Cyclic: N=10, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x531 = LUTBankedRead(x433,Vector(List(b526)),Vector(Const(0)),Vector(Set()),Vec[Fix[TRUE,_32,_0]]) {}
+             val halfStride = halfStrideLUT(s) (fft.scala:96:43)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x540: UnitPipe (-1) [Level: InnerControl, Loop: Single, Schedule: Sequenced]
+  x531: LUTBankedRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: inReal_1 (x438)
+Type: SRAM1[Fix[TRUE,_16,_24]]
+Src:  fft.scala:63:30
+Src:          val inReal  = SRAM[T](N)
+---------------------------------------------------------------------
+Symbol:     x438 = SRAMNew(List(Const(1024)),SRAM1[Fix[TRUE,_16,_24]])
+Instances: 1
+  RAM36: 1.0
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: BRAM
+     Depth:    1
+     Padding:  List(0)
+     Accum:    Fold
+     Banks:    1 <Flat>
+       Dims {0}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x459 = SRAMBankedWrite(x438,Vector(x458),Vector(List(Const(0))),Vector(x669),Vector(Set(x670))) {}
+             inReal load inputRealDRAM (fft.scala:73:16)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+           - Mux Port #1: 
+             x490 = SRAMBankedWrite(x438,Vector(x489),Vector(List(Const(0))),Vector(x676),Vector(Set(x677))) {}
+             inReal(i) = inReal(i) * hammingLUT(i) (fft.scala:78:23)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+           - Mux Port #2: 
+             x517 = SRAMBankedWrite(x438,Vector(x516),Vector(List(Const(0))),Vector(x681),Vector(Set(x682))) {}
+             inReal(i) = tmpReal(i) (fft.scala:89:23)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+           - Mux Port #3: 
+             x587 = SRAMBankedWrite(x438,Vector(x586),Vector(List(Const(0))),Vector(x711),Vector(Set(x712))) {}
+             inReal(i) = outReal(i) (fft.scala:130:23)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x558 = SRAMBankedRead(x438,Vector(List(Const(0))),Vector(x663),Vector(Set(x693)),Vec[Fix[TRUE,_16,_24]]) {}
+             val a_real = inReal(topIdx) (fft.scala:114:32)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x667: AccelScope (-1) [Level: OuterControl, Loop: Single, Schedule: Sequenced]
+  x665: ParallelPipe (-1) [Level: OuterControl, Loop: Single, Schedule: ForkJoin]
+    x462: UnitPipe (-1) [Level: OuterControl, Loop: Single, Schedule: Streaming]
+      x461: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+        x459: SRAMBankedWrite
+  x497: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+    x490: SRAMBankedWrite
+  x523: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+    x517: SRAMBankedWrite
+  x595: UnrolledForeach (-1) [Level: OuterControl, Loop: Looped, Schedule: Sequenced]
+    x594: UnitPipe (-1) [Level: OuterControl, Loop: Single, Schedule: Sequenced]
+      x580: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+        x558: SRAMBankedRead
+      x593: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+        x587: SRAMBankedWrite
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: twI_0 (x431)
+Type: LUT1[Fix[TRUE,_16,_24]]
+Src:  fft.scala:56:30
+Src:          val twI = LUT[T](N/2)(twIList :_*)
+---------------------------------------------------------------------
+Symbol:     x431 = LUTNew(List(Const(512)),List(Const(0), Const(-0.006135880947113037109375), Const(-0.01227152347564697265625), Const(-0.018406689167022705078125), Const(-0.024541199207305908203125), Const(-0.030674755573272705078125), Const(-0.03680717945098876953125), Const(-0.042938232421875), Const(-0.04906761646270751953125), Const(-0.05519521236419677734375), Const(-0.061320722103118896484375), Const(-0.067443907260894775390625), Const(-0.0735645294189453125), Const(-0.079682409763336181640625), Const(-0.08579730987548828125), Const(-0.091908931732177734375), Const(-0.09801709651947021484375), Const(-0.104121625423431396484375), Const(-0.110222160816192626953125), Const(-0.11631858348846435546875), Const(-0.12241065502166748046875), Const(-0.128498077392578125), Const(-0.134580671787261962890625), Const(-0.140658199787139892578125), Const(-0.1467304229736328125), Const(-0.152797162532806396484375), Const(-0.158858120441436767578125), Const(-0.164913117885589599609375), Const(-0.170961856842041015625), Const(-0.17700421810150146484375), Const(-0.183039844036102294921875), Const(-0.189068615436553955078125), Const(-0.19509029388427734375), Const(-0.201104581356048583984375), Const(-0.207111358642578125), Const(-0.213110268115997314453125), Const(-0.2191011905670166015625), Const(-0.225083887577056884765625), Const(-0.231058061122894287109375), Const(-0.2370235919952392578125), Const(-0.24298012256622314453125), Const(-0.248927593231201171875), Const(-0.2548656463623046875), Const(-0.260794103145599365234375), Const(-0.266712725162506103515625), Const(-0.272621333599090576171875), Const(-0.27851963043212890625), Const(-0.28440749645233154296875), Const(-0.290284633636474609375), Const(-0.296150863170623779296875), Const(-0.302005946636199951171875), Const(-0.307849586009979248046875), Const(-0.31368172168731689453125), Const(-0.31950199604034423828125), Const(-0.325310289859771728515625), Const(-0.33110630512237548828125), Const(-0.336889803409576416015625), Const(-0.3426606655120849609375), Const(-0.348418653011322021484375), Const(-0.354163467884063720703125), Const(-0.3598949909210205078125), Const(-0.36561298370361328125), Const(-0.3713171482086181640625), Const(-0.37700736522674560546875), Const(-0.38268339633941650390625), Const(-0.3883450031280517578125), Const(-0.393992006778717041015625), Const(-0.399624168872833251953125), Const(-0.405241310596466064453125), Const(-0.4108431339263916015625), Const(-0.4164295196533203125), Const(-0.422000229358673095703125), Const(-0.427555084228515625), Const(-0.4330937862396240234375), Const(-0.438616216182708740234375), Const(-0.444122135639190673828125), Const(-0.44961130619049072265625), Const(-0.455083549022674560546875), Const(-0.460538685321807861328125), Const(-0.4659764766693115234375), Const(-0.4713966846466064453125), Const(-0.476799190044403076171875), Const(-0.482183754444122314453125), Const(-0.48755013942718505859375), Const(-0.492898166179656982421875), Const(-0.498227655887603759765625), Const(-0.5035383701324462890625), Const(-0.508830130100250244140625), Const(-0.5141026973724365234375), Const(-0.519355952739715576171875), Const(-0.52458965778350830078125), Const(-0.529803574085235595703125), Const(-0.53499758243560791015625), Const(-0.540171444416046142578125), Const(-0.545324981212615966796875), Const(-0.55045795440673828125), Const(-0.555570185184478759765625), Const(-0.5606615543365478515625), Const(-0.5657317638397216796875), Const(-0.570780694484710693359375), Const(-0.57580816745758056640625), Const(-0.580813944339752197265625), Const(-0.585797846317291259765625), Const(-0.590759694576263427734375), Const(-0.595699250698089599609375), Const(-0.600616455078125), Const(-0.605511009693145751953125), Const(-0.6103827953338623046875), Const(-0.615231573581695556640625), Const(-0.620057165622711181640625), Const(-0.62485945224761962890625), Const(-0.629638195037841796875), Const(-0.634393274784088134765625), Const(-0.639124393463134765625), Const(-0.6438314914703369140625), Const(-0.64851438999176025390625), Const(-0.653172791004180908203125), Const(-0.6578066349029541015625), Const(-0.6624157428741455078125), Const(-0.666999876499176025390625), Const(-0.671558916568756103515625), Const(-0.676092684268951416015625), Const(-0.680600941181182861328125), Const(-0.6850836277008056640625), Const(-0.68954050540924072265625), Const(-0.693971455097198486328125), Const(-0.698376238346099853515625), Const(-0.7027547359466552734375), Const(-0.707106769084930419921875), Const(-0.711432158946990966796875), Const(-0.71573078632354736328125), Const(-0.720002472400665283203125), Const(-0.724247038364410400390625), Const(-0.7284643650054931640625), Const(-0.73265421390533447265625), Const(-0.73681652545928955078125), Const(-0.740951120853424072265625), Const(-0.745057761669158935546875), Const(-0.749136388301849365234375), Const(-0.753186762332916259765625), Const(-0.75720882415771484375), Const(-0.761202335357666015625), Const(-0.765167236328125), Const(-0.7691032886505126953125), Const(-0.773010432720184326171875), Const(-0.776888430118560791015625), Const(-0.780737221240997314453125), Const(-0.784556567668914794921875), Const(-0.78834640979766845703125), Const(-0.792106568813323974609375), Const(-0.795836865901947021484375), Const(-0.799537241458892822265625), Const(-0.80320751667022705078125), Const(-0.806847512722015380859375), Const(-0.810457170009613037109375), Const(-0.814036309719085693359375), Const(-0.817584812641143798828125), Const(-0.82110249996185302734375), Const(-0.824589252471923828125), Const(-0.82804501056671142578125), Const(-0.831469595432281494140625), Const(-0.83486282825469970703125), Const(-0.8382246494293212890625), Const(-0.841554939746856689453125), Const(-0.84485352039337158203125), Const(-0.84812033176422119140625), Const(-0.851355135440826416015625), Const(-0.854557931423187255859375), Const(-0.85772860050201416015625), Const(-0.86086690425872802734375), Const(-0.863972842693328857421875), Const(-0.86704623699188232421875), Const(-0.870086967945098876953125), Const(-0.873094975948333740234375), Const(-0.876070082187652587890625), Const(-0.879012167453765869140625), Const(-0.881921231746673583984375), Const(-0.88479709625244140625), Const(-0.887639582157135009765625), Const(-0.89044868946075439453125), Const(-0.893224298954010009765625), Const(-0.895966231822967529296875), Const(-0.898674428462982177734375), Const(-0.9013488292694091796875), Const(-0.903989255428314208984375), Const(-0.906595647335052490234375), Const(-0.909167945384979248046875), Const(-0.911706030368804931640625), Const(-0.91420972347259521484375), Const(-0.91667902469635009765625), Const(-0.919113814830780029296875), Const(-0.921514034271240234375), Const(-0.92387950420379638671875), Const(-0.926210224628448486328125), Const(-0.928506076335906982421875), Const(-0.93076694011688232421875), Const(-0.932992756366729736328125), Const(-0.935183465480804443359375), Const(-0.937339007854461669921875), Const(-0.93945920467376708984375), Const(-0.941544055938720703125), Const(-0.943593442440032958984375), Const(-0.94560730457305908203125), Const(-0.947585582733154296875), Const(-0.949528157711029052734375), Const(-0.95143496990203857421875), Const(-0.953306019306182861328125), Const(-0.955141127109527587890625), Const(-0.95694029331207275390625), Const(-0.958703458309173583984375), Const(-0.96043050289154052734375), Const(-0.96212136745452880859375), Const(-0.963776051998138427734375), Const(-0.965394437313079833984375), Const(-0.966976463794708251953125), Const(-0.96852207183837890625), Const(-0.970031201839447021484375), Const(-0.97150385379791259765625), Const(-0.972939908504486083984375), Const(-0.97433936595916748046875), Const(-0.975702106952667236328125), Const(-0.9770281314849853515625), Const(-0.978317320346832275390625), Const(-0.979569733142852783203125), Const(-0.98078525066375732421875), Const(-0.981963813304901123046875), Const(-0.983105480670928955078125), Const(-0.984210073947906494140625), Const(-0.985277593135833740234375), Const(-0.986308038234710693359375), Const(-0.987301409244537353515625), Const(-0.98825752735137939453125), Const(-0.989176452159881591796875), Const(-0.9900581836700439453125), Const(-0.990902602672576904296875), Const(-0.99170970916748046875), Const(-0.992479503154754638671875), Const(-0.993211925029754638671875), Const(-0.993906915187835693359375), Const(-0.994564533233642578125), Const(-0.995184719562530517578125), Const(-0.9957673549652099609375), Const(-0.996312558650970458984375), Const(-0.996820271015167236328125), Const(-0.997290432453155517578125), Const(-0.997723042964935302734375), Const(-0.998118102550506591796875), Const(-0.998475551605224609375), Const(-0.998795449733734130859375), Const(-0.99907767772674560546875), Const(-0.999322354793548583984375), Const(-0.999529361724853515625), Const(-0.999698817729949951171875), Const(-0.999830543994903564453125), Const(-0.99992465972900390625), Const(-0.9999811649322509765625), Const(-1), Const(-0.9999811649322509765625), Const(-0.99992465972900390625), Const(-0.999830543994903564453125), Const(-0.999698817729949951171875), Const(-0.999529361724853515625), Const(-0.999322354793548583984375), Const(-0.99907767772674560546875), Const(-0.998795449733734130859375), Const(-0.998475551605224609375), Const(-0.998118102550506591796875), Const(-0.997723042964935302734375), Const(-0.997290432453155517578125), Const(-0.996820271015167236328125), Const(-0.996312558650970458984375), Const(-0.9957673549652099609375), Const(-0.995184719562530517578125), Const(-0.994564533233642578125), Const(-0.993906915187835693359375), Const(-0.993211925029754638671875), Const(-0.992479503154754638671875), Const(-0.99170970916748046875), Const(-0.990902602672576904296875), Const(-0.9900581836700439453125), Const(-0.989176452159881591796875), Const(-0.98825752735137939453125), Const(-0.987301409244537353515625), Const(-0.986308038234710693359375), Const(-0.985277593135833740234375), Const(-0.984210073947906494140625), Const(-0.983105480670928955078125), Const(-0.981963813304901123046875), Const(-0.98078525066375732421875), Const(-0.979569733142852783203125), Const(-0.978317320346832275390625), Const(-0.9770281314849853515625), Const(-0.975702106952667236328125), Const(-0.97433936595916748046875), Const(-0.972939908504486083984375), Const(-0.97150385379791259765625), Const(-0.970031201839447021484375), Const(-0.96852207183837890625), Const(-0.966976463794708251953125), Const(-0.965394437313079833984375), Const(-0.963776051998138427734375), Const(-0.96212136745452880859375), Const(-0.96043050289154052734375), Const(-0.958703458309173583984375), Const(-0.95694029331207275390625), Const(-0.955141127109527587890625), Const(-0.953306019306182861328125), Const(-0.95143496990203857421875), Const(-0.949528157711029052734375), Const(-0.947585582733154296875), Const(-0.94560730457305908203125), Const(-0.943593442440032958984375), Const(-0.941544055938720703125), Const(-0.93945920467376708984375), Const(-0.937339007854461669921875), Const(-0.935183465480804443359375), Const(-0.932992756366729736328125), Const(-0.93076694011688232421875), Const(-0.928506076335906982421875), Const(-0.926210224628448486328125), Const(-0.92387950420379638671875), Const(-0.921514034271240234375), Const(-0.919113814830780029296875), Const(-0.91667902469635009765625), Const(-0.91420972347259521484375), Const(-0.911706030368804931640625), Const(-0.909167945384979248046875), Const(-0.906595647335052490234375), Const(-0.903989255428314208984375), Const(-0.9013488292694091796875), Const(-0.898674428462982177734375), Const(-0.895966231822967529296875), Const(-0.893224298954010009765625), Const(-0.89044868946075439453125), Const(-0.887639582157135009765625), Const(-0.88479709625244140625), Const(-0.881921231746673583984375), Const(-0.879012167453765869140625), Const(-0.876070082187652587890625), Const(-0.873094975948333740234375), Const(-0.870086967945098876953125), Const(-0.86704623699188232421875), Const(-0.863972842693328857421875), Const(-0.86086690425872802734375), Const(-0.85772860050201416015625), Const(-0.854557931423187255859375), Const(-0.851355135440826416015625), Const(-0.84812033176422119140625), Const(-0.84485352039337158203125), Const(-0.841554939746856689453125), Const(-0.8382246494293212890625), Const(-0.83486282825469970703125), Const(-0.831469595432281494140625), Const(-0.82804501056671142578125), Const(-0.824589252471923828125), Const(-0.82110249996185302734375), Const(-0.817584812641143798828125), Const(-0.814036309719085693359375), Const(-0.810457170009613037109375), Const(-0.806847512722015380859375), Const(-0.80320751667022705078125), Const(-0.799537241458892822265625), Const(-0.795836865901947021484375), Const(-0.792106568813323974609375), Const(-0.78834640979766845703125), Const(-0.784556567668914794921875), Const(-0.780737221240997314453125), Const(-0.776888430118560791015625), Const(-0.773010432720184326171875), Const(-0.7691032886505126953125), Const(-0.765167236328125), Const(-0.761202335357666015625), Const(-0.75720882415771484375), Const(-0.753186762332916259765625), Const(-0.749136388301849365234375), Const(-0.745057761669158935546875), Const(-0.740951120853424072265625), Const(-0.73681652545928955078125), Const(-0.73265421390533447265625), Const(-0.7284643650054931640625), Const(-0.724247038364410400390625), Const(-0.720002472400665283203125), Const(-0.71573078632354736328125), Const(-0.711432158946990966796875), Const(-0.707106769084930419921875), Const(-0.7027547359466552734375), Const(-0.698376238346099853515625), Const(-0.693971455097198486328125), Const(-0.68954050540924072265625), Const(-0.6850836277008056640625), Const(-0.680600941181182861328125), Const(-0.676092684268951416015625), Const(-0.671558916568756103515625), Const(-0.666999876499176025390625), Const(-0.6624157428741455078125), Const(-0.6578066349029541015625), Const(-0.653172791004180908203125), Const(-0.64851438999176025390625), Const(-0.6438314914703369140625), Const(-0.639124393463134765625), Const(-0.634393274784088134765625), Const(-0.629638195037841796875), Const(-0.62485945224761962890625), Const(-0.620057165622711181640625), Const(-0.615231573581695556640625), Const(-0.6103827953338623046875), Const(-0.605511009693145751953125), Const(-0.600616455078125), Const(-0.595699250698089599609375), Const(-0.590759694576263427734375), Const(-0.585797846317291259765625), Const(-0.580813944339752197265625), Const(-0.57580816745758056640625), Const(-0.570780694484710693359375), Const(-0.5657317638397216796875), Const(-0.5606615543365478515625), Const(-0.555570185184478759765625), Const(-0.55045795440673828125), Const(-0.545324981212615966796875), Const(-0.540171444416046142578125), Const(-0.53499758243560791015625), Const(-0.529803574085235595703125), Const(-0.52458965778350830078125), Const(-0.519355952739715576171875), Const(-0.5141026973724365234375), Const(-0.508830130100250244140625), Const(-0.5035383701324462890625), Const(-0.498227655887603759765625), Const(-0.492898166179656982421875), Const(-0.48755013942718505859375), Const(-0.482183754444122314453125), Const(-0.476799190044403076171875), Const(-0.4713966846466064453125), Const(-0.4659764766693115234375), Const(-0.460538685321807861328125), Const(-0.455083549022674560546875), Const(-0.44961130619049072265625), Const(-0.444122135639190673828125), Const(-0.438616216182708740234375), Const(-0.4330937862396240234375), Const(-0.427555084228515625), Const(-0.422000229358673095703125), Const(-0.4164295196533203125), Const(-0.4108431339263916015625), Const(-0.405241310596466064453125), Const(-0.399624168872833251953125), Const(-0.393992006778717041015625), Const(-0.3883450031280517578125), Const(-0.38268339633941650390625), Const(-0.37700736522674560546875), Const(-0.3713171482086181640625), Const(-0.36561298370361328125), Const(-0.3598949909210205078125), Const(-0.354163467884063720703125), Const(-0.348418653011322021484375), Const(-0.3426606655120849609375), Const(-0.336889803409576416015625), Const(-0.33110630512237548828125), Const(-0.325310289859771728515625), Const(-0.31950199604034423828125), Const(-0.31368172168731689453125), Const(-0.307849586009979248046875), Const(-0.302005946636199951171875), Const(-0.296150863170623779296875), Const(-0.290284633636474609375), Const(-0.28440749645233154296875), Const(-0.27851963043212890625), Const(-0.272621333599090576171875), Const(-0.266712725162506103515625), Const(-0.260794103145599365234375), Const(-0.2548656463623046875), Const(-0.248927593231201171875), Const(-0.24298012256622314453125), Const(-0.2370235919952392578125), Const(-0.231058061122894287109375), Const(-0.225083887577056884765625), Const(-0.2191011905670166015625), Const(-0.213110268115997314453125), Const(-0.207111358642578125), Const(-0.201104581356048583984375), Const(-0.19509029388427734375), Const(-0.189068615436553955078125), Const(-0.183039844036102294921875), Const(-0.17700421810150146484375), Const(-0.170961856842041015625), Const(-0.164913117885589599609375), Const(-0.158858120441436767578125), Const(-0.152797162532806396484375), Const(-0.1467304229736328125), Const(-0.140658199787139892578125), Const(-0.134580671787261962890625), Const(-0.128498077392578125), Const(-0.12241065502166748046875), Const(-0.11631858348846435546875), Const(-0.110222160816192626953125), Const(-0.104121625423431396484375), Const(-0.09801709651947021484375), Const(-0.091908931732177734375), Const(-0.08579730987548828125), Const(-0.079682409763336181640625), Const(-0.0735645294189453125), Const(-0.067443907260894775390625), Const(-0.061320722103118896484375), Const(-0.05519521236419677734375), Const(-0.04906761646270751953125), Const(-0.042938232421875), Const(-0.03680717945098876953125), Const(-0.030674755573272705078125), Const(-0.024541199207305908203125), Const(-0.018406689167022705078125), Const(-0.01227152347564697265625), Const(-0.006135880947113037109375)),LUT1[Fix[TRUE,_16,_24]])
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    512 <Hierarchical>
+       Dims {0}: Cyclic: N=512, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x556 = LUTBankedRead(x431,Vector(List(x553)),Vector(Const(0)),Vector(Set(x690)),Vec[Fix[TRUE,_16,_24]]) {}
+             val w_imag = twI(twIdx) (fft.scala:112:29)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x580: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+  x556: LUTBankedRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: inReal_0 (x437)
+Type: SRAM1[Fix[TRUE,_16,_24]]
+Src:  fft.scala:63:30
+Src:          val inReal  = SRAM[T](N)
+---------------------------------------------------------------------
+Symbol:     x437 = SRAMNew(List(Const(1024)),SRAM1[Fix[TRUE,_16,_24]])
+Instances: 1
+  RAM36: 1.0
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: BRAM
+     Depth:    1
+     Padding:  List(0)
+     Accum:    Fold
+     Banks:    1 <Flat>
+       Dims {0}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x460 = SRAMBankedWrite(x437,Vector(x458),Vector(List(Const(0))),Vector(x669),Vector(Set(x670))) {}
+             inReal load inputRealDRAM (fft.scala:73:16)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+           - Mux Port #1: 
+             x491 = SRAMBankedWrite(x437,Vector(x489),Vector(List(Const(0))),Vector(x676),Vector(Set(x677))) {}
+             inReal(i) = inReal(i) * hammingLUT(i) (fft.scala:78:23)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+           - Mux Port #2: 
+             x518 = SRAMBankedWrite(x437,Vector(x516),Vector(List(Const(0))),Vector(x681),Vector(Set(x682))) {}
+             inReal(i) = tmpReal(i) (fft.scala:89:23)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+           - Mux Port #3: 
+             x588 = SRAMBankedWrite(x437,Vector(x586),Vector(List(Const(0))),Vector(x711),Vector(Set(x712))) {}
+             inReal(i) = outReal(i) (fft.scala:130:23)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x608 = SRAMBankedRead(x437,Vector(List(Const(0))),Vector(b606),Vector(Set(b607)),Vec[Fix[TRUE,_16,_24]]) {}
+             outputRealDRAM store inReal (fft.scala:136:20)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+           - Mux Port #1: 
+             x560 = SRAMBankedRead(x437,Vector(List(Const(0))),Vector(x551),Vector(Set(x694)),Vec[Fix[TRUE,_16,_24]]) {}
+             val b_real = inReal(botIdx) (fft.scala:115:32)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+           - Mux Port #2: 
+             x485 = SRAMBankedRead(x437,Vector(List(Const(0))),Vector(b483),Vector(Set(b484)),Vec[Fix[TRUE,_16,_24]]) {}
+             inReal(i) = inReal(i) * hammingLUT(i) (fft.scala:78:31)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+           - Mux Port #3: 
+             x504 = SRAMBankedRead(x437,Vector(List(Const(0))),Vector(b500),Vector(Set(b501)),Vec[Fix[TRUE,_16,_24]]) {}
+             tmpReal(rev) = inReal(i) (fft.scala:84:34)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x667: AccelScope (-1) [Level: OuterControl, Loop: Single, Schedule: Sequenced]
+  x665: ParallelPipe (-1) [Level: OuterControl, Loop: Single, Schedule: ForkJoin]
+    x462: UnitPipe (-1) [Level: OuterControl, Loop: Single, Schedule: Streaming]
+      x461: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+        x460: SRAMBankedWrite
+  x497: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+    x485: SRAMBankedRead
+    x491: SRAMBankedWrite
+  x510: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Sequenced]
+    x504: SRAMBankedRead
+  x523: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+    x518: SRAMBankedWrite
+  x595: UnrolledForeach (-1) [Level: OuterControl, Loop: Looped, Schedule: Sequenced]
+    x594: UnitPipe (-1) [Level: OuterControl, Loop: Single, Schedule: Sequenced]
+      x580: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+        x560: SRAMBankedRead
+      x593: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+        x588: SRAMBankedWrite
+  x666: ParallelPipe (-1) [Level: OuterControl, Loop: Single, Schedule: ForkJoin]
+    x617: UnitPipe (-1) [Level: OuterControl, Loop: Single, Schedule: Streaming]
+      x612: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+        x608: SRAMBankedRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: tmpImag_0 (x444)
+Type: SRAM1[Fix[TRUE,_16,_24]]
+Src:  fft.scala:71:30
+Src:          val tmpImag = SRAM[T](N)
+---------------------------------------------------------------------
+Symbol:     x444 = SRAMNew(List(Const(1024)),SRAM1[Fix[TRUE,_16,_24]])
+Instances: 1
+  RAM36: 1.0
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: BRAM
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {0}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x509 = SRAMBankedWrite(x444,Vector(x508),Vector(List(Const(0))),Vector(x679),Vector(Set(x680))) {}
+             tmpImag(rev) = inImag(i) (fft.scala:85:26)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x519 = SRAMBankedRead(x444,Vector(List(Const(0))),Vector(b513),Vector(Set(b514)),Vec[Fix[TRUE,_16,_24]]) {}
+             inImag(i) = tmpImag(i) (fft.scala:90:32)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x667: AccelScope (-1) [Level: OuterControl, Loop: Single, Schedule: Sequenced]
+  x510: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Sequenced]
+    x509: SRAMBankedWrite
+  x523: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+    x519: SRAMBankedRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: x529
+Type: Reg[Fix[TRUE,_32,_0]]
+Src:  fft.scala:97:35
+Src:              val stride = strideLUT(s)(Pass 28)
+---------------------------------------------------------------------
+Symbol:     x529 = RegNew(Const(0))
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List()
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {}: Cyclic: N=1, B=1, alpha=<>, P=<> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x538 = RegWrite(x529,x534,Set()) {}
+             val stride = strideLUT(s)(Pass 28)(Pass 28) (fft.scala:97:35)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x548 = RegRead(x529) {}
+             val stride = strideLUT(s)(Pass 28)(Pass 28) (fft.scala:97:35)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x595: UnrolledForeach (-1) [Level: OuterControl, Loop: Looped, Schedule: Sequenced]
+  x540: UnitPipe (-1) [Level: InnerControl, Loop: Single, Schedule: Sequenced]
+    x538: RegWrite
+  x594: UnitPipe (-1) [Level: OuterControl, Loop: Single, Schedule: Sequenced]
+    x580: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+      x548: RegRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: x619
+Type: StreamOut[Tup2[Fix[TRUE,_16,_24],Bit]]
+Src:  fft.scala:137:20
+Src:      outputImagDRAM store inImag
+---------------------------------------------------------------------
+Symbol:     x619 = StreamOutNew(BurstFullDataBus())
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {0}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x633 = StreamOutBankedWrite(x619,ArrayBuffer(x632),ArrayBuffer(Set(x714))) {}
+             outputImagDRAM store inImag (fft.scala:137:20)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+
+
+
+Control Tree: 
+x634: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+  x633: StreamOutBankedWrite
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: strideLUT_0 (x434)
+Type: LUT1[Fix[TRUE,_32,_0]]
+Src:  fft.scala:59:44
+Src:          val strideLUT = LUT[Int](numStages)(strides :_*)
+---------------------------------------------------------------------
+Symbol:     x434 = LUTNew(List(Const(10)),List(Const(2), Const(4), Const(8), Const(16), Const(32), Const(64), Const(128), Const(256), Const(512), Const(1024)),LUT1[Fix[TRUE,_32,_0]])
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    10 <Hierarchical>
+       Dims {0}: Cyclic: N=10, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x533 = LUTBankedRead(x434,Vector(List(b526)),Vector(Const(0)),Vector(Set()),Vec[Fix[TRUE,_32,_0]]) {}
+             val stride = strideLUT(s) (fft.scala:97:35)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x540: UnitPipe (-1) [Level: InnerControl, Loop: Single, Schedule: Sequenced]
+  x533: LUTBankedRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: bitRevLUT_0 (x436)
+Type: LUT1[Fix[TRUE,_32,_0]]
+Src:  fft.scala:61:36
+Src:          val bitRevLUT = LUT[Int](N)(bitRevList :_*)
+---------------------------------------------------------------------
+Symbol:     x436 = LUTNew(List(Const(1024)),List(Const(0), Const(512), Const(256), Const(768), Const(128), Const(640), Const(384), Const(896), Const(64), Const(576), Const(320), Const(832), Const(192), Const(704), Const(448), Const(960), Const(32), Const(544), Const(288), Const(800), Const(160), Const(672), Const(416), Const(928), Const(96), Const(608), Const(352), Const(864), Const(224), Const(736), Const(480), Const(992), Const(16), Const(528), Const(272), Const(784), Const(144), Const(656), Const(400), Const(912), Const(80), Const(592), Const(336), Const(848), Const(208), Const(720), Const(464), Const(976), Const(48), Const(560), Const(304), Const(816), Const(176), Const(688), Const(432), Const(944), Const(112), Const(624), Const(368), Const(880), Const(240), Const(752), Const(496), Const(1008), Const(8), Const(520), Const(264), Const(776), Const(136), Const(648), Const(392), Const(904), Const(72), Const(584), Const(328), Const(840), Const(200), Const(712), Const(456), Const(968), Const(40), Const(552), Const(296), Const(808), Const(168), Const(680), Const(424), Const(936), Const(104), Const(616), Const(360), Const(872), Const(232), Const(744), Const(488), Const(1000), Const(24), Const(536), Const(280), Const(792), Const(152), Const(664), Const(408), Const(920), Const(88), Const(600), Const(344), Const(856), Const(216), Const(728), Const(472), Const(984), Const(56), Const(568), Const(312), Const(824), Const(184), Const(696), Const(440), Const(952), Const(120), Const(632), Const(376), Const(888), Const(248), Const(760), Const(504), Const(1016), Const(4), Const(516), Const(260), Const(772), Const(132), Const(644), Const(388), Const(900), Const(68), Const(580), Const(324), Const(836), Const(196), Const(708), Const(452), Const(964), Const(36), Const(548), Const(292), Const(804), Const(164), Const(676), Const(420), Const(932), Const(100), Const(612), Const(356), Const(868), Const(228), Const(740), Const(484), Const(996), Const(20), Const(532), Const(276), Const(788), Const(148), Const(660), Const(404), Const(916), Const(84), Const(596), Const(340), Const(852), Const(212), Const(724), Const(468), Const(980), Const(52), Const(564), Const(308), Const(820), Const(180), Const(692), Const(436), Const(948), Const(116), Const(628), Const(372), Const(884), Const(244), Const(756), Const(500), Const(1012), Const(12), Const(524), Const(268), Const(780), Const(140), Const(652), Const(396), Const(908), Const(76), Const(588), Const(332), Const(844), Const(204), Const(716), Const(460), Const(972), Const(44), Const(556), Const(300), Const(812), Const(172), Const(684), Const(428), Const(940), Const(108), Const(620), Const(364), Const(876), Const(236), Const(748), Const(492), Const(1004), Const(28), Const(540), Const(284), Const(796), Const(156), Const(668), Const(412), Const(924), Const(92), Const(604), Const(348), Const(860), Const(220), Const(732), Const(476), Const(988), Const(60), Const(572), Const(316), Const(828), Const(188), Const(700), Const(444), Const(956), Const(124), Const(636), Const(380), Const(892), Const(252), Const(764), Const(508), Const(1020), Const(2), Const(514), Const(258), Const(770), Const(130), Const(642), Const(386), Const(898), Const(66), Const(578), Const(322), Const(834), Const(194), Const(706), Const(450), Const(962), Const(34), Const(546), Const(290), Const(802), Const(162), Const(674), Const(418), Const(930), Const(98), Const(610), Const(354), Const(866), Const(226), Const(738), Const(482), Const(994), Const(18), Const(530), Const(274), Const(786), Const(146), Const(658), Const(402), Const(914), Const(82), Const(594), Const(338), Const(850), Const(210), Const(722), Const(466), Const(978), Const(50), Const(562), Const(306), Const(818), Const(178), Const(690), Const(434), Const(946), Const(114), Const(626), Const(370), Const(882), Const(242), Const(754), Const(498), Const(1010), Const(10), Const(522), Const(266), Const(778), Const(138), Const(650), Const(394), Const(906), Const(74), Const(586), Const(330), Const(842), Const(202), Const(714), Const(458), Const(970), Const(42), Const(554), Const(298), Const(810), Const(170), Const(682), Const(426), Const(938), Const(106), Const(618), Const(362), Const(874), Const(234), Const(746), Const(490), Const(1002), Const(26), Const(538), Const(282), Const(794), Const(154), Const(666), Const(410), Const(922), Const(90), Const(602), Const(346), Const(858), Const(218), Const(730), Const(474), Const(986), Const(58), Const(570), Const(314), Const(826), Const(186), Const(698), Const(442), Const(954), Const(122), Const(634), Const(378), Const(890), Const(250), Const(762), Const(506), Const(1018), Const(6), Const(518), Const(262), Const(774), Const(134), Const(646), Const(390), Const(902), Const(70), Const(582), Const(326), Const(838), Const(198), Const(710), Const(454), Const(966), Const(38), Const(550), Const(294), Const(806), Const(166), Const(678), Const(422), Const(934), Const(102), Const(614), Const(358), Const(870), Const(230), Const(742), Const(486), Const(998), Const(22), Const(534), Const(278), Const(790), Const(150), Const(662), Const(406), Const(918), Const(86), Const(598), Const(342), Const(854), Const(214), Const(726), Const(470), Const(982), Const(54), Const(566), Const(310), Const(822), Const(182), Const(694), Const(438), Const(950), Const(118), Const(630), Const(374), Const(886), Const(246), Const(758), Const(502), Const(1014), Const(14), Const(526), Const(270), Const(782), Const(142), Const(654), Const(398), Const(910), Const(78), Const(590), Const(334), Const(846), Const(206), Const(718), Const(462), Const(974), Const(46), Const(558), Const(302), Const(814), Const(174), Const(686), Const(430), Const(942), Const(110), Const(622), Const(366), Const(878), Const(238), Const(750), Const(494), Const(1006), Const(30), Const(542), Const(286), Const(798), Const(158), Const(670), Const(414), Const(926), Const(94), Const(606), Const(350), Const(862), Const(222), Const(734), Const(478), Const(990), Const(62), Const(574), Const(318), Const(830), Const(190), Const(702), Const(446), Const(958), Const(126), Const(638), Const(382), Const(894), Const(254), Const(766), Const(510), Const(1022), Const(1), Const(513), Const(257), Const(769), Const(129), Const(641), Const(385), Const(897), Const(65), Const(577), Const(321), Const(833), Const(193), Const(705), Const(449), Const(961), Const(33), Const(545), Const(289), Const(801), Const(161), Const(673), Const(417), Const(929), Const(97), Const(609), Const(353), Const(865), Const(225), Const(737), Const(481), Const(993), Const(17), Const(529), Const(273), Const(785), Const(145), Const(657), Const(401), Const(913), Const(81), Const(593), Const(337), Const(849), Const(209), Const(721), Const(465), Const(977), Const(49), Const(561), Const(305), Const(817), Const(177), Const(689), Const(433), Const(945), Const(113), Const(625), Const(369), Const(881), Const(241), Const(753), Const(497), Const(1009), Const(9), Const(521), Const(265), Const(777), Const(137), Const(649), Const(393), Const(905), Const(73), Const(585), Const(329), Const(841), Const(201), Const(713), Const(457), Const(969), Const(41), Const(553), Const(297), Const(809), Const(169), Const(681), Const(425), Const(937), Const(105), Const(617), Const(361), Const(873), Const(233), Const(745), Const(489), Const(1001), Const(25), Const(537), Const(281), Const(793), Const(153), Const(665), Const(409), Const(921), Const(89), Const(601), Const(345), Const(857), Const(217), Const(729), Const(473), Const(985), Const(57), Const(569), Const(313), Const(825), Const(185), Const(697), Const(441), Const(953), Const(121), Const(633), Const(377), Const(889), Const(249), Const(761), Const(505), Const(1017), Const(5), Const(517), Const(261), Const(773), Const(133), Const(645), Const(389), Const(901), Const(69), Const(581), Const(325), Const(837), Const(197), Const(709), Const(453), Const(965), Const(37), Const(549), Const(293), Const(805), Const(165), Const(677), Const(421), Const(933), Const(101), Const(613), Const(357), Const(869), Const(229), Const(741), Const(485), Const(997), Const(21), Const(533), Const(277), Const(789), Const(149), Const(661), Const(405), Const(917), Const(85), Const(597), Const(341), Const(853), Const(213), Const(725), Const(469), Const(981), Const(53), Const(565), Const(309), Const(821), Const(181), Const(693), Const(437), Const(949), Const(117), Const(629), Const(373), Const(885), Const(245), Const(757), Const(501), Const(1013), Const(13), Const(525), Const(269), Const(781), Const(141), Const(653), Const(397), Const(909), Const(77), Const(589), Const(333), Const(845), Const(205), Const(717), Const(461), Const(973), Const(45), Const(557), Const(301), Const(813), Const(173), Const(685), Const(429), Const(941), Const(109), Const(621), Const(365), Const(877), Const(237), Const(749), Const(493), Const(1005), Const(29), Const(541), Const(285), Const(797), Const(157), Const(669), Const(413), Const(925), Const(93), Const(605), Const(349), Const(861), Const(221), Const(733), Const(477), Const(989), Const(61), Const(573), Const(317), Const(829), Const(189), Const(701), Const(445), Const(957), Const(125), Const(637), Const(381), Const(893), Const(253), Const(765), Const(509), Const(1021), Const(3), Const(515), Const(259), Const(771), Const(131), Const(643), Const(387), Const(899), Const(67), Const(579), Const(323), Const(835), Const(195), Const(707), Const(451), Const(963), Const(35), Const(547), Const(291), Const(803), Const(163), Const(675), Const(419), Const(931), Const(99), Const(611), Const(355), Const(867), Const(227), Const(739), Const(483), Const(995), Const(19), Const(531), Const(275), Const(787), Const(147), Const(659), Const(403), Const(915), Const(83), Const(595), Const(339), Const(851), Const(211), Const(723), Const(467), Const(979), Const(51), Const(563), Const(307), Const(819), Const(179), Const(691), Const(435), Const(947), Const(115), Const(627), Const(371), Const(883), Const(243), Const(755), Const(499), Const(1011), Const(11), Const(523), Const(267), Const(779), Const(139), Const(651), Const(395), Const(907), Const(75), Const(587), Const(331), Const(843), Const(203), Const(715), Const(459), Const(971), Const(43), Const(555), Const(299), Const(811), Const(171), Const(683), Const(427), Const(939), Const(107), Const(619), Const(363), Const(875), Const(235), Const(747), Const(491), Const(1003), Const(27), Const(539), Const(283), Const(795), Const(155), Const(667), Const(411), Const(923), Const(91), Const(603), Const(347), Const(859), Const(219), Const(731), Const(475), Const(987), Const(59), Const(571), Const(315), Const(827), Const(187), Const(699), Const(443), Const(955), Const(123), Const(635), Const(379), Const(891), Const(251), Const(763), Const(507), Const(1019), Const(7), Const(519), Const(263), Const(775), Const(135), Const(647), Const(391), Const(903), Const(71), Const(583), Const(327), Const(839), Const(199), Const(711), Const(455), Const(967), Const(39), Const(551), Const(295), Const(807), Const(167), Const(679), Const(423), Const(935), Const(103), Const(615), Const(359), Const(871), Const(231), Const(743), Const(487), Const(999), Const(23), Const(535), Const(279), Const(791), Const(151), Const(663), Const(407), Const(919), Const(87), Const(599), Const(343), Const(855), Const(215), Const(727), Const(471), Const(983), Const(55), Const(567), Const(311), Const(823), Const(183), Const(695), Const(439), Const(951), Const(119), Const(631), Const(375), Const(887), Const(247), Const(759), Const(503), Const(1015), Const(15), Const(527), Const(271), Const(783), Const(143), Const(655), Const(399), Const(911), Const(79), Const(591), Const(335), Const(847), Const(207), Const(719), Const(463), Const(975), Const(47), Const(559), Const(303), Const(815), Const(175), Const(687), Const(431), Const(943), Const(111), Const(623), Const(367), Const(879), Const(239), Const(751), Const(495), Const(1007), Const(31), Const(543), Const(287), Const(799), Const(159), Const(671), Const(415), Const(927), Const(95), Const(607), Const(351), Const(863), Const(223), Const(735), Const(479), Const(991), Const(63), Const(575), Const(319), Const(831), Const(191), Const(703), Const(447), Const(959), Const(127), Const(639), Const(383), Const(895), Const(255), Const(767), Const(511), Const(1023)),LUT1[Fix[TRUE,_32,_0]])
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    1024 <Hierarchical>
+       Dims {0}: Cyclic: N=1024, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x502 = LUTBankedRead(x436,Vector(List(b500)),Vector(Const(0)),Vector(Set(b501)),Vec[Fix[TRUE,_32,_0]]) {}
+             val rev = bitRevLUT(i) (fft.scala:83:32)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x510: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Sequenced]
+  x502: LUTBankedRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: x445
+Type: StreamOut[BurstCmd]
+Src:  fft.scala:73:16
+Src:          inReal load inputRealDRAM
+---------------------------------------------------------------------
+Symbol:     x445 = StreamOutNew(BurstCmdBus)
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {0}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x450 = StreamOutBankedWrite(x445,ArrayBuffer(x448),ArrayBuffer(Set(x449))) {}
+             inReal load inputRealDRAM (fft.scala:73:16)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+
+
+
+Control Tree: 
+x451: UnitPipe (-1) [Level: InnerControl, Loop: Single, Schedule: Sequenced]
+  x450: StreamOutBankedWrite
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: hammingLUT_0 (x432)
+Type: LUT1[Fix[TRUE,_16,_24]]
+Src:  fft.scala:57:35
+Src:          val hammingLUT = LUT[T](N)(hammingList :_*)
+---------------------------------------------------------------------
+Symbol:     x432 = LUTNew(List(Const(1024)),List(Const(0.079999983310699462890625), Const(0.08000862598419189453125), Const(0.080034673213958740234375), Const(0.080078065395355224609375), Const(0.08013880252838134765625), Const(0.080216884613037109375), Const(0.080312311649322509765625), Const(0.0804250240325927734375), Const(0.080555140972137451171875), Const(0.080702602863311767578125), Const(0.080867350101470947265625), Const(0.081049382686614990234375), Const(0.081248819828033447265625), Const(0.0814654827117919921875), Const(0.08169949054718017578125), Const(0.08195078372955322265625), Const(0.082219302654266357421875), Const(0.082505166530609130859375), Const(0.0828082561492919921875), Const(0.08312857151031494140625), Const(0.083466112613677978515625), Const(0.08382093906402587890625), Const(0.084192931652069091796875), Const(0.084582149982452392578125), Const(0.08498847484588623046875), Const(0.08541202545166015625), Const(0.08585274219512939453125), Const(0.086310565471649169921875), Const(0.086785495281219482421875), Const(0.087277472019195556640625), Const(0.087786614894866943359375), Const(0.08831274509429931640625), Const(0.0888559818267822265625), Const(0.089416205883026123046875), Const(0.089993417263031005859375), Const(0.090587615966796875), Const(0.091198742389678955078125), Const(0.091826856136322021484375), Const(0.0924718379974365234375), Const(0.0931336879730224609375), Const(0.093812406063079833984375), Const(0.094507992267608642578125), Const(0.0952203273773193359375), Const(0.095949470996856689453125), Const(0.096695363521575927734375), Const(0.09745800495147705078125), Const(0.0982372760772705078125), Const(0.099033296108245849609375), Const(0.09984588623046875), Const(0.100675106048583984375), Const(0.10152089595794677734375), Const(0.102383196353912353515625), Const(0.103262007236480712890625), Const(0.10415732860565185546875), Const(0.105069100856781005859375), Const(0.105997264385223388671875), Const(0.106941759586334228515625), Const(0.10790264606475830078125), Const(0.1088798046112060546875), Const(0.109873235225677490234375), Const(0.11088287830352783203125), Const(0.111908733844757080078125), Const(0.112950742244720458984375), Const(0.114008843898773193359375), Const(0.1150829792022705078125), Const(0.116173207759857177734375), Const(0.117279350757598876953125), Const(0.11840152740478515625), Const(0.119539558887481689453125), Const(0.1206934452056884765625), Const(0.121863186359405517578125), Const(0.12304866313934326171875), Const(0.124249875545501708984375), Const(0.125466763973236083984375), Const(0.12669932842254638671875), Const(0.12794744968414306640625), Const(0.129211127758026123046875), Const(0.13049030303955078125), Const(0.131784915924072265625), Const(0.13309490680694580078125), Const(0.13442027568817138671875), Const(0.135760962963104248046875), Const(0.137116849422454833984375), Const(0.138487994670867919921875), Const(0.1398742198944091796875), Const(0.141275584697723388671875), Const(0.14269196987152099609375), Const(0.144123375415802001953125), Const(0.14556968212127685546875), Const(0.147030889987945556640625), Const(0.1485068798065185546875), Const(0.149997711181640625), Const(0.15150320529937744140625), Const(0.15302336215972900390625), Const(0.154558122158050537109375), Const(0.156107366085052490234375), Const(0.157671153545379638671875), Const(0.159249365329742431640625), Const(0.16084194183349609375), Const(0.16244876384735107421875), Const(0.1640698909759521484375), Const(0.165705204010009765625), Const(0.167354583740234375), Const(0.1690180301666259765625), Const(0.170695483684539794921875), Const(0.1723868846893310546875), Const(0.17409217357635498046875), Const(0.175811231136322021484375), Const(0.17754399776458740234375), Const(0.179290473461151123046875), Const(0.1810505390167236328125), Const(0.182824194431304931640625), Const(0.184611260890960693359375), Const(0.186411798000335693359375), Const(0.18822562694549560546875), Const(0.1900527477264404296875), Const(0.191893041133880615234375), Const(0.19374644756317138671875), Const(0.195612967014312744140625), Const(0.19749248027801513671875), Const(0.199384868144989013671875), Const(0.201290130615234375), Const(0.2032082080841064453125), Const(0.2051389217376708984375), Const(0.207082331180572509765625), Const(0.209038257598876953125), Const(0.211006641387939453125), Const(0.212987482547760009765625), Const(0.214980661869049072265625), Const(0.216986119747161865234375), Const(0.219003736972808837890625), Const(0.22103345394134521484375), Const(0.223075211048126220703125), Const(0.2251288890838623046875), Const(0.227194488048553466796875), Const(0.22927188873291015625), Const(0.231360971927642822265625), Const(0.23346173763275146484375), Const(0.235574066638946533203125), Const(0.2376978397369384765625), Const(0.239833056926727294921875), Const(0.2419795989990234375), Const(0.244137346744537353515625), Const(0.24630630016326904296875), Const(0.2484862804412841796875), Const(0.250677287578582763671875), Const(0.252879202365875244140625), Const(0.255091965198516845703125), Const(0.257315456867218017578125), Const(0.259549617767333984375), Const(0.261794388294219970703125), Const(0.264049589633941650390625), Const(0.2663152217864990234375), Const(0.268591225147247314453125), Const(0.270877420902252197265625), Const(0.273173809051513671875), Const(0.275480210781097412109375), Const(0.27779662609100341796875), Const(0.280122935771942138671875), Const(0.2824590206146240234375), Const(0.284804821014404296875), Const(0.28716027736663818359375), Const(0.2895252704620361328125), Const(0.29189968109130859375), Const(0.294283449649810791015625), Const(0.29667651653289794921875), Const(0.299078762531280517578125), Const(0.3014900684356689453125), Const(0.303910434246063232421875), Const(0.30633962154388427734375), Const(0.30877768993377685546875), Const(0.311224460601806640625), Const(0.31367981433868408203125), Const(0.3161437511444091796875), Const(0.3186161518096923828125), Const(0.321096837520599365234375), Const(0.32358586788177490234375), Const(0.326083004474639892578125), Const(0.328588187694549560546875), Const(0.33110141754150390625), Const(0.333622455596923828125), Const(0.3361513614654541015625), Const(0.338687896728515625), Const(0.3412320613861083984375), Const(0.343783676624298095703125), Const(0.346342742443084716796875), Const(0.348909080028533935546875), Const(0.3514826297760009765625), Const(0.3540632724761962890625), Const(0.35665094852447509765625), Const(0.359245598316192626953125), Const(0.361846983432769775390625), Const(0.36445510387420654296875), Const(0.367069900035858154296875), Const(0.369691193103790283203125), Const(0.37231886386871337890625), Const(0.37495291233062744140625), Const(0.37759315967559814453125), Const(0.380239546298980712890625), Const(0.382891952991485595703125), Const(0.385550320148468017578125), Const(0.38821446895599365234375), Const(0.390884339809417724609375), Const(0.393559873104095458984375), Const(0.396240890026092529296875), Const(0.398927390575408935546875), Const(0.4016191959381103515625), Const(0.4043161869049072265625), Const(0.40701830387115478515625), Const(0.4097254276275634765625), Const(0.412437498569488525390625), Const(0.41515433788299560546875), Const(0.417875945568084716796875), Const(0.420602142810821533203125), Const(0.42333281040191650390625), Const(0.426067888736724853515625), Const(0.42880725860595703125), Const(0.43155086040496826171875), Const(0.43429851531982421875), Const(0.437050163745880126953125), Const(0.4398057460784912109375), Const(0.44256508350372314453125), Const(0.445328056812286376953125), Const(0.4480946063995361328125), Const(0.45086467266082763671875), Const(0.4536380767822265625), Const(0.456414699554443359375), Const(0.45919454097747802734375), Const(0.46197736263275146484375), Const(0.464763164520263671875), Const(0.46755182743072509765625), Const(0.470343172550201416015625), Const(0.473137199878692626953125), Const(0.475933730602264404296875), Const(0.478732645511627197265625), Const(0.48153388500213623046875), Const(0.484337329864501953125), Const(0.48714292049407958984375), Const(0.489950478076934814453125), Const(0.492759883403778076171875), Const(0.495571136474609375), Const(0.498383998870849609375), Const(0.501198470592498779296875), Const(0.504014432430267333984375), Const(0.506831705570220947265625), Const(0.50965023040771484375), Const(0.51246988773345947265625), Const(0.51529061794281005859375), Const(0.51811230182647705078125), Const(0.520934760570526123046875), Const(0.523757994174957275390625), Const(0.52658176422119140625), Const(0.529406070709228515625), Const(0.532230794429779052734375), Const(0.535055816173553466796875), Const(0.53788101673126220703125), Const(0.54070627689361572265625), Const(0.54353153705596923828125), Const(0.546356678009033203125), Const(0.549181520938873291015625), Const(0.552006065845489501953125), Const(0.554830133914947509765625), Const(0.5576536655426025390625), Const(0.560476481914520263671875), Const(0.56329858303070068359375), Const(0.56611979007720947265625), Const(0.568939983844757080078125), Const(0.57175910472869873046875), Const(0.574577033519744873046875), Const(0.57739365100860595703125), Const(0.58020889759063720703125), Const(0.583022594451904296875), Const(0.58583462238311767578125), Const(0.58864498138427734375), Const(0.591453492641448974609375), Const(0.594260036945343017578125), Const(0.597064554691314697265625), Const(0.599866926670074462890625), Const(0.602667033672332763671875), Const(0.60546481609344482421875), Const(0.608260095119476318359375), Const(0.6110527515411376953125), Const(0.613842785358428955078125), Const(0.616630017757415771484375), Const(0.619414389133453369140625), Const(0.622195720672607421875), Const(0.624973952770233154296875), Const(0.627749025821685791015625), Const(0.63052070140838623046875), Const(0.633289039134979248046875), Const(0.636053860187530517578125), Const(0.638814985752105712890625), Const(0.641572475433349609375), Const(0.64432609081268310546875), Const(0.64707577228546142578125), Const(0.64982140064239501953125), Const(0.6525628566741943359375), Const(0.655300140380859375), Const(0.65803301334381103515625), Const(0.66076147556304931640625), Const(0.663485348224639892578125), Const(0.666204631328582763671875), Const(0.668919086456298828125), Const(0.6716287136077880859375), Const(0.6743333339691162109375), Const(0.677032887935638427734375), Const(0.6797273159027099609375), Const(0.682416439056396484375), Const(0.68510019779205322265625), Const(0.687778532505035400390625), Const(0.690451204776763916015625), Const(0.693118274211883544921875), Const(0.6957795619964599609375), Const(0.69843494892120361328125), Const(0.701084315776824951171875), Const(0.703727662563323974609375), Const(0.706364810466766357421875), Const(0.70899569988250732421875), Const(0.71162021160125732421875), Const(0.71423828601837158203125), Const(0.716849744319915771484375), Const(0.7194545269012451171875), Const(0.722052514553070068359375), Const(0.724643707275390625), Const(0.727227866649627685546875), Const(0.72980499267578125), Const(0.732374966144561767578125), Const(0.7349376678466796875), Const(0.737493038177490234375), Const(0.74004089832305908203125), Const(0.742581307888031005859375), Const(0.74511396884918212890625), Const(0.747639000415802001953125), Const(0.750156104564666748046875), Const(0.752665340900421142578125), Const(0.755166530609130859375), Const(0.757659614086151123046875), Const(0.7601444721221923828125), Const(0.76262104511260986328125), Const(0.765089213848114013671875), Const(0.767548859119415283203125), Const(0.769999980926513671875), Const(0.772442400455474853515625), Const(0.774876058101654052734375), Const(0.77730083465576171875), Const(0.779716670513153076171875), Const(0.78212344646453857421875), Const(0.7845211029052734375), Const(0.786909520626068115234375), Const(0.78928864002227783203125), Const(0.791658341884613037109375), Const(0.794018566608428955078125), Const(0.79636919498443603515625), Const(0.798710167407989501953125), Const(0.801041424274444580078125), Const(0.803362786769866943359375), Const(0.80567419528961181640625), Const(0.807975590229034423828125), Const(0.810266911983489990234375), Const(0.812547981739044189453125), Const(0.814818799495697021484375), Const(0.817079246044158935546875), Const(0.81932926177978515625), Const(0.8215687274932861328125), Const(0.82379758358001708984375), Const(0.8260157108306884765625), Const(0.828223049640655517578125), Const(0.8304195404052734375), Const(0.832605063915252685546875), Const(0.8347795009613037109375), Const(0.836942851543426513671875), Const(0.839095056056976318359375), Const(0.841235935688018798828125), Const(0.8433654308319091796875), Const(0.845483481884002685546875), Const(0.847590029239654541015625), Const(0.8496849536895751953125), Const(0.8517682552337646484375), Const(0.85383975505828857421875), Const(0.855899393558502197265625), Const(0.8579471111297607421875), Const(0.85998284816741943359375), Const(0.86200654506683349609375), Const(0.86401808261871337890625), Const(0.866017401218414306640625), Const(0.868004381656646728515625), Const(0.86997902393341064453125), Const(0.87194120883941650390625), Const(0.87389087677001953125), Const(0.875827968120574951171875), Const(0.877752363681793212890625), Const(0.879664003849029541015625), Const(0.881562888622283935546875), Const(0.8834488391876220703125), Const(0.8853218555450439453125), Const(0.887181818485260009765625), Const(0.889028728008270263671875), Const(0.890862405300140380859375), Const(0.89268290996551513671875), Const(0.894490063190460205078125), Const(0.8962838649749755859375), Const(0.89806425571441650390625), Const(0.899831116199493408203125), Const(0.9015843868255615234375), Const(0.90332400798797607421875), Const(0.905049979686737060546875), Const(0.90676212310791015625), Const(0.90846049785614013671875), Const(0.91014492511749267578125), Const(0.911815345287322998046875), Const(0.91347181797027587890625), Const(0.9151141643524169921875), Const(0.916742384433746337890625), Const(0.918356359004974365234375), Const(0.91995608806610107421875), Const(0.9215414524078369140625), Const(0.923112452030181884765625), Const(0.9246690273284912109375), Const(0.926211059093475341796875), Const(0.927738487720489501953125), Const(0.92925131320953369140625), Const(0.930749475955963134765625), Const(0.932232916355133056640625), Const(0.93370151519775390625), Const(0.93515527248382568359375), Const(0.93659412860870361328125), Const(0.938018023967742919921875), Const(0.939426898956298828125), Const(0.9408206939697265625), Const(0.942199409008026123046875), Const(0.943562924861907958984375), Const(0.9449112415313720703125), Const(0.94624423980712890625), Const(0.9475619792938232421875), Const(0.948864281177520751953125), Const(0.9501512050628662109375), Const(0.951422631740570068359375), Const(0.952678501605987548828125), Const(0.953918874263763427734375), Const(0.95514357089996337890625), Const(0.956352651119232177734375), Const(0.9575459957122802734375), Const(0.958723604679107666015625), Const(0.959885418415069580078125), Const(0.961031377315521240234375), Const(0.962161481380462646484375), Const(0.9632756710052490234375), Const(0.9643738269805908203125), Const(0.965456068515777587890625), Const(0.966522157192230224609375), Const(0.96757221221923828125), Const(0.968606173992156982421875), Const(0.96962392330169677734375), Const(0.970625460147857666015625), Const(0.971610724925994873046875), Const(0.972579777240753173828125), Const(0.973532497882843017578125), Const(0.97446882724761962890625), Const(0.9753887653350830078125), Const(0.976292312145233154296875), Const(0.97717940807342529296875), Const(0.9780499935150146484375), Const(0.9789040088653564453125), Const(0.979741513729095458984375), Const(0.9805624485015869140625), Const(0.98136675357818603515625), Const(0.982154369354248046875), Const(0.982925355434417724609375), Const(0.983679592609405517578125), Const(0.984417140483856201171875), Const(0.985137879848480224609375), Const(0.98584187030792236328125), Const(0.98652899265289306640625), Const(0.987199306488037109375), Const(0.98785269260406494140625), Const(0.98848927021026611328125), Const(0.989108860492706298828125), Const(0.9897115230560302734375), Const(0.990297257900238037109375), Const(0.990866005420684814453125), Const(0.991417706012725830078125), Const(0.991952359676361083984375), Const(0.9924700260162353515625), Const(0.99297058582305908203125), Const(0.99345409870147705078125), Const(0.99392044544219970703125), Const(0.994369685649871826171875), Const(0.994801819324493408203125), Const(0.995216786861419677734375), Const(0.995614588260650634765625), Const(0.99599516391754150390625), Const(0.996358573436737060546875), Const(0.996704757213592529296875), Const(0.99703371524810791015625), Const(0.997345387935638427734375), Const(0.997639834880828857421875), Const(0.99791705608367919921875), Const(0.998176991939544677734375), Const(0.99841964244842529296875), Const(0.99864494800567626953125), Const(0.998853027820587158203125), Const(0.999043762683868408203125), Const(0.99921715259552001953125), Const(0.999373257160186767578125), Const(0.999512016773223876953125), Const(0.99963343143463134765625), Const(0.999737560749053955078125), Const(0.9998242855072021484375), Const(0.999893665313720703125), Const(0.99994575977325439453125), Const(0.999980449676513671875), Const(0.999997794628143310546875), Const(0.999997794628143310546875), Const(0.999980449676513671875), Const(0.99994575977325439453125), Const(0.999893665313720703125), Const(0.9998242855072021484375), Const(0.999737560749053955078125), Const(0.99963343143463134765625), Const(0.999512016773223876953125), Const(0.999373257160186767578125), Const(0.99921715259552001953125), Const(0.999043762683868408203125), Const(0.998853027820587158203125), Const(0.99864494800567626953125), Const(0.99841964244842529296875), Const(0.998176991939544677734375), Const(0.99791705608367919921875), Const(0.997639834880828857421875), Const(0.997345387935638427734375), Const(0.99703371524810791015625), Const(0.996704757213592529296875), Const(0.996358573436737060546875), Const(0.99599516391754150390625), Const(0.995614588260650634765625), Const(0.995216786861419677734375), Const(0.994801819324493408203125), Const(0.994369685649871826171875), Const(0.99392044544219970703125), Const(0.99345409870147705078125), Const(0.99297058582305908203125), Const(0.9924700260162353515625), Const(0.991952359676361083984375), Const(0.991417706012725830078125), Const(0.990866005420684814453125), Const(0.990297257900238037109375), Const(0.9897115230560302734375), Const(0.989108860492706298828125), Const(0.98848927021026611328125), Const(0.98785269260406494140625), Const(0.987199306488037109375), Const(0.98652899265289306640625), Const(0.98584187030792236328125), Const(0.985137879848480224609375), Const(0.984417140483856201171875), Const(0.983679592609405517578125), Const(0.982925355434417724609375), Const(0.982154369354248046875), Const(0.98136675357818603515625), Const(0.9805624485015869140625), Const(0.979741513729095458984375), Const(0.9789040088653564453125), Const(0.9780499935150146484375), Const(0.97717940807342529296875), Const(0.976292312145233154296875), Const(0.9753887653350830078125), Const(0.97446882724761962890625), Const(0.973532497882843017578125), Const(0.972579777240753173828125), Const(0.971610724925994873046875), Const(0.970625460147857666015625), Const(0.96962392330169677734375), Const(0.968606173992156982421875), Const(0.96757221221923828125), Const(0.966522157192230224609375), Const(0.965456068515777587890625), Const(0.9643738269805908203125), Const(0.9632756710052490234375), Const(0.962161481380462646484375), Const(0.961031377315521240234375), Const(0.959885418415069580078125), Const(0.958723604679107666015625), Const(0.9575459957122802734375), Const(0.956352651119232177734375), Const(0.95514357089996337890625), Const(0.953918874263763427734375), Const(0.952678501605987548828125), Const(0.951422631740570068359375), Const(0.9501512050628662109375), Const(0.948864281177520751953125), Const(0.9475619792938232421875), Const(0.94624423980712890625), Const(0.9449112415313720703125), Const(0.943562924861907958984375), Const(0.942199409008026123046875), Const(0.9408206939697265625), Const(0.939426898956298828125), Const(0.938018023967742919921875), Const(0.93659412860870361328125), Const(0.93515527248382568359375), Const(0.93370151519775390625), Const(0.932232916355133056640625), Const(0.930749475955963134765625), Const(0.92925131320953369140625), Const(0.927738487720489501953125), Const(0.926211059093475341796875), Const(0.9246690273284912109375), Const(0.923112452030181884765625), Const(0.9215414524078369140625), Const(0.91995608806610107421875), Const(0.918356359004974365234375), Const(0.916742384433746337890625), Const(0.9151141643524169921875), Const(0.91347181797027587890625), Const(0.911815345287322998046875), Const(0.91014492511749267578125), Const(0.90846049785614013671875), Const(0.90676212310791015625), Const(0.905049979686737060546875), Const(0.90332400798797607421875), Const(0.9015843868255615234375), Const(0.899831116199493408203125), Const(0.89806425571441650390625), Const(0.8962838649749755859375), Const(0.894490063190460205078125), Const(0.89268290996551513671875), Const(0.890862405300140380859375), Const(0.889028728008270263671875), Const(0.887181818485260009765625), Const(0.8853218555450439453125), Const(0.8834488391876220703125), Const(0.881562888622283935546875), Const(0.879664003849029541015625), Const(0.877752363681793212890625), Const(0.875827968120574951171875), Const(0.87389087677001953125), Const(0.87194120883941650390625), Const(0.86997902393341064453125), Const(0.868004381656646728515625), Const(0.866017401218414306640625), Const(0.86401808261871337890625), Const(0.86200654506683349609375), Const(0.85998284816741943359375), Const(0.8579471111297607421875), Const(0.855899393558502197265625), Const(0.85383975505828857421875), Const(0.8517682552337646484375), Const(0.8496849536895751953125), Const(0.847590029239654541015625), Const(0.845483481884002685546875), Const(0.8433654308319091796875), Const(0.841235935688018798828125), Const(0.839095056056976318359375), Const(0.836942851543426513671875), Const(0.8347795009613037109375), Const(0.832605063915252685546875), Const(0.8304195404052734375), Const(0.828223049640655517578125), Const(0.8260157108306884765625), Const(0.82379758358001708984375), Const(0.8215687274932861328125), Const(0.81932926177978515625), Const(0.817079246044158935546875), Const(0.814818799495697021484375), Const(0.812547981739044189453125), Const(0.810266911983489990234375), Const(0.807975590229034423828125), Const(0.80567419528961181640625), Const(0.803362786769866943359375), Const(0.801041424274444580078125), Const(0.798710167407989501953125), Const(0.79636919498443603515625), Const(0.794018566608428955078125), Const(0.791658341884613037109375), Const(0.78928864002227783203125), Const(0.786909520626068115234375), Const(0.7845211029052734375), Const(0.78212344646453857421875), Const(0.779716670513153076171875), Const(0.77730083465576171875), Const(0.774876058101654052734375), Const(0.772442400455474853515625), Const(0.769999980926513671875), Const(0.767548859119415283203125), Const(0.765089213848114013671875), Const(0.76262104511260986328125), Const(0.7601444721221923828125), Const(0.757659614086151123046875), Const(0.755166530609130859375), Const(0.752665340900421142578125), Const(0.750156104564666748046875), Const(0.747639000415802001953125), Const(0.74511396884918212890625), Const(0.742581307888031005859375), Const(0.74004089832305908203125), Const(0.737493038177490234375), Const(0.7349376678466796875), Const(0.732374966144561767578125), Const(0.72980499267578125), Const(0.727227866649627685546875), Const(0.724643707275390625), Const(0.722052514553070068359375), Const(0.7194545269012451171875), Const(0.716849744319915771484375), Const(0.71423828601837158203125), Const(0.71162021160125732421875), Const(0.70899569988250732421875), Const(0.706364810466766357421875), Const(0.703727662563323974609375), Const(0.701084315776824951171875), Const(0.69843494892120361328125), Const(0.6957795619964599609375), Const(0.693118274211883544921875), Const(0.690451204776763916015625), Const(0.687778532505035400390625), Const(0.68510019779205322265625), Const(0.682416439056396484375), Const(0.6797273159027099609375), Const(0.677032887935638427734375), Const(0.6743333339691162109375), Const(0.6716287136077880859375), Const(0.668919086456298828125), Const(0.666204631328582763671875), Const(0.663485348224639892578125), Const(0.66076147556304931640625), Const(0.65803301334381103515625), Const(0.655300140380859375), Const(0.6525628566741943359375), Const(0.64982140064239501953125), Const(0.64707577228546142578125), Const(0.64432609081268310546875), Const(0.641572475433349609375), Const(0.638814985752105712890625), Const(0.636053860187530517578125), Const(0.633289039134979248046875), Const(0.63052070140838623046875), Const(0.627749025821685791015625), Const(0.624973952770233154296875), Const(0.622195720672607421875), Const(0.619414389133453369140625), Const(0.616630017757415771484375), Const(0.613842785358428955078125), Const(0.6110527515411376953125), Const(0.608260095119476318359375), Const(0.60546481609344482421875), Const(0.602667033672332763671875), Const(0.599866926670074462890625), Const(0.597064554691314697265625), Const(0.594260036945343017578125), Const(0.591453492641448974609375), Const(0.58864498138427734375), Const(0.58583462238311767578125), Const(0.583022594451904296875), Const(0.58020889759063720703125), Const(0.57739365100860595703125), Const(0.574577033519744873046875), Const(0.57175910472869873046875), Const(0.568939983844757080078125), Const(0.56611979007720947265625), Const(0.56329858303070068359375), Const(0.560476481914520263671875), Const(0.5576536655426025390625), Const(0.554830133914947509765625), Const(0.552006065845489501953125), Const(0.549181520938873291015625), Const(0.546356678009033203125), Const(0.54353153705596923828125), Const(0.54070627689361572265625), Const(0.53788101673126220703125), Const(0.535055816173553466796875), Const(0.532230794429779052734375), Const(0.529406070709228515625), Const(0.52658176422119140625), Const(0.523757994174957275390625), Const(0.520934760570526123046875), Const(0.51811230182647705078125), Const(0.51529061794281005859375), Const(0.51246988773345947265625), Const(0.50965023040771484375), Const(0.506831705570220947265625), Const(0.504014432430267333984375), Const(0.501198470592498779296875), Const(0.498383998870849609375), Const(0.495571136474609375), Const(0.492759883403778076171875), Const(0.489950478076934814453125), Const(0.48714292049407958984375), Const(0.484337329864501953125), Const(0.48153388500213623046875), Const(0.478732645511627197265625), Const(0.475933730602264404296875), Const(0.473137199878692626953125), Const(0.470343172550201416015625), Const(0.46755182743072509765625), Const(0.464763164520263671875), Const(0.46197736263275146484375), Const(0.45919454097747802734375), Const(0.456414699554443359375), Const(0.4536380767822265625), Const(0.45086467266082763671875), Const(0.4480946063995361328125), Const(0.445328056812286376953125), Const(0.44256508350372314453125), Const(0.4398057460784912109375), Const(0.437050163745880126953125), Const(0.43429851531982421875), Const(0.43155086040496826171875), Const(0.42880725860595703125), Const(0.426067888736724853515625), Const(0.42333281040191650390625), Const(0.420602142810821533203125), Const(0.417875945568084716796875), Const(0.41515433788299560546875), Const(0.412437498569488525390625), Const(0.4097254276275634765625), Const(0.40701830387115478515625), Const(0.4043161869049072265625), Const(0.4016191959381103515625), Const(0.398927390575408935546875), Const(0.396240890026092529296875), Const(0.393559873104095458984375), Const(0.390884339809417724609375), Const(0.38821446895599365234375), Const(0.385550320148468017578125), Const(0.382891952991485595703125), Const(0.380239546298980712890625), Const(0.37759315967559814453125), Const(0.37495291233062744140625), Const(0.37231886386871337890625), Const(0.369691193103790283203125), Const(0.367069900035858154296875), Const(0.36445510387420654296875), Const(0.361846983432769775390625), Const(0.359245598316192626953125), Const(0.35665094852447509765625), Const(0.3540632724761962890625), Const(0.3514826297760009765625), Const(0.348909080028533935546875), Const(0.346342742443084716796875), Const(0.343783676624298095703125), Const(0.3412320613861083984375), Const(0.338687896728515625), Const(0.3361513614654541015625), Const(0.333622455596923828125), Const(0.33110141754150390625), Const(0.328588187694549560546875), Const(0.326083004474639892578125), Const(0.32358586788177490234375), Const(0.321096837520599365234375), Const(0.3186161518096923828125), Const(0.3161437511444091796875), Const(0.31367981433868408203125), Const(0.311224460601806640625), Const(0.30877768993377685546875), Const(0.30633962154388427734375), Const(0.303910434246063232421875), Const(0.3014900684356689453125), Const(0.299078762531280517578125), Const(0.29667651653289794921875), Const(0.294283449649810791015625), Const(0.29189968109130859375), Const(0.2895252704620361328125), Const(0.28716027736663818359375), Const(0.284804821014404296875), Const(0.2824590206146240234375), Const(0.280122935771942138671875), Const(0.27779662609100341796875), Const(0.275480210781097412109375), Const(0.273173809051513671875), Const(0.270877420902252197265625), Const(0.268591225147247314453125), Const(0.2663152217864990234375), Const(0.264049589633941650390625), Const(0.261794388294219970703125), Const(0.259549617767333984375), Const(0.257315456867218017578125), Const(0.255091965198516845703125), Const(0.252879202365875244140625), Const(0.250677287578582763671875), Const(0.2484862804412841796875), Const(0.24630630016326904296875), Const(0.244137346744537353515625), Const(0.2419795989990234375), Const(0.239833056926727294921875), Const(0.2376978397369384765625), Const(0.235574066638946533203125), Const(0.23346173763275146484375), Const(0.231360971927642822265625), Const(0.22927188873291015625), Const(0.227194488048553466796875), Const(0.2251288890838623046875), Const(0.223075211048126220703125), Const(0.22103345394134521484375), Const(0.219003736972808837890625), Const(0.216986119747161865234375), Const(0.214980661869049072265625), Const(0.212987482547760009765625), Const(0.211006641387939453125), Const(0.209038257598876953125), Const(0.207082331180572509765625), Const(0.2051389217376708984375), Const(0.2032082080841064453125), Const(0.201290130615234375), Const(0.199384868144989013671875), Const(0.19749248027801513671875), Const(0.195612967014312744140625), Const(0.19374644756317138671875), Const(0.191893041133880615234375), Const(0.1900527477264404296875), Const(0.18822562694549560546875), Const(0.186411798000335693359375), Const(0.184611260890960693359375), Const(0.182824194431304931640625), Const(0.1810505390167236328125), Const(0.179290473461151123046875), Const(0.17754399776458740234375), Const(0.175811231136322021484375), Const(0.17409217357635498046875), Const(0.1723868846893310546875), Const(0.170695483684539794921875), Const(0.1690180301666259765625), Const(0.167354583740234375), Const(0.165705204010009765625), Const(0.1640698909759521484375), Const(0.16244876384735107421875), Const(0.16084194183349609375), Const(0.159249365329742431640625), Const(0.157671153545379638671875), Const(0.156107366085052490234375), Const(0.154558122158050537109375), Const(0.15302336215972900390625), Const(0.15150320529937744140625), Const(0.149997711181640625), Const(0.1485068798065185546875), Const(0.147030889987945556640625), Const(0.14556968212127685546875), Const(0.144123375415802001953125), Const(0.14269196987152099609375), Const(0.141275584697723388671875), Const(0.1398742198944091796875), Const(0.138487994670867919921875), Const(0.137116849422454833984375), Const(0.135760962963104248046875), Const(0.13442027568817138671875), Const(0.13309490680694580078125), Const(0.131784915924072265625), Const(0.13049030303955078125), Const(0.129211127758026123046875), Const(0.12794744968414306640625), Const(0.12669932842254638671875), Const(0.125466763973236083984375), Const(0.124249875545501708984375), Const(0.12304866313934326171875), Const(0.121863186359405517578125), Const(0.1206934452056884765625), Const(0.119539558887481689453125), Const(0.11840152740478515625), Const(0.117279350757598876953125), Const(0.116173207759857177734375), Const(0.1150829792022705078125), Const(0.114008843898773193359375), Const(0.112950742244720458984375), Const(0.111908733844757080078125), Const(0.11088287830352783203125), Const(0.109873235225677490234375), Const(0.1088798046112060546875), Const(0.10790264606475830078125), Const(0.106941759586334228515625), Const(0.105997264385223388671875), Const(0.105069100856781005859375), Const(0.10415732860565185546875), Const(0.103262007236480712890625), Const(0.102383196353912353515625), Const(0.10152089595794677734375), Const(0.100675106048583984375), Const(0.09984588623046875), Const(0.099033296108245849609375), Const(0.0982372760772705078125), Const(0.09745800495147705078125), Const(0.096695363521575927734375), Const(0.095949470996856689453125), Const(0.0952203273773193359375), Const(0.094507992267608642578125), Const(0.093812406063079833984375), Const(0.0931336879730224609375), Const(0.0924718379974365234375), Const(0.091826856136322021484375), Const(0.091198742389678955078125), Const(0.090587615966796875), Const(0.089993417263031005859375), Const(0.089416205883026123046875), Const(0.0888559818267822265625), Const(0.08831274509429931640625), Const(0.087786614894866943359375), Const(0.087277472019195556640625), Const(0.086785495281219482421875), Const(0.086310565471649169921875), Const(0.08585274219512939453125), Const(0.08541202545166015625), Const(0.08498847484588623046875), Const(0.084582149982452392578125), Const(0.084192931652069091796875), Const(0.08382093906402587890625), Const(0.083466112613677978515625), Const(0.08312857151031494140625), Const(0.0828082561492919921875), Const(0.082505166530609130859375), Const(0.082219302654266357421875), Const(0.08195078372955322265625), Const(0.08169949054718017578125), Const(0.0814654827117919921875), Const(0.081248819828033447265625), Const(0.081049382686614990234375), Const(0.080867350101470947265625), Const(0.080702602863311767578125), Const(0.080555140972137451171875), Const(0.0804250240325927734375), Const(0.080312311649322509765625), Const(0.080216884613037109375), Const(0.08013880252838134765625), Const(0.080078065395355224609375), Const(0.080034673213958740234375), Const(0.08000862598419189453125), Const(0.079999983310699462890625)),LUT1[Fix[TRUE,_16,_24]])
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    1024 <Hierarchical>
+       Dims {0}: Cyclic: N=1024, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x487 = LUTBankedRead(x432,Vector(List(b483)),Vector(Const(0)),Vector(Set(b484)),Vec[Fix[TRUE,_16,_24]]) {}
+             inReal(i) = inReal(i) * hammingLUT(i) (fft.scala:78:47)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x497: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+  x487: LUTBankedRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: x446
+Type: StreamIn[Fix[TRUE,_16,_24]]
+Src:  fft.scala:73:16
+Src:          inReal load inputRealDRAM
+---------------------------------------------------------------------
+Symbol:     x446 = StreamInNew(BurstDataBus())
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {0}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x457 = StreamInBankedRead(x446,ArrayBuffer(Set(b456))) {}
+             inReal load inputRealDRAM (fft.scala:73:16)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x461: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+  x457: StreamInBankedRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: x530
+Type: Reg[Fix[TRUE,_32,_0]]
+Src:  fft.scala:98:35
+Src:              val twStep = twStepLUT(s)(Pass 28)
+---------------------------------------------------------------------
+Symbol:     x530 = RegNew(Const(0))
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List()
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {}: Cyclic: N=1, B=1, alpha=<>, P=<> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x539 = RegWrite(x530,x536,Set()) {}
+             val twStep = twStepLUT(s)(Pass 28)(Pass 28) (fft.scala:98:35)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x552 = RegRead(x530) {}
+             val twStep = twStepLUT(s)(Pass 28)(Pass 28) (fft.scala:98:35)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x595: UnrolledForeach (-1) [Level: OuterControl, Loop: Looped, Schedule: Sequenced]
+  x540: UnitPipe (-1) [Level: InnerControl, Loop: Single, Schedule: Sequenced]
+    x539: RegWrite
+  x594: UnitPipe (-1) [Level: OuterControl, Loop: Single, Schedule: Sequenced]
+    x580: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+      x552: RegRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: x528
+Type: Reg[Fix[TRUE,_32,_0]]
+Src:  fft.scala:96:43
+Src:              val halfStride = halfStrideLUT(s)(Pass 28)
+---------------------------------------------------------------------
+Symbol:     x528 = RegNew(Const(0))
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List()
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {}: Cyclic: N=1, B=1, alpha=<>, P=<> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x537 = RegWrite(x528,x532,Set()) {}
+             val halfStride = halfStrideLUT(s)(Pass 28)(Pass 28) (fft.scala:96:43)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x545 = RegRead(x528) {}
+             val halfStride = halfStrideLUT(s)(Pass 28)(Pass 28) (fft.scala:96:43)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x595: UnrolledForeach (-1) [Level: OuterControl, Loop: Looped, Schedule: Sequenced]
+  x540: UnitPipe (-1) [Level: InnerControl, Loop: Single, Schedule: Sequenced]
+    x537: RegWrite
+  x594: UnitPipe (-1) [Level: OuterControl, Loop: Single, Schedule: Sequenced]
+    x580: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+      x545: RegRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: x618
+Type: StreamOut[BurstCmd]
+Src:  fft.scala:137:20
+Src:      outputImagDRAM store inImag
+---------------------------------------------------------------------
+Symbol:     x618 = StreamOutNew(BurstCmdBus)
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {0}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x624 = StreamOutBankedWrite(x618,ArrayBuffer(x622),ArrayBuffer(Set(x623))) {}
+             outputImagDRAM store inImag (fft.scala:137:20)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+
+
+
+Control Tree: 
+x625: UnitPipe (-1) [Level: InnerControl, Loop: Single, Schedule: Sequenced]
+  x624: StreamOutBankedWrite
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: x463
+Type: StreamOut[BurstCmd]
+Src:  fft.scala:74:16
+Src:          inImag load inputImagDRAM
+---------------------------------------------------------------------
+Symbol:     x463 = StreamOutNew(BurstCmdBus)
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {0}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x468 = StreamOutBankedWrite(x463,ArrayBuffer(x466),ArrayBuffer(Set(x467))) {}
+             inImag load inputImagDRAM (fft.scala:74:16)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+
+
+
+Control Tree: 
+x469: UnitPipe (-1) [Level: InnerControl, Loop: Single, Schedule: Sequenced]
+  x468: StreamOutBankedWrite
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: outImag_0 (x442)
+Type: SRAM1[Fix[TRUE,_16,_24]]
+Src:  fft.scala:68:30
+Src:          val outImag = SRAM[T](N).conflictable
+---------------------------------------------------------------------
+Symbol:     x442 = SRAMNew(List(Const(1024)),SRAM1[Fix[TRUE,_16,_24]])
+Instances: 1
+  RAM36: 1.0
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: BRAM
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {0}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x575 = SRAMBankedWrite(x442,Vector(x574),Vector(List(Const(0))),Vector(x704),Vector(Set(x703))) {}
+             outImag(topIdx) = a_imag + bw_imag (fft.scala:124:29)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+           - Mux Port #1: 
+             x579 = SRAMBankedWrite(x442,Vector(x709),Vector(List(Const(0))),Vector(x710),Vector(Set(x708))) {}
+             outImag(botIdx) = a_imag - bw_imag (fft.scala:126:29)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x589 = SRAMBankedRead(x442,Vector(List(Const(0))),Vector(b583),Vector(Set(b584)),Vec[Fix[TRUE,_16,_24]]) {}
+             inImag(i) = outImag(i) (fft.scala:131:32)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x594: UnitPipe (-1) [Level: OuterControl, Loop: Single, Schedule: Sequenced]
+  x580: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+    x575: SRAMBankedWrite
+    x579: SRAMBankedWrite
+  x593: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+    x589: SRAMBankedRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: inImag_0 (x439)
+Type: SRAM1[Fix[TRUE,_16,_24]]
+Src:  fft.scala:64:30
+Src:          val inImag  = SRAM[T](N)
+---------------------------------------------------------------------
+Symbol:     x439 = SRAMNew(List(Const(1024)),SRAM1[Fix[TRUE,_16,_24]])
+Instances: 1
+  RAM36: 1.0
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: BRAM
+     Depth:    1
+     Padding:  List(0)
+     Accum:    Fold
+     Banks:    1 <Flat>
+       Dims {0}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x477 = SRAMBankedWrite(x439,Vector(x476),Vector(List(Const(0))),Vector(x672),Vector(Set(x673))) {}
+             inImag load inputImagDRAM (fft.scala:74:16)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+           - Mux Port #1: 
+             x495 = SRAMBankedWrite(x439,Vector(x494),Vector(List(Const(0))),Vector(x676),Vector(Set(x677))) {}
+             inImag(i) = inImag(i) * hammingLUT(i) (fft.scala:79:23)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+           - Mux Port #2: 
+             x521 = SRAMBankedWrite(x439,Vector(x520),Vector(List(Const(0))),Vector(x681),Vector(Set(x682))) {}
+             inImag(i) = tmpImag(i) (fft.scala:90:23)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+           - Mux Port #3: 
+             x591 = SRAMBankedWrite(x439,Vector(x590),Vector(List(Const(0))),Vector(x711),Vector(Set(x712))) {}
+             inImag(i) = outImag(i) (fft.scala:131:23)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x507 = SRAMBankedRead(x439,Vector(List(Const(0))),Vector(b500),Vector(Set(b501)),Vec[Fix[TRUE,_16,_24]]) {}
+             tmpImag(rev) = inImag(i) (fft.scala:85:34)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+           - Mux Port #1: 
+             x564 = SRAMBankedRead(x439,Vector(List(Const(0))),Vector(x551),Vector(Set(x694)),Vec[Fix[TRUE,_16,_24]]) {}
+             val b_imag = inImag(botIdx) (fft.scala:118:32)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+           - Mux Port #2: 
+             x630 = SRAMBankedRead(x439,Vector(List(Const(0))),Vector(b628),Vector(Set(b629)),Vec[Fix[TRUE,_16,_24]]) {}
+             outputImagDRAM store inImag (fft.scala:137:20)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+           - Mux Port #3: 
+             x492 = SRAMBankedRead(x439,Vector(List(Const(0))),Vector(b483),Vector(Set(b484)),Vec[Fix[TRUE,_16,_24]]) {}
+             inImag(i) = inImag(i) * hammingLUT(i) (fft.scala:79:31)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x667: AccelScope (-1) [Level: OuterControl, Loop: Single, Schedule: Sequenced]
+  x665: ParallelPipe (-1) [Level: OuterControl, Loop: Single, Schedule: ForkJoin]
+    x480: UnitPipe (-1) [Level: OuterControl, Loop: Single, Schedule: Streaming]
+      x479: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+        x477: SRAMBankedWrite
+  x497: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+    x492: SRAMBankedRead
+    x495: SRAMBankedWrite
+  x510: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Sequenced]
+    x507: SRAMBankedRead
+  x523: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+    x521: SRAMBankedWrite
+  x595: UnrolledForeach (-1) [Level: OuterControl, Loop: Looped, Schedule: Sequenced]
+    x594: UnitPipe (-1) [Level: OuterControl, Loop: Single, Schedule: Sequenced]
+      x580: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+        x564: SRAMBankedRead
+      x593: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+        x591: SRAMBankedWrite
+  x666: ParallelPipe (-1) [Level: OuterControl, Loop: Single, Schedule: ForkJoin]
+    x639: UnitPipe (-1) [Level: OuterControl, Loop: Single, Schedule: Streaming]
+      x634: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+        x630: SRAMBankedRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: twR_0 (x430)
+Type: LUT1[Fix[TRUE,_16,_24]]
+Src:  fft.scala:55:30
+Src:          val twR = LUT[T](N/2)(twRList :_*)
+---------------------------------------------------------------------
+Symbol:     x430 = LUTNew(List(Const(512)),List(Const(1), Const(0.9999811649322509765625), Const(0.99992465972900390625), Const(0.999830543994903564453125), Const(0.999698817729949951171875), Const(0.999529361724853515625), Const(0.999322354793548583984375), Const(0.99907767772674560546875), Const(0.998795449733734130859375), Const(0.998475551605224609375), Const(0.998118102550506591796875), Const(0.997723042964935302734375), Const(0.997290432453155517578125), Const(0.996820271015167236328125), Const(0.996312558650970458984375), Const(0.9957673549652099609375), Const(0.995184719562530517578125), Const(0.994564533233642578125), Const(0.993906915187835693359375), Const(0.993211925029754638671875), Const(0.992479503154754638671875), Const(0.99170970916748046875), Const(0.990902602672576904296875), Const(0.9900581836700439453125), Const(0.989176452159881591796875), Const(0.98825752735137939453125), Const(0.987301409244537353515625), Const(0.986308038234710693359375), Const(0.985277593135833740234375), Const(0.984210073947906494140625), Const(0.983105480670928955078125), Const(0.981963813304901123046875), Const(0.98078525066375732421875), Const(0.979569733142852783203125), Const(0.978317320346832275390625), Const(0.9770281314849853515625), Const(0.975702106952667236328125), Const(0.97433936595916748046875), Const(0.972939908504486083984375), Const(0.97150385379791259765625), Const(0.970031201839447021484375), Const(0.96852207183837890625), Const(0.966976463794708251953125), Const(0.965394437313079833984375), Const(0.963776051998138427734375), Const(0.96212136745452880859375), Const(0.96043050289154052734375), Const(0.958703458309173583984375), Const(0.95694029331207275390625), Const(0.955141127109527587890625), Const(0.953306019306182861328125), Const(0.95143496990203857421875), Const(0.949528157711029052734375), Const(0.947585582733154296875), Const(0.94560730457305908203125), Const(0.943593442440032958984375), Const(0.941544055938720703125), Const(0.93945920467376708984375), Const(0.937339007854461669921875), Const(0.935183465480804443359375), Const(0.932992756366729736328125), Const(0.93076694011688232421875), Const(0.928506076335906982421875), Const(0.926210224628448486328125), Const(0.92387950420379638671875), Const(0.921514034271240234375), Const(0.919113814830780029296875), Const(0.91667902469635009765625), Const(0.91420972347259521484375), Const(0.911706030368804931640625), Const(0.909167945384979248046875), Const(0.906595647335052490234375), Const(0.903989255428314208984375), Const(0.9013488292694091796875), Const(0.898674428462982177734375), Const(0.895966231822967529296875), Const(0.893224298954010009765625), Const(0.89044868946075439453125), Const(0.887639582157135009765625), Const(0.88479709625244140625), Const(0.881921231746673583984375), Const(0.879012167453765869140625), Const(0.876070082187652587890625), Const(0.873094975948333740234375), Const(0.870086967945098876953125), Const(0.86704623699188232421875), Const(0.863972842693328857421875), Const(0.86086690425872802734375), Const(0.85772860050201416015625), Const(0.854557931423187255859375), Const(0.851355135440826416015625), Const(0.84812033176422119140625), Const(0.84485352039337158203125), Const(0.841554939746856689453125), Const(0.8382246494293212890625), Const(0.83486282825469970703125), Const(0.831469595432281494140625), Const(0.82804501056671142578125), Const(0.824589252471923828125), Const(0.82110249996185302734375), Const(0.817584812641143798828125), Const(0.814036309719085693359375), Const(0.810457170009613037109375), Const(0.806847512722015380859375), Const(0.80320751667022705078125), Const(0.799537241458892822265625), Const(0.795836865901947021484375), Const(0.792106568813323974609375), Const(0.78834640979766845703125), Const(0.784556567668914794921875), Const(0.780737221240997314453125), Const(0.776888430118560791015625), Const(0.773010432720184326171875), Const(0.7691032886505126953125), Const(0.765167236328125), Const(0.761202335357666015625), Const(0.75720882415771484375), Const(0.753186762332916259765625), Const(0.749136388301849365234375), Const(0.745057761669158935546875), Const(0.740951120853424072265625), Const(0.73681652545928955078125), Const(0.73265421390533447265625), Const(0.7284643650054931640625), Const(0.724247038364410400390625), Const(0.720002472400665283203125), Const(0.71573078632354736328125), Const(0.711432158946990966796875), Const(0.707106769084930419921875), Const(0.7027547359466552734375), Const(0.698376238346099853515625), Const(0.693971455097198486328125), Const(0.68954050540924072265625), Const(0.6850836277008056640625), Const(0.680600941181182861328125), Const(0.676092684268951416015625), Const(0.671558916568756103515625), Const(0.666999876499176025390625), Const(0.6624157428741455078125), Const(0.6578066349029541015625), Const(0.653172791004180908203125), Const(0.64851438999176025390625), Const(0.6438314914703369140625), Const(0.639124393463134765625), Const(0.634393274784088134765625), Const(0.629638195037841796875), Const(0.62485945224761962890625), Const(0.620057165622711181640625), Const(0.615231573581695556640625), Const(0.6103827953338623046875), Const(0.605511009693145751953125), Const(0.600616455078125), Const(0.595699250698089599609375), Const(0.590759694576263427734375), Const(0.585797846317291259765625), Const(0.580813944339752197265625), Const(0.57580816745758056640625), Const(0.570780694484710693359375), Const(0.5657317638397216796875), Const(0.5606615543365478515625), Const(0.555570185184478759765625), Const(0.55045795440673828125), Const(0.545324981212615966796875), Const(0.540171444416046142578125), Const(0.53499758243560791015625), Const(0.529803574085235595703125), Const(0.52458965778350830078125), Const(0.519355952739715576171875), Const(0.5141026973724365234375), Const(0.508830130100250244140625), Const(0.5035383701324462890625), Const(0.498227655887603759765625), Const(0.492898166179656982421875), Const(0.48755013942718505859375), Const(0.482183754444122314453125), Const(0.476799190044403076171875), Const(0.4713966846466064453125), Const(0.4659764766693115234375), Const(0.460538685321807861328125), Const(0.455083549022674560546875), Const(0.44961130619049072265625), Const(0.444122135639190673828125), Const(0.438616216182708740234375), Const(0.4330937862396240234375), Const(0.427555084228515625), Const(0.422000229358673095703125), Const(0.4164295196533203125), Const(0.4108431339263916015625), Const(0.405241310596466064453125), Const(0.399624168872833251953125), Const(0.393992006778717041015625), Const(0.3883450031280517578125), Const(0.38268339633941650390625), Const(0.37700736522674560546875), Const(0.3713171482086181640625), Const(0.36561298370361328125), Const(0.3598949909210205078125), Const(0.354163467884063720703125), Const(0.348418653011322021484375), Const(0.3426606655120849609375), Const(0.336889803409576416015625), Const(0.33110630512237548828125), Const(0.325310289859771728515625), Const(0.31950199604034423828125), Const(0.31368172168731689453125), Const(0.307849586009979248046875), Const(0.302005946636199951171875), Const(0.296150863170623779296875), Const(0.290284633636474609375), Const(0.28440749645233154296875), Const(0.27851963043212890625), Const(0.272621333599090576171875), Const(0.266712725162506103515625), Const(0.260794103145599365234375), Const(0.2548656463623046875), Const(0.248927593231201171875), Const(0.24298012256622314453125), Const(0.2370235919952392578125), Const(0.231058061122894287109375), Const(0.225083887577056884765625), Const(0.2191011905670166015625), Const(0.213110268115997314453125), Const(0.207111358642578125), Const(0.201104581356048583984375), Const(0.19509029388427734375), Const(0.189068615436553955078125), Const(0.183039844036102294921875), Const(0.17700421810150146484375), Const(0.170961856842041015625), Const(0.164913117885589599609375), Const(0.158858120441436767578125), Const(0.152797162532806396484375), Const(0.1467304229736328125), Const(0.140658199787139892578125), Const(0.134580671787261962890625), Const(0.128498077392578125), Const(0.12241065502166748046875), Const(0.11631858348846435546875), Const(0.110222160816192626953125), Const(0.104121625423431396484375), Const(0.09801709651947021484375), Const(0.091908931732177734375), Const(0.08579730987548828125), Const(0.079682409763336181640625), Const(0.0735645294189453125), Const(0.067443907260894775390625), Const(0.061320722103118896484375), Const(0.05519521236419677734375), Const(0.04906761646270751953125), Const(0.042938232421875), Const(0.03680717945098876953125), Const(0.030674755573272705078125), Const(0.024541199207305908203125), Const(0.018406689167022705078125), Const(0.01227152347564697265625), Const(0.006135880947113037109375), Const(0), Const(-0.006135880947113037109375), Const(-0.01227152347564697265625), Const(-0.018406689167022705078125), Const(-0.024541199207305908203125), Const(-0.030674755573272705078125), Const(-0.03680717945098876953125), Const(-0.042938232421875), Const(-0.04906761646270751953125), Const(-0.05519521236419677734375), Const(-0.061320722103118896484375), Const(-0.067443907260894775390625), Const(-0.0735645294189453125), Const(-0.079682409763336181640625), Const(-0.08579730987548828125), Const(-0.091908931732177734375), Const(-0.09801709651947021484375), Const(-0.104121625423431396484375), Const(-0.110222160816192626953125), Const(-0.11631858348846435546875), Const(-0.12241065502166748046875), Const(-0.128498077392578125), Const(-0.134580671787261962890625), Const(-0.140658199787139892578125), Const(-0.1467304229736328125), Const(-0.152797162532806396484375), Const(-0.158858120441436767578125), Const(-0.164913117885589599609375), Const(-0.170961856842041015625), Const(-0.17700421810150146484375), Const(-0.183039844036102294921875), Const(-0.189068615436553955078125), Const(-0.19509029388427734375), Const(-0.201104581356048583984375), Const(-0.207111358642578125), Const(-0.213110268115997314453125), Const(-0.2191011905670166015625), Const(-0.225083887577056884765625), Const(-0.231058061122894287109375), Const(-0.2370235919952392578125), Const(-0.24298012256622314453125), Const(-0.248927593231201171875), Const(-0.2548656463623046875), Const(-0.260794103145599365234375), Const(-0.266712725162506103515625), Const(-0.272621333599090576171875), Const(-0.27851963043212890625), Const(-0.28440749645233154296875), Const(-0.290284633636474609375), Const(-0.296150863170623779296875), Const(-0.302005946636199951171875), Const(-0.307849586009979248046875), Const(-0.31368172168731689453125), Const(-0.31950199604034423828125), Const(-0.325310289859771728515625), Const(-0.33110630512237548828125), Const(-0.336889803409576416015625), Const(-0.3426606655120849609375), Const(-0.348418653011322021484375), Const(-0.354163467884063720703125), Const(-0.3598949909210205078125), Const(-0.36561298370361328125), Const(-0.3713171482086181640625), Const(-0.37700736522674560546875), Const(-0.38268339633941650390625), Const(-0.3883450031280517578125), Const(-0.393992006778717041015625), Const(-0.399624168872833251953125), Const(-0.405241310596466064453125), Const(-0.4108431339263916015625), Const(-0.4164295196533203125), Const(-0.422000229358673095703125), Const(-0.427555084228515625), Const(-0.4330937862396240234375), Const(-0.438616216182708740234375), Const(-0.444122135639190673828125), Const(-0.44961130619049072265625), Const(-0.455083549022674560546875), Const(-0.460538685321807861328125), Const(-0.4659764766693115234375), Const(-0.4713966846466064453125), Const(-0.476799190044403076171875), Const(-0.482183754444122314453125), Const(-0.48755013942718505859375), Const(-0.492898166179656982421875), Const(-0.498227655887603759765625), Const(-0.5035383701324462890625), Const(-0.508830130100250244140625), Const(-0.5141026973724365234375), Const(-0.519355952739715576171875), Const(-0.52458965778350830078125), Const(-0.529803574085235595703125), Const(-0.53499758243560791015625), Const(-0.540171444416046142578125), Const(-0.545324981212615966796875), Const(-0.55045795440673828125), Const(-0.555570185184478759765625), Const(-0.5606615543365478515625), Const(-0.5657317638397216796875), Const(-0.570780694484710693359375), Const(-0.57580816745758056640625), Const(-0.580813944339752197265625), Const(-0.585797846317291259765625), Const(-0.590759694576263427734375), Const(-0.595699250698089599609375), Const(-0.600616455078125), Const(-0.605511009693145751953125), Const(-0.6103827953338623046875), Const(-0.615231573581695556640625), Const(-0.620057165622711181640625), Const(-0.62485945224761962890625), Const(-0.629638195037841796875), Const(-0.634393274784088134765625), Const(-0.639124393463134765625), Const(-0.6438314914703369140625), Const(-0.64851438999176025390625), Const(-0.653172791004180908203125), Const(-0.6578066349029541015625), Const(-0.6624157428741455078125), Const(-0.666999876499176025390625), Const(-0.671558916568756103515625), Const(-0.676092684268951416015625), Const(-0.680600941181182861328125), Const(-0.6850836277008056640625), Const(-0.68954050540924072265625), Const(-0.693971455097198486328125), Const(-0.698376238346099853515625), Const(-0.7027547359466552734375), Const(-0.707106769084930419921875), Const(-0.711432158946990966796875), Const(-0.71573078632354736328125), Const(-0.720002472400665283203125), Const(-0.724247038364410400390625), Const(-0.7284643650054931640625), Const(-0.73265421390533447265625), Const(-0.73681652545928955078125), Const(-0.740951120853424072265625), Const(-0.745057761669158935546875), Const(-0.749136388301849365234375), Const(-0.753186762332916259765625), Const(-0.75720882415771484375), Const(-0.761202335357666015625), Const(-0.765167236328125), Const(-0.7691032886505126953125), Const(-0.773010432720184326171875), Const(-0.776888430118560791015625), Const(-0.780737221240997314453125), Const(-0.784556567668914794921875), Const(-0.78834640979766845703125), Const(-0.792106568813323974609375), Const(-0.795836865901947021484375), Const(-0.799537241458892822265625), Const(-0.80320751667022705078125), Const(-0.806847512722015380859375), Const(-0.810457170009613037109375), Const(-0.814036309719085693359375), Const(-0.817584812641143798828125), Const(-0.82110249996185302734375), Const(-0.824589252471923828125), Const(-0.82804501056671142578125), Const(-0.831469595432281494140625), Const(-0.83486282825469970703125), Const(-0.8382246494293212890625), Const(-0.841554939746856689453125), Const(-0.84485352039337158203125), Const(-0.84812033176422119140625), Const(-0.851355135440826416015625), Const(-0.854557931423187255859375), Const(-0.85772860050201416015625), Const(-0.86086690425872802734375), Const(-0.863972842693328857421875), Const(-0.86704623699188232421875), Const(-0.870086967945098876953125), Const(-0.873094975948333740234375), Const(-0.876070082187652587890625), Const(-0.879012167453765869140625), Const(-0.881921231746673583984375), Const(-0.88479709625244140625), Const(-0.887639582157135009765625), Const(-0.89044868946075439453125), Const(-0.893224298954010009765625), Const(-0.895966231822967529296875), Const(-0.898674428462982177734375), Const(-0.9013488292694091796875), Const(-0.903989255428314208984375), Const(-0.906595647335052490234375), Const(-0.909167945384979248046875), Const(-0.911706030368804931640625), Const(-0.91420972347259521484375), Const(-0.91667902469635009765625), Const(-0.919113814830780029296875), Const(-0.921514034271240234375), Const(-0.92387950420379638671875), Const(-0.926210224628448486328125), Const(-0.928506076335906982421875), Const(-0.93076694011688232421875), Const(-0.932992756366729736328125), Const(-0.935183465480804443359375), Const(-0.937339007854461669921875), Const(-0.93945920467376708984375), Const(-0.941544055938720703125), Const(-0.943593442440032958984375), Const(-0.94560730457305908203125), Const(-0.947585582733154296875), Const(-0.949528157711029052734375), Const(-0.95143496990203857421875), Const(-0.953306019306182861328125), Const(-0.955141127109527587890625), Const(-0.95694029331207275390625), Const(-0.958703458309173583984375), Const(-0.96043050289154052734375), Const(-0.96212136745452880859375), Const(-0.963776051998138427734375), Const(-0.965394437313079833984375), Const(-0.966976463794708251953125), Const(-0.96852207183837890625), Const(-0.970031201839447021484375), Const(-0.97150385379791259765625), Const(-0.972939908504486083984375), Const(-0.97433936595916748046875), Const(-0.975702106952667236328125), Const(-0.9770281314849853515625), Const(-0.978317320346832275390625), Const(-0.979569733142852783203125), Const(-0.98078525066375732421875), Const(-0.981963813304901123046875), Const(-0.983105480670928955078125), Const(-0.984210073947906494140625), Const(-0.985277593135833740234375), Const(-0.986308038234710693359375), Const(-0.987301409244537353515625), Const(-0.98825752735137939453125), Const(-0.989176452159881591796875), Const(-0.9900581836700439453125), Const(-0.990902602672576904296875), Const(-0.99170970916748046875), Const(-0.992479503154754638671875), Const(-0.993211925029754638671875), Const(-0.993906915187835693359375), Const(-0.994564533233642578125), Const(-0.995184719562530517578125), Const(-0.9957673549652099609375), Const(-0.996312558650970458984375), Const(-0.996820271015167236328125), Const(-0.997290432453155517578125), Const(-0.997723042964935302734375), Const(-0.998118102550506591796875), Const(-0.998475551605224609375), Const(-0.998795449733734130859375), Const(-0.99907767772674560546875), Const(-0.999322354793548583984375), Const(-0.999529361724853515625), Const(-0.999698817729949951171875), Const(-0.999830543994903564453125), Const(-0.99992465972900390625), Const(-0.9999811649322509765625)),LUT1[Fix[TRUE,_16,_24]])
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    512 <Hierarchical>
+       Dims {0}: Cyclic: N=512, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x554 = LUTBankedRead(x430,Vector(List(x553)),Vector(Const(0)),Vector(Set(x690)),Vec[Fix[TRUE,_16,_24]]) {}
+             val w_real = twR(twIdx) (fft.scala:111:29)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x580: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+  x554: LUTBankedRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: twStepLUT_0 (x435)
+Type: LUT1[Fix[TRUE,_32,_0]]
+Src:  fft.scala:60:44
+Src:          val twStepLUT = LUT[Int](numStages)(twSteps :_*)
+---------------------------------------------------------------------
+Symbol:     x435 = LUTNew(List(Const(10)),List(Const(512), Const(256), Const(128), Const(64), Const(32), Const(16), Const(8), Const(4), Const(2), Const(1)),LUT1[Fix[TRUE,_32,_0]])
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    10 <Hierarchical>
+       Dims {0}: Cyclic: N=10, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x535 = LUTBankedRead(x435,Vector(List(b526)),Vector(Const(0)),Vector(Set()),Vec[Fix[TRUE,_32,_0]]) {}
+             val twStep = twStepLUT(s) (fft.scala:98:35)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x540: UnitPipe (-1) [Level: InnerControl, Loop: Single, Schedule: Sequenced]
+  x535: LUTBankedRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: x597
+Type: StreamOut[Tup2[Fix[TRUE,_16,_24],Bit]]
+Src:  fft.scala:136:20
+Src:      outputRealDRAM store inReal
+---------------------------------------------------------------------
+Symbol:     x597 = StreamOutNew(BurstFullDataBus())
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {0}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x611 = StreamOutBankedWrite(x597,ArrayBuffer(x610),ArrayBuffer(Set(x713))) {}
+             outputRealDRAM store inReal (fft.scala:136:20)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+
+
+
+Control Tree: 
+x612: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+  x611: StreamOutBankedWrite
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: outReal_0 (x441)
+Type: SRAM1[Fix[TRUE,_16,_24]]
+Src:  fft.scala:67:30
+Src:          val outReal = SRAM[T](N).conflictable
+---------------------------------------------------------------------
+Symbol:     x441 = SRAMNew(List(Const(1024)),SRAM1[Fix[TRUE,_16,_24]])
+Instances: 1
+  RAM36: 1.0
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: BRAM
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {0}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x573 = SRAMBankedWrite(x441,Vector(x572),Vector(List(Const(0))),Vector(x701),Vector(Set(x700))) {}
+             outReal(topIdx) = a_real + bw_real (fft.scala:123:29)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+           - Mux Port #1: 
+             x577 = SRAMBankedWrite(x441,Vector(x706),Vector(List(Const(0))),Vector(x707),Vector(Set(x705))) {}
+             outReal(botIdx) = a_real - bw_real (fft.scala:125:29)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x585 = SRAMBankedRead(x441,Vector(List(Const(0))),Vector(b583),Vector(Set(b584)),Vec[Fix[TRUE,_16,_24]]) {}
+             inReal(i) = outReal(i) (fft.scala:130:32)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x594: UnitPipe (-1) [Level: OuterControl, Loop: Single, Schedule: Sequenced]
+  x580: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+    x573: SRAMBankedWrite
+    x577: SRAMBankedWrite
+  x593: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+    x585: SRAMBankedRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: x464
+Type: StreamIn[Fix[TRUE,_16,_24]]
+Src:  fft.scala:74:16
+Src:          inImag load inputImagDRAM
+---------------------------------------------------------------------
+Symbol:     x464 = StreamInNew(BurstDataBus())
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {0}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x475 = StreamInBankedRead(x464,ArrayBuffer(Set(b474))) {}
+             inImag load inputImagDRAM (fft.scala:74:16)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x479: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+  x475: StreamInBankedRead
+---------------------------------------------------------------------
+
+
+
+
