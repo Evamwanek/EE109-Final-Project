@@ -1,0 +1,3080 @@
+---------------------------
+Estimated Total Memories: 
+---------------------------
+  RAM36: 18.0
+---------------------------
+
+
+
+---------------------------------------------------------------------
+Name: hContrib_1 (x1813)
+Type: Reg[Fix[TRUE,_16,_16]]
+Src:  lstm.scala:157:39
+Src:            val hContrib = Reduce(Reg[T](0.to[T]))(HIDDEN by 1) { k =>
+---------------------------------------------------------------------
+Symbol:     x1813 = RegNew(Const(0))
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    2
+     Padding:  List()
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {}: Cyclic: N=1, B=1, alpha=<>, P=<> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x1834 = RegWrite(x1813,x2180,Set()) {}
+             }{_ + _} (lstm.scala:159:12)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+         1 [Type:WR]:
+         1 [Type:RD]:
+           - Mux Port #0: 
+             x1837 = RegRead(x1813) {}
+             gates0(g, j) = xContrib.value + hContrib.value + bih0(row) + bhh0(row) (lstm.scala:161:52)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         M [Type:WR]:
+         M [Type:RD]:
+
+
+
+Control Tree: 
+x2175: UnrolledForeach (-1) [Level: OuterControl, Loop: Looped, Schedule: Pipelined]
+  x2174: ParallelPipe (-1) [Level: OuterControl, Loop: Single, Schedule: ForkJoin]
+    x1836: UnrolledReduce (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+      x1834: RegWrite
+  x1852: UnitPipe (-1) [Level: InnerControl, Loop: Single, Schedule: Sequenced]
+    x1837: RegRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: xContrib_1 (x1785)
+Type: Reg[Fix[TRUE,_16,_16]]
+Src:  lstm.scala:152:39
+Src:            val xContrib = Reduce(Reg[T](0.to[T]))(INPUT_SZ by 1) { k =>
+---------------------------------------------------------------------
+Symbol:     x1785 = RegNew(Const(0))
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: BRAM
+     Depth:    2
+     Padding:  List()
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {}: Cyclic: N=1, B=1, alpha=<>, P=<> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x1810 = RegWrite(x1785,x2179,Set()) {}
+             }{_ + _} (lstm.scala:154:12)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+         1 [Type:WR]:
+         1 [Type:RD]:
+           - Mux Port #0: 
+             x1838 = RegRead(x1785) {}
+             gates0(g, j) = xContrib.value + hContrib.value + bih0(row) + bhh0(row) (lstm.scala:161:35)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         M [Type:WR]:
+         M [Type:RD]:
+
+
+
+Control Tree: 
+x2175: UnrolledForeach (-1) [Level: OuterControl, Loop: Looped, Schedule: Pipelined]
+  x2174: ParallelPipe (-1) [Level: OuterControl, Loop: Single, Schedule: ForkJoin]
+    x1811: UnrolledReduce (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+      x1810: RegWrite
+  x1852: UnitPipe (-1) [Level: InnerControl, Loop: Single, Schedule: Sequenced]
+    x1838: RegRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: c1_0 (x1756)
+Type: SRAM1[Fix[TRUE,_16,_16]]
+Src:  lstm.scala:125:23
+Src:        val c1 = SRAM[T](HIDDEN)
+---------------------------------------------------------------------
+Symbol:     x1756 = SRAMNew(List(Const(128)),SRAM1[Fix[TRUE,_16,_16]])
+Instances: 1
+  RAM36: 1.0
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: BRAM
+     Depth:    1
+     Padding:  List(0)
+     Accum:    Fold
+     Banks:    1 <Flat>
+       Dims {0}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x1764 = SRAMBankedWrite(x1756,Vector(Const(0)),Vector(List(Const(0))),Vector(b1759),Vector(Set(b1760))) {}
+             c1(i) = 0.to[T] (lstm.scala:132:15)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+           - Mux Port #1: 
+             x2084 = SRAMBankedWrite(x1756,Vector(x2171),Vector(List(Const(0))),Vector(x2310),Vector(Set(x2309, x2311))) {}
+             c1(j) = c1_new (lstm.scala:203:17)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x2065 = SRAMBankedRead(x1756,Vector(List(Const(0))),Vector(x2300),Vector(Set(x2299, x2301)),Vec[Fix[TRUE,_16,_16]]) {}
+             val c1_new = f_gate * c1(j) + i_gate * g_gate (lstm.scala:200:35)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x2178: AccelScope (-1) [Level: OuterControl, Loop: Single, Schedule: Sequenced]
+  x2173: ParallelPipe (-1) [Level: OuterControl, Loop: Single, Schedule: ForkJoin]
+    x1765: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+      x1764: SRAMBankedWrite
+  x2087: UnrolledForeach (-1) [Level: OuterControl, Loop: Looped, Schedule: Sequenced]
+    x2086: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+      x2065: SRAMBankedRead
+      x2084: SRAMBankedWrite
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: x1686
+Type: StreamOut[BurstCmd]
+Src:  lstm.scala:113:12
+Src:        bfc  load dBfc
+---------------------------------------------------------------------
+Symbol:     x1686 = StreamOutNew(BurstCmdBus)
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {0}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x1692 = StreamOutBankedWrite(x1686,ArrayBuffer(x1690),ArrayBuffer(Set(x1691))) {}
+             bfc  load dBfc (lstm.scala:113:12)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+
+
+
+Control Tree: 
+x1695: UnitPipe (-1) [Level: InnerControl, Loop: Single, Schedule: Sequenced]
+  x1692: StreamOutBankedWrite
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: maxIdx_0 (x2123)
+Type: Reg[Fix[TRUE,_32,_0]]
+Src:  lstm.scala:220:28
+Src:        val maxIdx = Reg[Int](0)
+---------------------------------------------------------------------
+Symbol:     x2123 = RegNew(Const(0))
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List()
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {}: Cyclic: N=1, B=1, alpha=<>, P=<> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x2136 = RegWrite(x2123,x2324,Set(x2131)) {}
+             maxIdx := i (lstm.scala:224:18)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x2141 = RegRead(x2123) {}
+             predOut := maxIdx.value (lstm.scala:228:25)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x2178: AccelScope (-1) [Level: OuterControl, Loop: Single, Schedule: Sequenced]
+  x2140: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Sequenced]
+    x2136: RegWrite
+  x2143: UnitPipe (-1) [Level: InnerControl, Loop: Single, Schedule: Sequenced]
+    x2141: RegRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: x1722
+Type: StreamOut[BurstCmd]
+Src:  lstm.scala:117:16
+Src:        inputSeq load dInput
+---------------------------------------------------------------------
+Symbol:     x1722 = StreamOutNew(BurstCmdBus)
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {0}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x1735 = StreamOutBankedWrite(x1722,ArrayBuffer(x1733),ArrayBuffer(Set(x2226, x2225))) {}
+             inputSeq load dInput (lstm.scala:117:16)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+
+
+
+Control Tree: 
+x1736: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Sequenced]
+  x1735: StreamOutBankedWrite
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: maxVal_0 (x2122)
+Type: Reg[Fix[TRUE,_16,_16]]
+Src:  lstm.scala:219:26
+Src:        val maxVal = Reg[T](-1000.to[T])
+---------------------------------------------------------------------
+Symbol:     x2122 = RegNew(Const(-1000))
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List()
+     Accum:    Fold
+     Banks:    1 <Flat>
+       Dims {}: Cyclic: N=1, B=1, alpha=<>, P=<> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x2135 = RegWrite(x2122,x2134,Set(x2325)) {}
+             maxVal := logits(i) (lstm.scala:223:18)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x2130 = RegRead(x2122) {}
+             if (logits(i) > maxVal.value) { (lstm.scala:222:32)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x2140: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Sequenced]
+  x2130: RegRead
+  x2135: RegWrite
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: sigLUT_0 (x2023)
+Type: LUT1[Fix[TRUE,_16,_16]]
+Src:  lstm.scala:244:27
+Src:    val sigLUT = LUT[T](256)(List.tabulate(256){ i =>
+---------------------------------------------------------------------
+Symbol:     x2023 = LUTNew(List(Const(256)),List(Const(0.002471923828125), Const(0.0025787353515625), Const(0.0027008056640625), Const(0.002838134765625), Const(0.0029754638671875), Const(0.00311279296875), Const(0.003265380859375), Const(0.0034332275390625), Const(0.0035858154296875), Const(0.0037689208984375), Const(0.0039520263671875), Const(0.0041351318359375), Const(0.00433349609375), Const(0.004547119140625), Const(0.0047607421875), Const(0.0049896240234375), Const(0.0052337646484375), Const(0.0054779052734375), Const(0.0057373046875), Const(0.006011962890625), Const(0.0063018798828125), Const(0.0066070556640625), Const(0.006927490234375), Const(0.00726318359375), Const(0.007598876953125), Const(0.007965087890625), Const(0.0083465576171875), Const(0.0087432861328125), Const(0.0091705322265625), Const(0.0095977783203125), Const(0.0100555419921875), Const(0.0105438232421875), Const(0.01104736328125), Const(0.011566162109375), Const(0.012115478515625), Const(0.0126953125), Const(0.0133056640625), Const(0.0139312744140625), Const(0.0146026611328125), Const(0.015289306640625), Const(0.016021728515625), Const(0.0167694091796875), Const(0.0175628662109375), Const(0.018402099609375), Const(0.0192718505859375), Const(0.020172119140625), Const(0.0211334228515625), Const(0.022125244140625), Const(0.023162841796875), Const(0.024261474609375), Const(0.025390625), Const(0.0265960693359375), Const(0.02783203125), Const(0.029144287109375), Const(0.0305023193359375), Const(0.03192138671875), Const(0.033416748046875), Const(0.0349578857421875), Const(0.036590576171875), Const(0.0382843017578125), Const(0.0400543212890625), Const(0.041900634765625), Const(0.0438385009765625), Const(0.0458526611328125), Const(0.0479583740234375), Const(0.050140380859375), Const(0.0524444580078125), Const(0.0548248291015625), Const(0.05731201171875), Const(0.059906005859375), Const(0.0626220703125), Const(0.0654449462890625), Const(0.0683746337890625), Const(0.071441650390625), Const(0.074615478515625), Const(0.07794189453125), Const(0.081390380859375), Const(0.0849761962890625), Const(0.088714599609375), Const(0.09259033203125), Const(0.09661865234375), Const(0.100799560546875), Const(0.1051483154296875), Const(0.1096649169921875), Const(0.114349365234375), Const(0.11920166015625), Const(0.1242218017578125), Const(0.1294403076171875), Const(0.13482666015625), Const(0.140411376953125), Const(0.1461944580078125), Const(0.15216064453125), Const(0.1583404541015625), Const(0.1647186279296875), Const(0.171295166015625), Const(0.178070068359375), Const(0.18505859375), Const(0.1922607421875), Const(0.199676513671875), Const(0.207305908203125), Const(0.21514892578125), Const(0.22320556640625), Const(0.2314605712890625), Const(0.2399444580078125), Const(0.248626708984375), Const(0.2575225830078125), Const(0.266632080078125), Const(0.2759246826171875), Const(0.285430908203125), Const(0.2951202392578125), Const(0.3050079345703125), Const(0.3150787353515625), Const(0.3253173828125), Const(0.335723876953125), Const(0.3462982177734375), Const(0.357025146484375), Const(0.3679046630859375), Const(0.3789215087890625), Const(0.390045166015625), Const(0.40130615234375), Const(0.41265869140625), Const(0.4241180419921875), Const(0.435638427734375), Const(0.4472503662109375), Const(0.4589080810546875), Const(0.470611572265625), Const(0.4823455810546875), Const(0.494110107421875), Const(0.5058746337890625), Const(0.51763916015625), Const(0.5293731689453125), Const(0.54107666015625), Const(0.552734375), Const(0.5643463134765625), Const(0.57586669921875), Const(0.5873260498046875), Const(0.5986785888671875), Const(0.6099395751953125), Const(0.621063232421875), Const(0.632080078125), Const(0.6429595947265625), Const(0.6536865234375), Const(0.6642608642578125), Const(0.6746673583984375), Const(0.684906005859375), Const(0.694976806640625), Const(0.704864501953125), Const(0.7145538330078125), Const(0.72406005859375), Const(0.7333526611328125), Const(0.742462158203125), Const(0.7513580322265625), Const(0.760040283203125), Const(0.768524169921875), Const(0.7767791748046875), Const(0.7848358154296875), Const(0.7926788330078125), Const(0.8003082275390625), Const(0.8077239990234375), Const(0.8149261474609375), Const(0.8219146728515625), Const(0.8286895751953125), Const(0.83526611328125), Const(0.841644287109375), Const(0.8478240966796875), Const(0.853790283203125), Const(0.8595733642578125), Const(0.8651580810546875), Const(0.87054443359375), Const(0.875762939453125), Const(0.8807830810546875), Const(0.8856353759765625), Const(0.89031982421875), Const(0.89483642578125), Const(0.8991851806640625), Const(0.9033660888671875), Const(0.9073944091796875), Const(0.9112701416015625), Const(0.915008544921875), Const(0.9185943603515625), Const(0.9220428466796875), Const(0.9253692626953125), Const(0.9285430908203125), Const(0.931610107421875), Const(0.934539794921875), Const(0.9373626708984375), Const(0.9400787353515625), Const(0.9426727294921875), Const(0.945159912109375), Const(0.947540283203125), Const(0.9498443603515625), Const(0.9520263671875), Const(0.954132080078125), Const(0.956146240234375), Const(0.9580841064453125), Const(0.959930419921875), Const(0.961700439453125), Const(0.9633941650390625), Const(0.96502685546875), Const(0.9665679931640625), Const(0.9680633544921875), Const(0.969482421875), Const(0.9708404541015625), Const(0.9721527099609375), Const(0.973388671875), Const(0.9745941162109375), Const(0.9757232666015625), Const(0.9768218994140625), Const(0.9778594970703125), Const(0.978851318359375), Const(0.9798126220703125), Const(0.980712890625), Const(0.9815826416015625), Const(0.982421875), Const(0.98321533203125), Const(0.9839630126953125), Const(0.9846954345703125), Const(0.985382080078125), Const(0.986053466796875), Const(0.9866790771484375), Const(0.9872894287109375), Const(0.9878692626953125), Const(0.9884185791015625), Const(0.9889373779296875), Const(0.98944091796875), Const(0.98992919921875), Const(0.990386962890625), Const(0.990814208984375), Const(0.991241455078125), Const(0.99163818359375), Const(0.9920196533203125), Const(0.9923858642578125), Const(0.9927215576171875), Const(0.9930572509765625), Const(0.993377685546875), Const(0.993682861328125), Const(0.9939727783203125), Const(0.9942474365234375), Const(0.9945068359375), Const(0.9947509765625), Const(0.9949951171875), Const(0.9952239990234375), Const(0.9954376220703125), Const(0.9956512451171875), Const(0.995849609375), Const(0.99603271484375), Const(0.9962158203125), Const(0.99639892578125), Const(0.996551513671875), Const(0.9967193603515625), Const(0.9968719482421875), Const(0.99700927734375), Const(0.9971466064453125), Const(0.997283935546875), Const(0.997406005859375), Const(0.9975128173828125)),LUT1[Fix[TRUE,_16,_16]])
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    256 <Hierarchical>
+       Dims {0}: Cyclic: N=256, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x2024 = LUTBankedRead(x2023,Vector(List(x2022)),Vector(Const(0)),Vector(Set(x2289, x2290)),Vec[Fix[TRUE,_16,_16]]) {}
+             sigLUT(idx) (lstm.scala:248:9)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x2086: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+  x2024: LUTBankedRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: h0_0 (x1753)
+Type: SRAM1[Fix[TRUE,_16,_16]]
+Src:  lstm.scala:121:23
+Src:        val h0 = SRAM[T](HIDDEN)
+---------------------------------------------------------------------
+Symbol:     x1753 = SRAMNew(List(Const(128)),SRAM1[Fix[TRUE,_16,_16]])
+Instances: 1
+  RAM36: 1.0
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: BRAM
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {0}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x1761 = SRAMBankedWrite(x1753,Vector(Const(0)),Vector(List(Const(0))),Vector(b1759),Vector(Set(b1760))) {}
+             h0(i) = 0.to[T] (lstm.scala:129:15)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+           - Mux Port #1: 
+             x1929 = SRAMBankedWrite(x1753,Vector(x1927),Vector(List(Const(0))),Vector(x2271),Vector(Set(x2270, x2269))) {}
+             h0(j) = h0_new (lstm.scala:176:17)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x1955 = SRAMBankedRead(x1753,Vector(List(Const(0))),Vector(b1947),Vector(Set(b1948, b1936, b1937, b1771)),Vec[Fix[TRUE,_16,_16]]) {}
+             wih1(row, k) * h0(k) (lstm.scala:184:30)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+           - Mux Port #1: 
+             x1824 = SRAMBankedRead(x1753,Vector(List(Const(0))),Vector(b1816),Vector(Set(b1817, b1777, b1778, b1771)),Vec[Fix[TRUE,_16,_16]]) {}
+             whh0(row, k) * h0(k) (lstm.scala:158:30)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x2178: AccelScope (-1) [Level: OuterControl, Loop: Single, Schedule: Sequenced]
+  x2173: ParallelPipe (-1) [Level: OuterControl, Loop: Single, Schedule: ForkJoin]
+    x1765: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+      x1761: SRAMBankedWrite
+  x2087: UnrolledForeach (-1) [Level: OuterControl, Loop: Looped, Schedule: Sequenced]
+    x2175: UnrolledForeach (-1) [Level: OuterControl, Loop: Looped, Schedule: Pipelined]
+      x2174: ParallelPipe (-1) [Level: OuterControl, Loop: Single, Schedule: ForkJoin]
+        x1836: UnrolledReduce (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+          x1824: SRAMBankedRead
+    x1930: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+      x1929: SRAMBankedWrite
+    x2177: UnrolledForeach (-1) [Level: OuterControl, Loop: Looped, Schedule: Pipelined]
+      x2176: ParallelPipe (-1) [Level: OuterControl, Loop: Single, Schedule: ForkJoin]
+        x1967: UnrolledReduce (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+          x1955: SRAMBankedRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: whh0_0 (x1454)
+Type: SRAM2[Fix[TRUE,_16,_16]]
+Src:  lstm.scala:90:25
+Src:        val whh0 = SRAM[T](GATE_H, HIDDEN)
+---------------------------------------------------------------------
+Symbol:     x1454 = SRAMNew(List(Const(512), Const(128)),SRAM2[Fix[TRUE,_16,_16]])
+Instances: 1
+  RAM36: 1.0
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: BRAM
+     Depth:    1
+     Padding:  List(0, 0)
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {0,1}: Cyclic: N=1, B=1, alpha=<1,1>, P=<1,1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x1522 = SRAMBankedWrite(x1454,Vector(x1518),Vector(List(Const(0))),Vector(x1521),Vector(Set(x2193, x2192))) {}
+             whh0 load dWhh0 (lstm.scala:103:12)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x1822 = SRAMBankedRead(x1454,Vector(List(Const(0))),Vector(x1821),Vector(Set(x2237, x2238, x2235, x2236)),Vec[Fix[TRUE,_16,_16]]) {}
+             whh0(row, k) * h0(k) (lstm.scala:158:17)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x2178: AccelScope (-1) [Level: OuterControl, Loop: Single, Schedule: Sequenced]
+  x2173: ParallelPipe (-1) [Level: OuterControl, Loop: Single, Schedule: ForkJoin]
+    x1524: UnitPipe (-1) [Level: OuterControl, Loop: Single, Schedule: Streaming]
+      x1523: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+        x1522: SRAMBankedWrite
+  x2087: UnrolledForeach (-1) [Level: OuterControl, Loop: Looped, Schedule: Sequenced]
+    x2175: UnrolledForeach (-1) [Level: OuterControl, Loop: Looped, Schedule: Pipelined]
+      x2174: ParallelPipe (-1) [Level: OuterControl, Loop: Single, Schedule: ForkJoin]
+        x1836: UnrolledReduce (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+          x1822: SRAMBankedRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: x1463
+Type: StreamOut[BurstCmd]
+Src:  lstm.scala:102:12
+Src:        wih0 load dWih0
+---------------------------------------------------------------------
+Symbol:     x1463 = StreamOutNew(BurstCmdBus)
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {0}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x1476 = StreamOutBankedWrite(x1463,ArrayBuffer(x1474),ArrayBuffer(Set(x2184, x2185))) {}
+             wih0 load dWih0 (lstm.scala:102:12)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+
+
+
+Control Tree: 
+x1477: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Sequenced]
+  x1476: StreamOutBankedWrite
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: inputSeq_0 (x1721)
+Type: SRAM2[Fix[TRUE,_16,_16]]
+Src:  lstm.scala:116:29
+Src:        val inputSeq = SRAM[T](T_STEPS, INPUT_SZ)
+---------------------------------------------------------------------
+Symbol:     x1721 = SRAMNew(List(Const(50), Const(128)),SRAM2[Fix[TRUE,_16,_16]])
+Instances: 1
+  RAM36: 1.0
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: BRAM
+     Depth:    1
+     Padding:  List(0, 0)
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {0,1}: Cyclic: N=1, B=1, alpha=<1,1>, P=<1,1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x1750 = SRAMBankedWrite(x1721,Vector(x1746),Vector(List(Const(0))),Vector(x1749),Vector(Set(x2229, x2228))) {}
+             inputSeq load dInput (lstm.scala:117:16)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x1799 = SRAMBankedRead(x1721,Vector(List(Const(0))),Vector(x1798),Vector(Set(x2233, x2232, x2230, x2231)),Vec[Fix[TRUE,_16,_16]]) {}
+             wih0(row, k) * inputSeq(t, k) (lstm.scala:153:36)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x2178: AccelScope (-1) [Level: OuterControl, Loop: Single, Schedule: Sequenced]
+  x2173: ParallelPipe (-1) [Level: OuterControl, Loop: Single, Schedule: ForkJoin]
+    x1752: UnitPipe (-1) [Level: OuterControl, Loop: Single, Schedule: Streaming]
+      x1751: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+        x1750: SRAMBankedWrite
+  x2087: UnrolledForeach (-1) [Level: OuterControl, Loop: Looped, Schedule: Sequenced]
+    x2175: UnrolledForeach (-1) [Level: OuterControl, Loop: Looped, Schedule: Pipelined]
+      x2174: ParallelPipe (-1) [Level: OuterControl, Loop: Single, Schedule: ForkJoin]
+        x1811: UnrolledReduce (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+          x1799: SRAMBankedRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: sigLUT_0 (x2035)
+Type: LUT1[Fix[TRUE,_16,_16]]
+Src:  lstm.scala:244:27
+Src:    val sigLUT = LUT[T](256)(List.tabulate(256){ i =>
+---------------------------------------------------------------------
+Symbol:     x2035 = LUTNew(List(Const(256)),List(Const(0.002471923828125), Const(0.0025787353515625), Const(0.0027008056640625), Const(0.002838134765625), Const(0.0029754638671875), Const(0.00311279296875), Const(0.003265380859375), Const(0.0034332275390625), Const(0.0035858154296875), Const(0.0037689208984375), Const(0.0039520263671875), Const(0.0041351318359375), Const(0.00433349609375), Const(0.004547119140625), Const(0.0047607421875), Const(0.0049896240234375), Const(0.0052337646484375), Const(0.0054779052734375), Const(0.0057373046875), Const(0.006011962890625), Const(0.0063018798828125), Const(0.0066070556640625), Const(0.006927490234375), Const(0.00726318359375), Const(0.007598876953125), Const(0.007965087890625), Const(0.0083465576171875), Const(0.0087432861328125), Const(0.0091705322265625), Const(0.0095977783203125), Const(0.0100555419921875), Const(0.0105438232421875), Const(0.01104736328125), Const(0.011566162109375), Const(0.012115478515625), Const(0.0126953125), Const(0.0133056640625), Const(0.0139312744140625), Const(0.0146026611328125), Const(0.015289306640625), Const(0.016021728515625), Const(0.0167694091796875), Const(0.0175628662109375), Const(0.018402099609375), Const(0.0192718505859375), Const(0.020172119140625), Const(0.0211334228515625), Const(0.022125244140625), Const(0.023162841796875), Const(0.024261474609375), Const(0.025390625), Const(0.0265960693359375), Const(0.02783203125), Const(0.029144287109375), Const(0.0305023193359375), Const(0.03192138671875), Const(0.033416748046875), Const(0.0349578857421875), Const(0.036590576171875), Const(0.0382843017578125), Const(0.0400543212890625), Const(0.041900634765625), Const(0.0438385009765625), Const(0.0458526611328125), Const(0.0479583740234375), Const(0.050140380859375), Const(0.0524444580078125), Const(0.0548248291015625), Const(0.05731201171875), Const(0.059906005859375), Const(0.0626220703125), Const(0.0654449462890625), Const(0.0683746337890625), Const(0.071441650390625), Const(0.074615478515625), Const(0.07794189453125), Const(0.081390380859375), Const(0.0849761962890625), Const(0.088714599609375), Const(0.09259033203125), Const(0.09661865234375), Const(0.100799560546875), Const(0.1051483154296875), Const(0.1096649169921875), Const(0.114349365234375), Const(0.11920166015625), Const(0.1242218017578125), Const(0.1294403076171875), Const(0.13482666015625), Const(0.140411376953125), Const(0.1461944580078125), Const(0.15216064453125), Const(0.1583404541015625), Const(0.1647186279296875), Const(0.171295166015625), Const(0.178070068359375), Const(0.18505859375), Const(0.1922607421875), Const(0.199676513671875), Const(0.207305908203125), Const(0.21514892578125), Const(0.22320556640625), Const(0.2314605712890625), Const(0.2399444580078125), Const(0.248626708984375), Const(0.2575225830078125), Const(0.266632080078125), Const(0.2759246826171875), Const(0.285430908203125), Const(0.2951202392578125), Const(0.3050079345703125), Const(0.3150787353515625), Const(0.3253173828125), Const(0.335723876953125), Const(0.3462982177734375), Const(0.357025146484375), Const(0.3679046630859375), Const(0.3789215087890625), Const(0.390045166015625), Const(0.40130615234375), Const(0.41265869140625), Const(0.4241180419921875), Const(0.435638427734375), Const(0.4472503662109375), Const(0.4589080810546875), Const(0.470611572265625), Const(0.4823455810546875), Const(0.494110107421875), Const(0.5058746337890625), Const(0.51763916015625), Const(0.5293731689453125), Const(0.54107666015625), Const(0.552734375), Const(0.5643463134765625), Const(0.57586669921875), Const(0.5873260498046875), Const(0.5986785888671875), Const(0.6099395751953125), Const(0.621063232421875), Const(0.632080078125), Const(0.6429595947265625), Const(0.6536865234375), Const(0.6642608642578125), Const(0.6746673583984375), Const(0.684906005859375), Const(0.694976806640625), Const(0.704864501953125), Const(0.7145538330078125), Const(0.72406005859375), Const(0.7333526611328125), Const(0.742462158203125), Const(0.7513580322265625), Const(0.760040283203125), Const(0.768524169921875), Const(0.7767791748046875), Const(0.7848358154296875), Const(0.7926788330078125), Const(0.8003082275390625), Const(0.8077239990234375), Const(0.8149261474609375), Const(0.8219146728515625), Const(0.8286895751953125), Const(0.83526611328125), Const(0.841644287109375), Const(0.8478240966796875), Const(0.853790283203125), Const(0.8595733642578125), Const(0.8651580810546875), Const(0.87054443359375), Const(0.875762939453125), Const(0.8807830810546875), Const(0.8856353759765625), Const(0.89031982421875), Const(0.89483642578125), Const(0.8991851806640625), Const(0.9033660888671875), Const(0.9073944091796875), Const(0.9112701416015625), Const(0.915008544921875), Const(0.9185943603515625), Const(0.9220428466796875), Const(0.9253692626953125), Const(0.9285430908203125), Const(0.931610107421875), Const(0.934539794921875), Const(0.9373626708984375), Const(0.9400787353515625), Const(0.9426727294921875), Const(0.945159912109375), Const(0.947540283203125), Const(0.9498443603515625), Const(0.9520263671875), Const(0.954132080078125), Const(0.956146240234375), Const(0.9580841064453125), Const(0.959930419921875), Const(0.961700439453125), Const(0.9633941650390625), Const(0.96502685546875), Const(0.9665679931640625), Const(0.9680633544921875), Const(0.969482421875), Const(0.9708404541015625), Const(0.9721527099609375), Const(0.973388671875), Const(0.9745941162109375), Const(0.9757232666015625), Const(0.9768218994140625), Const(0.9778594970703125), Const(0.978851318359375), Const(0.9798126220703125), Const(0.980712890625), Const(0.9815826416015625), Const(0.982421875), Const(0.98321533203125), Const(0.9839630126953125), Const(0.9846954345703125), Const(0.985382080078125), Const(0.986053466796875), Const(0.9866790771484375), Const(0.9872894287109375), Const(0.9878692626953125), Const(0.9884185791015625), Const(0.9889373779296875), Const(0.98944091796875), Const(0.98992919921875), Const(0.990386962890625), Const(0.990814208984375), Const(0.991241455078125), Const(0.99163818359375), Const(0.9920196533203125), Const(0.9923858642578125), Const(0.9927215576171875), Const(0.9930572509765625), Const(0.993377685546875), Const(0.993682861328125), Const(0.9939727783203125), Const(0.9942474365234375), Const(0.9945068359375), Const(0.9947509765625), Const(0.9949951171875), Const(0.9952239990234375), Const(0.9954376220703125), Const(0.9956512451171875), Const(0.995849609375), Const(0.99603271484375), Const(0.9962158203125), Const(0.99639892578125), Const(0.996551513671875), Const(0.9967193603515625), Const(0.9968719482421875), Const(0.99700927734375), Const(0.9971466064453125), Const(0.997283935546875), Const(0.997406005859375), Const(0.9975128173828125)),LUT1[Fix[TRUE,_16,_16]])
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    256 <Hierarchical>
+       Dims {0}: Cyclic: N=256, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x2036 = LUTBankedRead(x2035,Vector(List(x2034)),Vector(Const(0)),Vector(Set(x2289, x2290)),Vec[Fix[TRUE,_16,_16]]) {}
+             sigLUT(idx) (lstm.scala:248:9)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x2086: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+  x2036: LUTBankedRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: gates1_0 (x1767)
+Type: SRAM2[Fix[TRUE,_16,_16]]
+Src:  lstm.scala:138:27
+Src:        val gates1 = SRAM[T](GATES, HIDDEN).conflictable
+---------------------------------------------------------------------
+Symbol:     x1767 = SRAMNew(List(Const(4), Const(128)),SRAM2[Fix[TRUE,_16,_16]])
+Instances: 1
+  RAM36: 1.0
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: BRAM
+     Depth:    1
+     Padding:  List(0, 0)
+     Accum:    None
+     Banks:    4, 1 <Hierarchical>
+       Dims {0}: Cyclic: N=4, B=1, alpha=<1>, P=<4> (5 solutions, 7 checks)
+       Dims {1}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x2007 = SRAMBankedWrite(x1767,Vector(x2002),Vector(List(x2286, Const(0))),Vector(x2287),Vector(Set())) {}
+             gates1(g, j) = xContrib.value + hContrib.value + bih1(row) + bhh1(row) (lstm.scala:191:24)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x2014 = SRAMBankedRead(x1767,Vector(List(Const(0), Const(0))),Vector(b2012),Vector(Set(b2013, b1771)),Vec[Fix[TRUE,_16,_16]]) {}
+             val i_gate = sigmoid(gates1(0, j)) (lstm.scala:195:38)
+               Directly Banked: true
+               Port: <offset: 2, castgroup: (2), broadcast: (0)>
+
+             x2026 = SRAMBankedRead(x1767,Vector(List(Const(1), Const(0))),Vector(b2012),Vector(Set(b2013, b1771)),Vec[Fix[TRUE,_16,_16]]) {}
+             val f_gate = sigmoid(gates1(1, j)) (lstm.scala:196:38)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+             x2038 = SRAMBankedRead(x1767,Vector(List(Const(2), Const(0))),Vector(b2012),Vector(Set(b2013, b1771)),Vec[Fix[TRUE,_16,_16]]) {}
+             val g_gate = tanh_approx(gates1(2, j)) (lstm.scala:197:42)
+               Directly Banked: true
+               Port: <offset: 3, castgroup: (3), broadcast: (0)>
+
+             x2053 = SRAMBankedRead(x1767,Vector(List(Const(3), Const(0))),Vector(b2012),Vector(Set(b2013, b1771)),Vec[Fix[TRUE,_16,_16]]) {}
+             val o_gate = sigmoid(gates1(3, j)) (lstm.scala:198:38)
+               Directly Banked: true
+               Port: <offset: 1, castgroup: (1), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x2087: UnrolledForeach (-1) [Level: OuterControl, Loop: Looped, Schedule: Sequenced]
+  x2177: UnrolledForeach (-1) [Level: OuterControl, Loop: Looped, Schedule: Pipelined]
+    x2008: UnitPipe (-1) [Level: InnerControl, Loop: Single, Schedule: Sequenced]
+      x2007: SRAMBankedWrite
+  x2086: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+    x2014: SRAMBankedRead
+    x2053: SRAMBankedRead
+    x2038: SRAMBankedRead
+    x2026: SRAMBankedRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: x1655
+Type: StreamOut[BurstCmd]
+Src:  lstm.scala:112:12
+Src:        wfc  load dWfc
+---------------------------------------------------------------------
+Symbol:     x1655 = StreamOutNew(BurstCmdBus)
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {0}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x1668 = StreamOutBankedWrite(x1655,ArrayBuffer(x1666),ArrayBuffer(Set(x2217, x2216))) {}
+             wfc  load dWfc (lstm.scala:112:12)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+
+
+
+Control Tree: 
+x1669: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Sequenced]
+  x1668: StreamOutBankedWrite
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: dot_0 (x2093)
+Type: Reg[Fix[TRUE,_16,_16]]
+Src:  lstm.scala:212:32
+Src:          val dot = Reduce(Reg[T](0.to[T]))(HIDDEN by 1) { j =>
+---------------------------------------------------------------------
+Symbol:     x2093 = RegNew(Const(0))
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List()
+     Accum:    Buffer
+     Banks:    1 <Flat>
+       Dims {}: Cyclic: N=1, B=1, alpha=<>, P=<> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+         0 [Type:RD]:
+
+
+
+Control Tree: 
+x2114: UnrolledReduce (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+  x2183: RegAccumFMA
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: wih0_0 (x1453)
+Type: SRAM2[Fix[TRUE,_16,_16]]
+Src:  lstm.scala:89:25
+Src:        val wih0 = SRAM[T](GATE_H, INPUT_SZ)
+---------------------------------------------------------------------
+Symbol:     x1453 = SRAMNew(List(Const(512), Const(128)),SRAM2[Fix[TRUE,_16,_16]])
+Instances: 1
+  RAM36: 1.0
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: BRAM
+     Depth:    1
+     Padding:  List(0, 0)
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {0,1}: Cyclic: N=1, B=1, alpha=<1,1>, P=<1,1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x1491 = SRAMBankedWrite(x1453,Vector(x1487),Vector(List(Const(0))),Vector(x1490),Vector(Set(x2187, x2188))) {}
+             wih0 load dWih0 (lstm.scala:102:12)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x1794 = SRAMBankedRead(x1453,Vector(List(Const(0))),Vector(x1793),Vector(Set(x2233, x2232, x2230, x2231)),Vec[Fix[TRUE,_16,_16]]) {}
+             wih0(row, k) * inputSeq(t, k) (lstm.scala:153:17)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x2178: AccelScope (-1) [Level: OuterControl, Loop: Single, Schedule: Sequenced]
+  x2173: ParallelPipe (-1) [Level: OuterControl, Loop: Single, Schedule: ForkJoin]
+    x1493: UnitPipe (-1) [Level: OuterControl, Loop: Single, Schedule: Streaming]
+      x1492: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+        x1491: SRAMBankedWrite
+  x2087: UnrolledForeach (-1) [Level: OuterControl, Loop: Looped, Schedule: Sequenced]
+    x2175: UnrolledForeach (-1) [Level: OuterControl, Loop: Looped, Schedule: Pipelined]
+      x2174: ParallelPipe (-1) [Level: OuterControl, Loop: Single, Schedule: ForkJoin]
+        x1811: UnrolledReduce (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+          x1794: SRAMBankedRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: bhh1_0 (x1460)
+Type: SRAM1[Fix[TRUE,_16,_16]]
+Src:  lstm.scala:97:25
+Src:        val bhh1 = SRAM[T](GATE_H)
+---------------------------------------------------------------------
+Symbol:     x1460 = SRAMNew(List(Const(512)),SRAM1[Fix[TRUE,_16,_16]])
+Instances: 1
+  RAM36: 1.0
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: BRAM
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {0}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x1652 = SRAMBankedWrite(x1460,Vector(x1651),Vector(List(Const(0))),Vector(x2214),Vector(Set(x2215))) {}
+             bhh1 load dBhh1 (lstm.scala:110:12)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x2000 = SRAMBankedRead(x1460,Vector(List(Const(0))),Vector(x1996),Vector(Set()),Vec[Fix[TRUE,_16,_16]]) {}
+             gates1(g, j) = xContrib.value + hContrib.value + bih1(row) + bhh1(row) (lstm.scala:191:76)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x2178: AccelScope (-1) [Level: OuterControl, Loop: Single, Schedule: Sequenced]
+  x2173: ParallelPipe (-1) [Level: OuterControl, Loop: Single, Schedule: ForkJoin]
+    x1654: UnitPipe (-1) [Level: OuterControl, Loop: Single, Schedule: Streaming]
+      x1653: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+        x1652: SRAMBankedWrite
+  x2087: UnrolledForeach (-1) [Level: OuterControl, Loop: Looped, Schedule: Sequenced]
+    x2177: UnrolledForeach (-1) [Level: OuterControl, Loop: Looped, Schedule: Pipelined]
+      x2008: UnitPipe (-1) [Level: InnerControl, Loop: Single, Schedule: Sequenced]
+        x2000: SRAMBankedRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: x1494
+Type: StreamOut[BurstCmd]
+Src:  lstm.scala:103:12
+Src:        whh0 load dWhh0
+---------------------------------------------------------------------
+Symbol:     x1494 = StreamOutNew(BurstCmdBus)
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {0}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x1507 = StreamOutBankedWrite(x1494,ArrayBuffer(x1505),ArrayBuffer(Set(x2190, x2189))) {}
+             whh0 load dWhh0 (lstm.scala:103:12)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+
+
+
+Control Tree: 
+x1508: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Sequenced]
+  x1507: StreamOutBankedWrite
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: sigLUT_0 (x1922)
+Type: LUT1[Fix[TRUE,_16,_16]]
+Src:  lstm.scala:244:27
+Src:    val sigLUT = LUT[T](256)(List.tabulate(256){ i =>
+---------------------------------------------------------------------
+Symbol:     x1922 = LUTNew(List(Const(256)),List(Const(0.002471923828125), Const(0.0025787353515625), Const(0.0027008056640625), Const(0.002838134765625), Const(0.0029754638671875), Const(0.00311279296875), Const(0.003265380859375), Const(0.0034332275390625), Const(0.0035858154296875), Const(0.0037689208984375), Const(0.0039520263671875), Const(0.0041351318359375), Const(0.00433349609375), Const(0.004547119140625), Const(0.0047607421875), Const(0.0049896240234375), Const(0.0052337646484375), Const(0.0054779052734375), Const(0.0057373046875), Const(0.006011962890625), Const(0.0063018798828125), Const(0.0066070556640625), Const(0.006927490234375), Const(0.00726318359375), Const(0.007598876953125), Const(0.007965087890625), Const(0.0083465576171875), Const(0.0087432861328125), Const(0.0091705322265625), Const(0.0095977783203125), Const(0.0100555419921875), Const(0.0105438232421875), Const(0.01104736328125), Const(0.011566162109375), Const(0.012115478515625), Const(0.0126953125), Const(0.0133056640625), Const(0.0139312744140625), Const(0.0146026611328125), Const(0.015289306640625), Const(0.016021728515625), Const(0.0167694091796875), Const(0.0175628662109375), Const(0.018402099609375), Const(0.0192718505859375), Const(0.020172119140625), Const(0.0211334228515625), Const(0.022125244140625), Const(0.023162841796875), Const(0.024261474609375), Const(0.025390625), Const(0.0265960693359375), Const(0.02783203125), Const(0.029144287109375), Const(0.0305023193359375), Const(0.03192138671875), Const(0.033416748046875), Const(0.0349578857421875), Const(0.036590576171875), Const(0.0382843017578125), Const(0.0400543212890625), Const(0.041900634765625), Const(0.0438385009765625), Const(0.0458526611328125), Const(0.0479583740234375), Const(0.050140380859375), Const(0.0524444580078125), Const(0.0548248291015625), Const(0.05731201171875), Const(0.059906005859375), Const(0.0626220703125), Const(0.0654449462890625), Const(0.0683746337890625), Const(0.071441650390625), Const(0.074615478515625), Const(0.07794189453125), Const(0.081390380859375), Const(0.0849761962890625), Const(0.088714599609375), Const(0.09259033203125), Const(0.09661865234375), Const(0.100799560546875), Const(0.1051483154296875), Const(0.1096649169921875), Const(0.114349365234375), Const(0.11920166015625), Const(0.1242218017578125), Const(0.1294403076171875), Const(0.13482666015625), Const(0.140411376953125), Const(0.1461944580078125), Const(0.15216064453125), Const(0.1583404541015625), Const(0.1647186279296875), Const(0.171295166015625), Const(0.178070068359375), Const(0.18505859375), Const(0.1922607421875), Const(0.199676513671875), Const(0.207305908203125), Const(0.21514892578125), Const(0.22320556640625), Const(0.2314605712890625), Const(0.2399444580078125), Const(0.248626708984375), Const(0.2575225830078125), Const(0.266632080078125), Const(0.2759246826171875), Const(0.285430908203125), Const(0.2951202392578125), Const(0.3050079345703125), Const(0.3150787353515625), Const(0.3253173828125), Const(0.335723876953125), Const(0.3462982177734375), Const(0.357025146484375), Const(0.3679046630859375), Const(0.3789215087890625), Const(0.390045166015625), Const(0.40130615234375), Const(0.41265869140625), Const(0.4241180419921875), Const(0.435638427734375), Const(0.4472503662109375), Const(0.4589080810546875), Const(0.470611572265625), Const(0.4823455810546875), Const(0.494110107421875), Const(0.5058746337890625), Const(0.51763916015625), Const(0.5293731689453125), Const(0.54107666015625), Const(0.552734375), Const(0.5643463134765625), Const(0.57586669921875), Const(0.5873260498046875), Const(0.5986785888671875), Const(0.6099395751953125), Const(0.621063232421875), Const(0.632080078125), Const(0.6429595947265625), Const(0.6536865234375), Const(0.6642608642578125), Const(0.6746673583984375), Const(0.684906005859375), Const(0.694976806640625), Const(0.704864501953125), Const(0.7145538330078125), Const(0.72406005859375), Const(0.7333526611328125), Const(0.742462158203125), Const(0.7513580322265625), Const(0.760040283203125), Const(0.768524169921875), Const(0.7767791748046875), Const(0.7848358154296875), Const(0.7926788330078125), Const(0.8003082275390625), Const(0.8077239990234375), Const(0.8149261474609375), Const(0.8219146728515625), Const(0.8286895751953125), Const(0.83526611328125), Const(0.841644287109375), Const(0.8478240966796875), Const(0.853790283203125), Const(0.8595733642578125), Const(0.8651580810546875), Const(0.87054443359375), Const(0.875762939453125), Const(0.8807830810546875), Const(0.8856353759765625), Const(0.89031982421875), Const(0.89483642578125), Const(0.8991851806640625), Const(0.9033660888671875), Const(0.9073944091796875), Const(0.9112701416015625), Const(0.915008544921875), Const(0.9185943603515625), Const(0.9220428466796875), Const(0.9253692626953125), Const(0.9285430908203125), Const(0.931610107421875), Const(0.934539794921875), Const(0.9373626708984375), Const(0.9400787353515625), Const(0.9426727294921875), Const(0.945159912109375), Const(0.947540283203125), Const(0.9498443603515625), Const(0.9520263671875), Const(0.954132080078125), Const(0.956146240234375), Const(0.9580841064453125), Const(0.959930419921875), Const(0.961700439453125), Const(0.9633941650390625), Const(0.96502685546875), Const(0.9665679931640625), Const(0.9680633544921875), Const(0.969482421875), Const(0.9708404541015625), Const(0.9721527099609375), Const(0.973388671875), Const(0.9745941162109375), Const(0.9757232666015625), Const(0.9768218994140625), Const(0.9778594970703125), Const(0.978851318359375), Const(0.9798126220703125), Const(0.980712890625), Const(0.9815826416015625), Const(0.982421875), Const(0.98321533203125), Const(0.9839630126953125), Const(0.9846954345703125), Const(0.985382080078125), Const(0.986053466796875), Const(0.9866790771484375), Const(0.9872894287109375), Const(0.9878692626953125), Const(0.9884185791015625), Const(0.9889373779296875), Const(0.98944091796875), Const(0.98992919921875), Const(0.990386962890625), Const(0.990814208984375), Const(0.991241455078125), Const(0.99163818359375), Const(0.9920196533203125), Const(0.9923858642578125), Const(0.9927215576171875), Const(0.9930572509765625), Const(0.993377685546875), Const(0.993682861328125), Const(0.9939727783203125), Const(0.9942474365234375), Const(0.9945068359375), Const(0.9947509765625), Const(0.9949951171875), Const(0.9952239990234375), Const(0.9954376220703125), Const(0.9956512451171875), Const(0.995849609375), Const(0.99603271484375), Const(0.9962158203125), Const(0.99639892578125), Const(0.996551513671875), Const(0.9967193603515625), Const(0.9968719482421875), Const(0.99700927734375), Const(0.9971466064453125), Const(0.997283935546875), Const(0.997406005859375), Const(0.9975128173828125)),LUT1[Fix[TRUE,_16,_16]])
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    256 <Hierarchical>
+       Dims {0}: Cyclic: N=256, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x1923 = LUTBankedRead(x1922,Vector(List(x1921)),Vector(Const(0)),Vector(Set(x2263, x2262)),Vec[Fix[TRUE,_16,_16]]) {}
+             sigLUT(idx) (lstm.scala:248:9)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x1930: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+  x1923: LUTBankedRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: x1622
+Type: StreamIn[Fix[TRUE,_16,_16]]
+Src:  lstm.scala:109:12
+Src:        bih1 load dBih1
+---------------------------------------------------------------------
+Symbol:     x1622 = StreamInNew(BurstDataBus())
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {0}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x1633 = StreamInBankedRead(x1622,ArrayBuffer(Set(b1632))) {}
+             bih1 load dBih1 (lstm.scala:109:12)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x1636: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+  x1633: StreamInBankedRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: x1591
+Type: StreamIn[Fix[TRUE,_16,_16]]
+Src:  lstm.scala:108:12
+Src:        whh1 load dWhh1
+---------------------------------------------------------------------
+Symbol:     x1591 = StreamInNew(BurstDataBus())
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {0}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x1613 = StreamInBankedRead(x1591,ArrayBuffer(Set(b1611, b1612))) {}
+             whh1 load dWhh1 (lstm.scala:108:12)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x1619: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+  x1613: StreamInBankedRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: h1_0 (x1755)
+Type: SRAM1[Fix[TRUE,_16,_16]]
+Src:  lstm.scala:124:23
+Src:        val h1 = SRAM[T](HIDDEN)
+---------------------------------------------------------------------
+Symbol:     x1755 = SRAMNew(List(Const(128)),SRAM1[Fix[TRUE,_16,_16]])
+Instances: 1
+  RAM36: 1.0
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: BRAM
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {0}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x1763 = SRAMBankedWrite(x1755,Vector(Const(0)),Vector(List(Const(0))),Vector(b1759),Vector(Set(b1760))) {}
+             h1(i) = 0.to[T] (lstm.scala:131:15)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+           - Mux Port #1: 
+             x2085 = SRAMBankedWrite(x1755,Vector(x2083),Vector(List(Const(0))),Vector(x2313),Vector(Set(x2312, x2314))) {}
+             h1(j) = h1_new (lstm.scala:204:17)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x2104 = SRAMBankedRead(x1755,Vector(List(Const(0))),Vector(b2097),Vector(Set(b2098, b2092)),Vec[Fix[TRUE,_16,_16]]) {}
+             wfc(i, j) * h1(j) (lstm.scala:213:25)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+           - Mux Port #1: 
+             x1980 = SRAMBankedRead(x1755,Vector(List(Const(0))),Vector(b1972),Vector(Set(b1973, b1936, b1937, b1771)),Vec[Fix[TRUE,_16,_16]]) {}
+             whh1(row, k) * h1(k) (lstm.scala:188:30)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x2178: AccelScope (-1) [Level: OuterControl, Loop: Single, Schedule: Sequenced]
+  x2173: ParallelPipe (-1) [Level: OuterControl, Loop: Single, Schedule: ForkJoin]
+    x1765: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+      x1763: SRAMBankedWrite
+  x2087: UnrolledForeach (-1) [Level: OuterControl, Loop: Looped, Schedule: Sequenced]
+    x2177: UnrolledForeach (-1) [Level: OuterControl, Loop: Looped, Schedule: Pipelined]
+      x2176: ParallelPipe (-1) [Level: OuterControl, Loop: Single, Schedule: ForkJoin]
+        x1992: UnrolledReduce (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+          x1980: SRAMBankedRead
+    x2086: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+      x2085: SRAMBankedWrite
+  x2121: UnrolledForeach (-1) [Level: OuterControl, Loop: Looped, Schedule: Pipelined]
+    x2114: UnrolledReduce (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+      x2104: SRAMBankedRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: predOut (x1452)
+Type: Reg[Fix[TRUE,_32,_0]]
+Src:  lstm.scala:84:25
+Src:      val predOut = ArgOut[Int]
+---------------------------------------------------------------------
+Symbol:     x1452 = ArgOutNew(Const(0))
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List()
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {}: Cyclic: N=1, B=1, alpha=<>, P=<> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x2142 = RegWrite(x1452,x2141,Set()) {}
+             predOut := maxIdx.value (lstm.scala:228:15)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x2144 = GetReg(x1452) {}
+             val result = getArg(predOut) (lstm.scala:232:24)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+Host
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: hContrib_0 (x1968)
+Type: Reg[Fix[TRUE,_16,_16]]
+Src:  lstm.scala:187:39
+Src:            val hContrib = Reduce(Reg[T](0.to[T]))(HIDDEN by 1) { k =>
+---------------------------------------------------------------------
+Symbol:     x1968 = RegNew(Const(0))
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List()
+     Accum:    Buffer
+     Banks:    1 <Flat>
+       Dims {}: Cyclic: N=1, B=1, alpha=<>, P=<> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+         0 [Type:RD]:
+
+
+
+Control Tree: 
+x1992: UnrolledReduce (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+  x2182: RegAccumFMA
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: c0_0 (x1754)
+Type: SRAM1[Fix[TRUE,_16,_16]]
+Src:  lstm.scala:122:23
+Src:        val c0 = SRAM[T](HIDDEN)
+---------------------------------------------------------------------
+Symbol:     x1754 = SRAMNew(List(Const(128)),SRAM1[Fix[TRUE,_16,_16]])
+Instances: 1
+  RAM36: 1.0
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: BRAM
+     Depth:    1
+     Padding:  List(0)
+     Accum:    Fold
+     Banks:    1 <Flat>
+       Dims {0}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x1762 = SRAMBankedWrite(x1754,Vector(Const(0)),Vector(List(Const(0))),Vector(b1759),Vector(Set(b1760))) {}
+             c0(i) = 0.to[T] (lstm.scala:130:15)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+           - Mux Port #1: 
+             x1928 = SRAMBankedWrite(x1754,Vector(x2167),Vector(List(Const(0))),Vector(x2268),Vector(Set(x2267, x2266))) {}
+             c0(j) = c0_new (lstm.scala:175:17)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x1909 = SRAMBankedRead(x1754,Vector(List(Const(0))),Vector(x2258),Vector(Set(x2257, x2256)),Vec[Fix[TRUE,_16,_16]]) {}
+             val c0_new = f_gate * c0(j) + i_gate * g_gate (lstm.scala:172:35)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x2178: AccelScope (-1) [Level: OuterControl, Loop: Single, Schedule: Sequenced]
+  x2173: ParallelPipe (-1) [Level: OuterControl, Loop: Single, Schedule: ForkJoin]
+    x1765: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+      x1762: SRAMBankedWrite
+  x2087: UnrolledForeach (-1) [Level: OuterControl, Loop: Looped, Schedule: Sequenced]
+    x1930: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+      x1909: SRAMBankedRead
+      x1928: SRAMBankedWrite
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: x1723
+Type: StreamIn[Fix[TRUE,_16,_16]]
+Src:  lstm.scala:117:16
+Src:        inputSeq load dInput
+---------------------------------------------------------------------
+Symbol:     x1723 = StreamInNew(BurstDataBus())
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {0}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x1745 = StreamInBankedRead(x1723,ArrayBuffer(Set(b1743, b1744))) {}
+             inputSeq load dInput (lstm.scala:117:16)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x1751: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+  x1745: StreamInBankedRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: dot_1 (x2094)
+Type: Reg[Fix[TRUE,_16,_16]]
+Src:  lstm.scala:212:32
+Src:          val dot = Reduce(Reg[T](0.to[T]))(HIDDEN by 1) { j =>
+---------------------------------------------------------------------
+Symbol:     x2094 = RegNew(Const(0))
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    2
+     Padding:  List()
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {}: Cyclic: N=1, B=1, alpha=<>, P=<> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x2113 = RegWrite(x2094,x2183,Set()) {}
+             }{_ + _} (lstm.scala:214:10)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+         1 [Type:WR]:
+         1 [Type:RD]:
+           - Mux Port #0: 
+             x2117 = RegRead(x2094) {}
+             logits(i) = dot.value + bfc(i) (lstm.scala:215:25)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         M [Type:WR]:
+         M [Type:RD]:
+
+
+
+Control Tree: 
+x2121: UnrolledForeach (-1) [Level: OuterControl, Loop: Looped, Schedule: Pipelined]
+  x2114: UnrolledReduce (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+    x2113: RegWrite
+  x2120: UnitPipe (-1) [Level: InnerControl, Loop: Single, Schedule: Sequenced]
+    x2117: RegRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: wih1_0 (x1457)
+Type: SRAM2[Fix[TRUE,_16,_16]]
+Src:  lstm.scala:94:25
+Src:        val wih1 = SRAM[T](GATE_H, HIDDEN)
+---------------------------------------------------------------------
+Symbol:     x1457 = SRAMNew(List(Const(512), Const(128)),SRAM2[Fix[TRUE,_16,_16]])
+Instances: 1
+  RAM36: 1.0
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: BRAM
+     Depth:    1
+     Padding:  List(0, 0)
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {0,1}: Cyclic: N=1, B=1, alpha=<1,1>, P=<1,1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x1587 = SRAMBankedWrite(x1457,Vector(x1583),Vector(List(Const(0))),Vector(x1586),Vector(Set(x2203, x2204))) {}
+             wih1 load dWih1 (lstm.scala:107:12)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x1953 = SRAMBankedRead(x1457,Vector(List(Const(0))),Vector(x1952),Vector(Set(x2275, x2272, x2273, x2274)),Vec[Fix[TRUE,_16,_16]]) {}
+             wih1(row, k) * h0(k) (lstm.scala:184:17)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x2178: AccelScope (-1) [Level: OuterControl, Loop: Single, Schedule: Sequenced]
+  x2173: ParallelPipe (-1) [Level: OuterControl, Loop: Single, Schedule: ForkJoin]
+    x1589: UnitPipe (-1) [Level: OuterControl, Loop: Single, Schedule: Streaming]
+      x1588: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+        x1587: SRAMBankedWrite
+  x2087: UnrolledForeach (-1) [Level: OuterControl, Loop: Looped, Schedule: Sequenced]
+    x2177: UnrolledForeach (-1) [Level: OuterControl, Loop: Looped, Schedule: Pipelined]
+      x2176: ParallelPipe (-1) [Level: OuterControl, Loop: Single, Schedule: ForkJoin]
+        x1967: UnrolledReduce (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+          x1953: SRAMBankedRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: sigLUT_0 (x2062)
+Type: LUT1[Fix[TRUE,_16,_16]]
+Src:  lstm.scala:244:27
+Src:    val sigLUT = LUT[T](256)(List.tabulate(256){ i =>
+---------------------------------------------------------------------
+Symbol:     x2062 = LUTNew(List(Const(256)),List(Const(0.002471923828125), Const(0.0025787353515625), Const(0.0027008056640625), Const(0.002838134765625), Const(0.0029754638671875), Const(0.00311279296875), Const(0.003265380859375), Const(0.0034332275390625), Const(0.0035858154296875), Const(0.0037689208984375), Const(0.0039520263671875), Const(0.0041351318359375), Const(0.00433349609375), Const(0.004547119140625), Const(0.0047607421875), Const(0.0049896240234375), Const(0.0052337646484375), Const(0.0054779052734375), Const(0.0057373046875), Const(0.006011962890625), Const(0.0063018798828125), Const(0.0066070556640625), Const(0.006927490234375), Const(0.00726318359375), Const(0.007598876953125), Const(0.007965087890625), Const(0.0083465576171875), Const(0.0087432861328125), Const(0.0091705322265625), Const(0.0095977783203125), Const(0.0100555419921875), Const(0.0105438232421875), Const(0.01104736328125), Const(0.011566162109375), Const(0.012115478515625), Const(0.0126953125), Const(0.0133056640625), Const(0.0139312744140625), Const(0.0146026611328125), Const(0.015289306640625), Const(0.016021728515625), Const(0.0167694091796875), Const(0.0175628662109375), Const(0.018402099609375), Const(0.0192718505859375), Const(0.020172119140625), Const(0.0211334228515625), Const(0.022125244140625), Const(0.023162841796875), Const(0.024261474609375), Const(0.025390625), Const(0.0265960693359375), Const(0.02783203125), Const(0.029144287109375), Const(0.0305023193359375), Const(0.03192138671875), Const(0.033416748046875), Const(0.0349578857421875), Const(0.036590576171875), Const(0.0382843017578125), Const(0.0400543212890625), Const(0.041900634765625), Const(0.0438385009765625), Const(0.0458526611328125), Const(0.0479583740234375), Const(0.050140380859375), Const(0.0524444580078125), Const(0.0548248291015625), Const(0.05731201171875), Const(0.059906005859375), Const(0.0626220703125), Const(0.0654449462890625), Const(0.0683746337890625), Const(0.071441650390625), Const(0.074615478515625), Const(0.07794189453125), Const(0.081390380859375), Const(0.0849761962890625), Const(0.088714599609375), Const(0.09259033203125), Const(0.09661865234375), Const(0.100799560546875), Const(0.1051483154296875), Const(0.1096649169921875), Const(0.114349365234375), Const(0.11920166015625), Const(0.1242218017578125), Const(0.1294403076171875), Const(0.13482666015625), Const(0.140411376953125), Const(0.1461944580078125), Const(0.15216064453125), Const(0.1583404541015625), Const(0.1647186279296875), Const(0.171295166015625), Const(0.178070068359375), Const(0.18505859375), Const(0.1922607421875), Const(0.199676513671875), Const(0.207305908203125), Const(0.21514892578125), Const(0.22320556640625), Const(0.2314605712890625), Const(0.2399444580078125), Const(0.248626708984375), Const(0.2575225830078125), Const(0.266632080078125), Const(0.2759246826171875), Const(0.285430908203125), Const(0.2951202392578125), Const(0.3050079345703125), Const(0.3150787353515625), Const(0.3253173828125), Const(0.335723876953125), Const(0.3462982177734375), Const(0.357025146484375), Const(0.3679046630859375), Const(0.3789215087890625), Const(0.390045166015625), Const(0.40130615234375), Const(0.41265869140625), Const(0.4241180419921875), Const(0.435638427734375), Const(0.4472503662109375), Const(0.4589080810546875), Const(0.470611572265625), Const(0.4823455810546875), Const(0.494110107421875), Const(0.5058746337890625), Const(0.51763916015625), Const(0.5293731689453125), Const(0.54107666015625), Const(0.552734375), Const(0.5643463134765625), Const(0.57586669921875), Const(0.5873260498046875), Const(0.5986785888671875), Const(0.6099395751953125), Const(0.621063232421875), Const(0.632080078125), Const(0.6429595947265625), Const(0.6536865234375), Const(0.6642608642578125), Const(0.6746673583984375), Const(0.684906005859375), Const(0.694976806640625), Const(0.704864501953125), Const(0.7145538330078125), Const(0.72406005859375), Const(0.7333526611328125), Const(0.742462158203125), Const(0.7513580322265625), Const(0.760040283203125), Const(0.768524169921875), Const(0.7767791748046875), Const(0.7848358154296875), Const(0.7926788330078125), Const(0.8003082275390625), Const(0.8077239990234375), Const(0.8149261474609375), Const(0.8219146728515625), Const(0.8286895751953125), Const(0.83526611328125), Const(0.841644287109375), Const(0.8478240966796875), Const(0.853790283203125), Const(0.8595733642578125), Const(0.8651580810546875), Const(0.87054443359375), Const(0.875762939453125), Const(0.8807830810546875), Const(0.8856353759765625), Const(0.89031982421875), Const(0.89483642578125), Const(0.8991851806640625), Const(0.9033660888671875), Const(0.9073944091796875), Const(0.9112701416015625), Const(0.915008544921875), Const(0.9185943603515625), Const(0.9220428466796875), Const(0.9253692626953125), Const(0.9285430908203125), Const(0.931610107421875), Const(0.934539794921875), Const(0.9373626708984375), Const(0.9400787353515625), Const(0.9426727294921875), Const(0.945159912109375), Const(0.947540283203125), Const(0.9498443603515625), Const(0.9520263671875), Const(0.954132080078125), Const(0.956146240234375), Const(0.9580841064453125), Const(0.959930419921875), Const(0.961700439453125), Const(0.9633941650390625), Const(0.96502685546875), Const(0.9665679931640625), Const(0.9680633544921875), Const(0.969482421875), Const(0.9708404541015625), Const(0.9721527099609375), Const(0.973388671875), Const(0.9745941162109375), Const(0.9757232666015625), Const(0.9768218994140625), Const(0.9778594970703125), Const(0.978851318359375), Const(0.9798126220703125), Const(0.980712890625), Const(0.9815826416015625), Const(0.982421875), Const(0.98321533203125), Const(0.9839630126953125), Const(0.9846954345703125), Const(0.985382080078125), Const(0.986053466796875), Const(0.9866790771484375), Const(0.9872894287109375), Const(0.9878692626953125), Const(0.9884185791015625), Const(0.9889373779296875), Const(0.98944091796875), Const(0.98992919921875), Const(0.990386962890625), Const(0.990814208984375), Const(0.991241455078125), Const(0.99163818359375), Const(0.9920196533203125), Const(0.9923858642578125), Const(0.9927215576171875), Const(0.9930572509765625), Const(0.993377685546875), Const(0.993682861328125), Const(0.9939727783203125), Const(0.9942474365234375), Const(0.9945068359375), Const(0.9947509765625), Const(0.9949951171875), Const(0.9952239990234375), Const(0.9954376220703125), Const(0.9956512451171875), Const(0.995849609375), Const(0.99603271484375), Const(0.9962158203125), Const(0.99639892578125), Const(0.996551513671875), Const(0.9967193603515625), Const(0.9968719482421875), Const(0.99700927734375), Const(0.9971466064453125), Const(0.997283935546875), Const(0.997406005859375), Const(0.9975128173828125)),LUT1[Fix[TRUE,_16,_16]])
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    256 <Hierarchical>
+       Dims {0}: Cyclic: N=256, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x2063 = LUTBankedRead(x2062,Vector(List(x2061)),Vector(Const(0)),Vector(Set(x2289, x2290)),Vec[Fix[TRUE,_16,_16]]) {}
+             sigLUT(idx) (lstm.scala:248:9)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x2086: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+  x2063: LUTBankedRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: x1638
+Type: StreamOut[BurstCmd]
+Src:  lstm.scala:110:12
+Src:        bhh1 load dBhh1
+---------------------------------------------------------------------
+Symbol:     x1638 = StreamOutNew(BurstCmdBus)
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {0}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x1643 = StreamOutBankedWrite(x1638,ArrayBuffer(x1641),ArrayBuffer(Set(x1642))) {}
+             bhh1 load dBhh1 (lstm.scala:110:12)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+
+
+
+Control Tree: 
+x1644: UnitPipe (-1) [Level: InnerControl, Loop: Single, Schedule: Sequenced]
+  x1643: StreamOutBankedWrite
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: x1688
+Type: StreamIn[Fix[TRUE,_16,_16]]
+Src:  lstm.scala:113:12
+Src:        bfc  load dBfc
+---------------------------------------------------------------------
+Symbol:     x1688 = StreamInNew(BurstDataBus())
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {0}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x1715 = StreamInBankedRead(x1688,ArrayBuffer(Set(b1710))) {}
+             bfc  load dBfc (lstm.scala:113:12)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x1718: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+  x1715: StreamInBankedRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: sigLUT_0 (x1867)
+Type: LUT1[Fix[TRUE,_16,_16]]
+Src:  lstm.scala:244:27
+Src:    val sigLUT = LUT[T](256)(List.tabulate(256){ i =>
+---------------------------------------------------------------------
+Symbol:     x1867 = LUTNew(List(Const(256)),List(Const(0.002471923828125), Const(0.0025787353515625), Const(0.0027008056640625), Const(0.002838134765625), Const(0.0029754638671875), Const(0.00311279296875), Const(0.003265380859375), Const(0.0034332275390625), Const(0.0035858154296875), Const(0.0037689208984375), Const(0.0039520263671875), Const(0.0041351318359375), Const(0.00433349609375), Const(0.004547119140625), Const(0.0047607421875), Const(0.0049896240234375), Const(0.0052337646484375), Const(0.0054779052734375), Const(0.0057373046875), Const(0.006011962890625), Const(0.0063018798828125), Const(0.0066070556640625), Const(0.006927490234375), Const(0.00726318359375), Const(0.007598876953125), Const(0.007965087890625), Const(0.0083465576171875), Const(0.0087432861328125), Const(0.0091705322265625), Const(0.0095977783203125), Const(0.0100555419921875), Const(0.0105438232421875), Const(0.01104736328125), Const(0.011566162109375), Const(0.012115478515625), Const(0.0126953125), Const(0.0133056640625), Const(0.0139312744140625), Const(0.0146026611328125), Const(0.015289306640625), Const(0.016021728515625), Const(0.0167694091796875), Const(0.0175628662109375), Const(0.018402099609375), Const(0.0192718505859375), Const(0.020172119140625), Const(0.0211334228515625), Const(0.022125244140625), Const(0.023162841796875), Const(0.024261474609375), Const(0.025390625), Const(0.0265960693359375), Const(0.02783203125), Const(0.029144287109375), Const(0.0305023193359375), Const(0.03192138671875), Const(0.033416748046875), Const(0.0349578857421875), Const(0.036590576171875), Const(0.0382843017578125), Const(0.0400543212890625), Const(0.041900634765625), Const(0.0438385009765625), Const(0.0458526611328125), Const(0.0479583740234375), Const(0.050140380859375), Const(0.0524444580078125), Const(0.0548248291015625), Const(0.05731201171875), Const(0.059906005859375), Const(0.0626220703125), Const(0.0654449462890625), Const(0.0683746337890625), Const(0.071441650390625), Const(0.074615478515625), Const(0.07794189453125), Const(0.081390380859375), Const(0.0849761962890625), Const(0.088714599609375), Const(0.09259033203125), Const(0.09661865234375), Const(0.100799560546875), Const(0.1051483154296875), Const(0.1096649169921875), Const(0.114349365234375), Const(0.11920166015625), Const(0.1242218017578125), Const(0.1294403076171875), Const(0.13482666015625), Const(0.140411376953125), Const(0.1461944580078125), Const(0.15216064453125), Const(0.1583404541015625), Const(0.1647186279296875), Const(0.171295166015625), Const(0.178070068359375), Const(0.18505859375), Const(0.1922607421875), Const(0.199676513671875), Const(0.207305908203125), Const(0.21514892578125), Const(0.22320556640625), Const(0.2314605712890625), Const(0.2399444580078125), Const(0.248626708984375), Const(0.2575225830078125), Const(0.266632080078125), Const(0.2759246826171875), Const(0.285430908203125), Const(0.2951202392578125), Const(0.3050079345703125), Const(0.3150787353515625), Const(0.3253173828125), Const(0.335723876953125), Const(0.3462982177734375), Const(0.357025146484375), Const(0.3679046630859375), Const(0.3789215087890625), Const(0.390045166015625), Const(0.40130615234375), Const(0.41265869140625), Const(0.4241180419921875), Const(0.435638427734375), Const(0.4472503662109375), Const(0.4589080810546875), Const(0.470611572265625), Const(0.4823455810546875), Const(0.494110107421875), Const(0.5058746337890625), Const(0.51763916015625), Const(0.5293731689453125), Const(0.54107666015625), Const(0.552734375), Const(0.5643463134765625), Const(0.57586669921875), Const(0.5873260498046875), Const(0.5986785888671875), Const(0.6099395751953125), Const(0.621063232421875), Const(0.632080078125), Const(0.6429595947265625), Const(0.6536865234375), Const(0.6642608642578125), Const(0.6746673583984375), Const(0.684906005859375), Const(0.694976806640625), Const(0.704864501953125), Const(0.7145538330078125), Const(0.72406005859375), Const(0.7333526611328125), Const(0.742462158203125), Const(0.7513580322265625), Const(0.760040283203125), Const(0.768524169921875), Const(0.7767791748046875), Const(0.7848358154296875), Const(0.7926788330078125), Const(0.8003082275390625), Const(0.8077239990234375), Const(0.8149261474609375), Const(0.8219146728515625), Const(0.8286895751953125), Const(0.83526611328125), Const(0.841644287109375), Const(0.8478240966796875), Const(0.853790283203125), Const(0.8595733642578125), Const(0.8651580810546875), Const(0.87054443359375), Const(0.875762939453125), Const(0.8807830810546875), Const(0.8856353759765625), Const(0.89031982421875), Const(0.89483642578125), Const(0.8991851806640625), Const(0.9033660888671875), Const(0.9073944091796875), Const(0.9112701416015625), Const(0.915008544921875), Const(0.9185943603515625), Const(0.9220428466796875), Const(0.9253692626953125), Const(0.9285430908203125), Const(0.931610107421875), Const(0.934539794921875), Const(0.9373626708984375), Const(0.9400787353515625), Const(0.9426727294921875), Const(0.945159912109375), Const(0.947540283203125), Const(0.9498443603515625), Const(0.9520263671875), Const(0.954132080078125), Const(0.956146240234375), Const(0.9580841064453125), Const(0.959930419921875), Const(0.961700439453125), Const(0.9633941650390625), Const(0.96502685546875), Const(0.9665679931640625), Const(0.9680633544921875), Const(0.969482421875), Const(0.9708404541015625), Const(0.9721527099609375), Const(0.973388671875), Const(0.9745941162109375), Const(0.9757232666015625), Const(0.9768218994140625), Const(0.9778594970703125), Const(0.978851318359375), Const(0.9798126220703125), Const(0.980712890625), Const(0.9815826416015625), Const(0.982421875), Const(0.98321533203125), Const(0.9839630126953125), Const(0.9846954345703125), Const(0.985382080078125), Const(0.986053466796875), Const(0.9866790771484375), Const(0.9872894287109375), Const(0.9878692626953125), Const(0.9884185791015625), Const(0.9889373779296875), Const(0.98944091796875), Const(0.98992919921875), Const(0.990386962890625), Const(0.990814208984375), Const(0.991241455078125), Const(0.99163818359375), Const(0.9920196533203125), Const(0.9923858642578125), Const(0.9927215576171875), Const(0.9930572509765625), Const(0.993377685546875), Const(0.993682861328125), Const(0.9939727783203125), Const(0.9942474365234375), Const(0.9945068359375), Const(0.9947509765625), Const(0.9949951171875), Const(0.9952239990234375), Const(0.9954376220703125), Const(0.9956512451171875), Const(0.995849609375), Const(0.99603271484375), Const(0.9962158203125), Const(0.99639892578125), Const(0.996551513671875), Const(0.9967193603515625), Const(0.9968719482421875), Const(0.99700927734375), Const(0.9971466064453125), Const(0.997283935546875), Const(0.997406005859375), Const(0.9975128173828125)),LUT1[Fix[TRUE,_16,_16]])
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    256 <Hierarchical>
+       Dims {0}: Cyclic: N=256, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x1868 = LUTBankedRead(x1867,Vector(List(x1866)),Vector(Const(0)),Vector(Set(x2247, x2246)),Vec[Fix[TRUE,_16,_16]]) {}
+             sigLUT(idx) (lstm.scala:248:9)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x1930: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+  x1868: LUTBankedRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: x1495
+Type: StreamIn[Fix[TRUE,_16,_16]]
+Src:  lstm.scala:103:12
+Src:        whh0 load dWhh0
+---------------------------------------------------------------------
+Symbol:     x1495 = StreamInNew(BurstDataBus())
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {0}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x1517 = StreamInBankedRead(x1495,ArrayBuffer(Set(b1515, b1516))) {}
+             whh0 load dWhh0 (lstm.scala:103:12)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x1523: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+  x1517: StreamInBankedRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: x1464
+Type: StreamIn[Fix[TRUE,_16,_16]]
+Src:  lstm.scala:102:12
+Src:        wih0 load dWih0
+---------------------------------------------------------------------
+Symbol:     x1464 = StreamInNew(BurstDataBus())
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {0}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x1486 = StreamInBankedRead(x1464,ArrayBuffer(Set(b1484, b1485))) {}
+             wih0 load dWih0 (lstm.scala:102:12)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x1492: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+  x1486: StreamInBankedRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: x1938
+Type: Reg[Fix[TRUE,_32,_0]]
+Src:  lstm.scala:181:32
+Src:            val row = g * HIDDEN + j(Pass 28)
+---------------------------------------------------------------------
+Symbol:     x1938 = RegNew(Const(0))
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: BRAM
+     Depth:    3
+     Padding:  List()
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {}: Cyclic: N=1, B=1, alpha=<>, P=<> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x1941 = RegWrite(x1938,x1940,Set()) {}
+             val row = g * HIDDEN + j(Pass 28)(Pass 28) (lstm.scala:181:32)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+         1 [Type:WR]:
+         1 [Type:RD]:
+           - Mux Port #0: 
+             x1974 = RegRead(x1938) {}
+             val row = g * HIDDEN + j(Pass 28)(Pass 28) (lstm.scala:181:32)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+           - Mux Port #1: 
+             x1949 = RegRead(x1938) {}
+             val row = g * HIDDEN + j(Pass 28)(Pass 28) (lstm.scala:181:32)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         2 [Type:WR]:
+         2 [Type:RD]:
+           - Mux Port #0: 
+             x1996 = RegRead(x1938) {}
+             val row = g * HIDDEN + j(Pass 28)(Pass 28) (lstm.scala:181:32)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         M [Type:WR]:
+         M [Type:RD]:
+
+
+
+Control Tree: 
+x2177: UnrolledForeach (-1) [Level: OuterControl, Loop: Looped, Schedule: Pipelined]
+  x1942: UnitPipe (-1) [Level: InnerControl, Loop: Single, Schedule: Sequenced]
+    x1941: RegWrite
+  x2176: ParallelPipe (-1) [Level: OuterControl, Loop: Single, Schedule: ForkJoin]
+    x1967: UnrolledReduce (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+      x1949: RegRead
+    x1992: UnrolledReduce (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+      x1974: RegRead
+  x2008: UnitPipe (-1) [Level: InnerControl, Loop: Single, Schedule: Sequenced]
+    x1996: RegRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: sigLUT_0 (x1892)
+Type: LUT1[Fix[TRUE,_16,_16]]
+Src:  lstm.scala:244:27
+Src:    val sigLUT = LUT[T](256)(List.tabulate(256){ i =>
+---------------------------------------------------------------------
+Symbol:     x1892 = LUTNew(List(Const(256)),List(Const(0.002471923828125), Const(0.0025787353515625), Const(0.0027008056640625), Const(0.002838134765625), Const(0.0029754638671875), Const(0.00311279296875), Const(0.003265380859375), Const(0.0034332275390625), Const(0.0035858154296875), Const(0.0037689208984375), Const(0.0039520263671875), Const(0.0041351318359375), Const(0.00433349609375), Const(0.004547119140625), Const(0.0047607421875), Const(0.0049896240234375), Const(0.0052337646484375), Const(0.0054779052734375), Const(0.0057373046875), Const(0.006011962890625), Const(0.0063018798828125), Const(0.0066070556640625), Const(0.006927490234375), Const(0.00726318359375), Const(0.007598876953125), Const(0.007965087890625), Const(0.0083465576171875), Const(0.0087432861328125), Const(0.0091705322265625), Const(0.0095977783203125), Const(0.0100555419921875), Const(0.0105438232421875), Const(0.01104736328125), Const(0.011566162109375), Const(0.012115478515625), Const(0.0126953125), Const(0.0133056640625), Const(0.0139312744140625), Const(0.0146026611328125), Const(0.015289306640625), Const(0.016021728515625), Const(0.0167694091796875), Const(0.0175628662109375), Const(0.018402099609375), Const(0.0192718505859375), Const(0.020172119140625), Const(0.0211334228515625), Const(0.022125244140625), Const(0.023162841796875), Const(0.024261474609375), Const(0.025390625), Const(0.0265960693359375), Const(0.02783203125), Const(0.029144287109375), Const(0.0305023193359375), Const(0.03192138671875), Const(0.033416748046875), Const(0.0349578857421875), Const(0.036590576171875), Const(0.0382843017578125), Const(0.0400543212890625), Const(0.041900634765625), Const(0.0438385009765625), Const(0.0458526611328125), Const(0.0479583740234375), Const(0.050140380859375), Const(0.0524444580078125), Const(0.0548248291015625), Const(0.05731201171875), Const(0.059906005859375), Const(0.0626220703125), Const(0.0654449462890625), Const(0.0683746337890625), Const(0.071441650390625), Const(0.074615478515625), Const(0.07794189453125), Const(0.081390380859375), Const(0.0849761962890625), Const(0.088714599609375), Const(0.09259033203125), Const(0.09661865234375), Const(0.100799560546875), Const(0.1051483154296875), Const(0.1096649169921875), Const(0.114349365234375), Const(0.11920166015625), Const(0.1242218017578125), Const(0.1294403076171875), Const(0.13482666015625), Const(0.140411376953125), Const(0.1461944580078125), Const(0.15216064453125), Const(0.1583404541015625), Const(0.1647186279296875), Const(0.171295166015625), Const(0.178070068359375), Const(0.18505859375), Const(0.1922607421875), Const(0.199676513671875), Const(0.207305908203125), Const(0.21514892578125), Const(0.22320556640625), Const(0.2314605712890625), Const(0.2399444580078125), Const(0.248626708984375), Const(0.2575225830078125), Const(0.266632080078125), Const(0.2759246826171875), Const(0.285430908203125), Const(0.2951202392578125), Const(0.3050079345703125), Const(0.3150787353515625), Const(0.3253173828125), Const(0.335723876953125), Const(0.3462982177734375), Const(0.357025146484375), Const(0.3679046630859375), Const(0.3789215087890625), Const(0.390045166015625), Const(0.40130615234375), Const(0.41265869140625), Const(0.4241180419921875), Const(0.435638427734375), Const(0.4472503662109375), Const(0.4589080810546875), Const(0.470611572265625), Const(0.4823455810546875), Const(0.494110107421875), Const(0.5058746337890625), Const(0.51763916015625), Const(0.5293731689453125), Const(0.54107666015625), Const(0.552734375), Const(0.5643463134765625), Const(0.57586669921875), Const(0.5873260498046875), Const(0.5986785888671875), Const(0.6099395751953125), Const(0.621063232421875), Const(0.632080078125), Const(0.6429595947265625), Const(0.6536865234375), Const(0.6642608642578125), Const(0.6746673583984375), Const(0.684906005859375), Const(0.694976806640625), Const(0.704864501953125), Const(0.7145538330078125), Const(0.72406005859375), Const(0.7333526611328125), Const(0.742462158203125), Const(0.7513580322265625), Const(0.760040283203125), Const(0.768524169921875), Const(0.7767791748046875), Const(0.7848358154296875), Const(0.7926788330078125), Const(0.8003082275390625), Const(0.8077239990234375), Const(0.8149261474609375), Const(0.8219146728515625), Const(0.8286895751953125), Const(0.83526611328125), Const(0.841644287109375), Const(0.8478240966796875), Const(0.853790283203125), Const(0.8595733642578125), Const(0.8651580810546875), Const(0.87054443359375), Const(0.875762939453125), Const(0.8807830810546875), Const(0.8856353759765625), Const(0.89031982421875), Const(0.89483642578125), Const(0.8991851806640625), Const(0.9033660888671875), Const(0.9073944091796875), Const(0.9112701416015625), Const(0.915008544921875), Const(0.9185943603515625), Const(0.9220428466796875), Const(0.9253692626953125), Const(0.9285430908203125), Const(0.931610107421875), Const(0.934539794921875), Const(0.9373626708984375), Const(0.9400787353515625), Const(0.9426727294921875), Const(0.945159912109375), Const(0.947540283203125), Const(0.9498443603515625), Const(0.9520263671875), Const(0.954132080078125), Const(0.956146240234375), Const(0.9580841064453125), Const(0.959930419921875), Const(0.961700439453125), Const(0.9633941650390625), Const(0.96502685546875), Const(0.9665679931640625), Const(0.9680633544921875), Const(0.969482421875), Const(0.9708404541015625), Const(0.9721527099609375), Const(0.973388671875), Const(0.9745941162109375), Const(0.9757232666015625), Const(0.9768218994140625), Const(0.9778594970703125), Const(0.978851318359375), Const(0.9798126220703125), Const(0.980712890625), Const(0.9815826416015625), Const(0.982421875), Const(0.98321533203125), Const(0.9839630126953125), Const(0.9846954345703125), Const(0.985382080078125), Const(0.986053466796875), Const(0.9866790771484375), Const(0.9872894287109375), Const(0.9878692626953125), Const(0.9884185791015625), Const(0.9889373779296875), Const(0.98944091796875), Const(0.98992919921875), Const(0.990386962890625), Const(0.990814208984375), Const(0.991241455078125), Const(0.99163818359375), Const(0.9920196533203125), Const(0.9923858642578125), Const(0.9927215576171875), Const(0.9930572509765625), Const(0.993377685546875), Const(0.993682861328125), Const(0.9939727783203125), Const(0.9942474365234375), Const(0.9945068359375), Const(0.9947509765625), Const(0.9949951171875), Const(0.9952239990234375), Const(0.9954376220703125), Const(0.9956512451171875), Const(0.995849609375), Const(0.99603271484375), Const(0.9962158203125), Const(0.99639892578125), Const(0.996551513671875), Const(0.9967193603515625), Const(0.9968719482421875), Const(0.99700927734375), Const(0.9971466064453125), Const(0.997283935546875), Const(0.997406005859375), Const(0.9975128173828125)),LUT1[Fix[TRUE,_16,_16]])
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    256 <Hierarchical>
+       Dims {0}: Cyclic: N=256, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x1893 = LUTBankedRead(x1892,Vector(List(x1891)),Vector(Const(0)),Vector(Set(x2247, x2246)),Vec[Fix[TRUE,_16,_16]]) {}
+             sigLUT(idx) (lstm.scala:248:9)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x1930: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+  x1893: LUTBankedRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: hContrib_1 (x1969)
+Type: Reg[Fix[TRUE,_16,_16]]
+Src:  lstm.scala:187:39
+Src:            val hContrib = Reduce(Reg[T](0.to[T]))(HIDDEN by 1) { k =>
+---------------------------------------------------------------------
+Symbol:     x1969 = RegNew(Const(0))
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    2
+     Padding:  List()
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {}: Cyclic: N=1, B=1, alpha=<>, P=<> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x1990 = RegWrite(x1969,x2182,Set()) {}
+             }{_ + _} (lstm.scala:189:12)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+         1 [Type:WR]:
+         1 [Type:RD]:
+           - Mux Port #0: 
+             x1993 = RegRead(x1969) {}
+             gates1(g, j) = xContrib.value + hContrib.value + bih1(row) + bhh1(row) (lstm.scala:191:52)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         M [Type:WR]:
+         M [Type:RD]:
+
+
+
+Control Tree: 
+x2177: UnrolledForeach (-1) [Level: OuterControl, Loop: Looped, Schedule: Pipelined]
+  x2176: ParallelPipe (-1) [Level: OuterControl, Loop: Single, Schedule: ForkJoin]
+    x1992: UnrolledReduce (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+      x1990: RegWrite
+  x2008: UnitPipe (-1) [Level: InnerControl, Loop: Single, Schedule: Sequenced]
+    x1993: RegRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: sigLUT_0 (x2078)
+Type: LUT1[Fix[TRUE,_16,_16]]
+Src:  lstm.scala:244:27
+Src:    val sigLUT = LUT[T](256)(List.tabulate(256){ i =>
+---------------------------------------------------------------------
+Symbol:     x2078 = LUTNew(List(Const(256)),List(Const(0.002471923828125), Const(0.0025787353515625), Const(0.0027008056640625), Const(0.002838134765625), Const(0.0029754638671875), Const(0.00311279296875), Const(0.003265380859375), Const(0.0034332275390625), Const(0.0035858154296875), Const(0.0037689208984375), Const(0.0039520263671875), Const(0.0041351318359375), Const(0.00433349609375), Const(0.004547119140625), Const(0.0047607421875), Const(0.0049896240234375), Const(0.0052337646484375), Const(0.0054779052734375), Const(0.0057373046875), Const(0.006011962890625), Const(0.0063018798828125), Const(0.0066070556640625), Const(0.006927490234375), Const(0.00726318359375), Const(0.007598876953125), Const(0.007965087890625), Const(0.0083465576171875), Const(0.0087432861328125), Const(0.0091705322265625), Const(0.0095977783203125), Const(0.0100555419921875), Const(0.0105438232421875), Const(0.01104736328125), Const(0.011566162109375), Const(0.012115478515625), Const(0.0126953125), Const(0.0133056640625), Const(0.0139312744140625), Const(0.0146026611328125), Const(0.015289306640625), Const(0.016021728515625), Const(0.0167694091796875), Const(0.0175628662109375), Const(0.018402099609375), Const(0.0192718505859375), Const(0.020172119140625), Const(0.0211334228515625), Const(0.022125244140625), Const(0.023162841796875), Const(0.024261474609375), Const(0.025390625), Const(0.0265960693359375), Const(0.02783203125), Const(0.029144287109375), Const(0.0305023193359375), Const(0.03192138671875), Const(0.033416748046875), Const(0.0349578857421875), Const(0.036590576171875), Const(0.0382843017578125), Const(0.0400543212890625), Const(0.041900634765625), Const(0.0438385009765625), Const(0.0458526611328125), Const(0.0479583740234375), Const(0.050140380859375), Const(0.0524444580078125), Const(0.0548248291015625), Const(0.05731201171875), Const(0.059906005859375), Const(0.0626220703125), Const(0.0654449462890625), Const(0.0683746337890625), Const(0.071441650390625), Const(0.074615478515625), Const(0.07794189453125), Const(0.081390380859375), Const(0.0849761962890625), Const(0.088714599609375), Const(0.09259033203125), Const(0.09661865234375), Const(0.100799560546875), Const(0.1051483154296875), Const(0.1096649169921875), Const(0.114349365234375), Const(0.11920166015625), Const(0.1242218017578125), Const(0.1294403076171875), Const(0.13482666015625), Const(0.140411376953125), Const(0.1461944580078125), Const(0.15216064453125), Const(0.1583404541015625), Const(0.1647186279296875), Const(0.171295166015625), Const(0.178070068359375), Const(0.18505859375), Const(0.1922607421875), Const(0.199676513671875), Const(0.207305908203125), Const(0.21514892578125), Const(0.22320556640625), Const(0.2314605712890625), Const(0.2399444580078125), Const(0.248626708984375), Const(0.2575225830078125), Const(0.266632080078125), Const(0.2759246826171875), Const(0.285430908203125), Const(0.2951202392578125), Const(0.3050079345703125), Const(0.3150787353515625), Const(0.3253173828125), Const(0.335723876953125), Const(0.3462982177734375), Const(0.357025146484375), Const(0.3679046630859375), Const(0.3789215087890625), Const(0.390045166015625), Const(0.40130615234375), Const(0.41265869140625), Const(0.4241180419921875), Const(0.435638427734375), Const(0.4472503662109375), Const(0.4589080810546875), Const(0.470611572265625), Const(0.4823455810546875), Const(0.494110107421875), Const(0.5058746337890625), Const(0.51763916015625), Const(0.5293731689453125), Const(0.54107666015625), Const(0.552734375), Const(0.5643463134765625), Const(0.57586669921875), Const(0.5873260498046875), Const(0.5986785888671875), Const(0.6099395751953125), Const(0.621063232421875), Const(0.632080078125), Const(0.6429595947265625), Const(0.6536865234375), Const(0.6642608642578125), Const(0.6746673583984375), Const(0.684906005859375), Const(0.694976806640625), Const(0.704864501953125), Const(0.7145538330078125), Const(0.72406005859375), Const(0.7333526611328125), Const(0.742462158203125), Const(0.7513580322265625), Const(0.760040283203125), Const(0.768524169921875), Const(0.7767791748046875), Const(0.7848358154296875), Const(0.7926788330078125), Const(0.8003082275390625), Const(0.8077239990234375), Const(0.8149261474609375), Const(0.8219146728515625), Const(0.8286895751953125), Const(0.83526611328125), Const(0.841644287109375), Const(0.8478240966796875), Const(0.853790283203125), Const(0.8595733642578125), Const(0.8651580810546875), Const(0.87054443359375), Const(0.875762939453125), Const(0.8807830810546875), Const(0.8856353759765625), Const(0.89031982421875), Const(0.89483642578125), Const(0.8991851806640625), Const(0.9033660888671875), Const(0.9073944091796875), Const(0.9112701416015625), Const(0.915008544921875), Const(0.9185943603515625), Const(0.9220428466796875), Const(0.9253692626953125), Const(0.9285430908203125), Const(0.931610107421875), Const(0.934539794921875), Const(0.9373626708984375), Const(0.9400787353515625), Const(0.9426727294921875), Const(0.945159912109375), Const(0.947540283203125), Const(0.9498443603515625), Const(0.9520263671875), Const(0.954132080078125), Const(0.956146240234375), Const(0.9580841064453125), Const(0.959930419921875), Const(0.961700439453125), Const(0.9633941650390625), Const(0.96502685546875), Const(0.9665679931640625), Const(0.9680633544921875), Const(0.969482421875), Const(0.9708404541015625), Const(0.9721527099609375), Const(0.973388671875), Const(0.9745941162109375), Const(0.9757232666015625), Const(0.9768218994140625), Const(0.9778594970703125), Const(0.978851318359375), Const(0.9798126220703125), Const(0.980712890625), Const(0.9815826416015625), Const(0.982421875), Const(0.98321533203125), Const(0.9839630126953125), Const(0.9846954345703125), Const(0.985382080078125), Const(0.986053466796875), Const(0.9866790771484375), Const(0.9872894287109375), Const(0.9878692626953125), Const(0.9884185791015625), Const(0.9889373779296875), Const(0.98944091796875), Const(0.98992919921875), Const(0.990386962890625), Const(0.990814208984375), Const(0.991241455078125), Const(0.99163818359375), Const(0.9920196533203125), Const(0.9923858642578125), Const(0.9927215576171875), Const(0.9930572509765625), Const(0.993377685546875), Const(0.993682861328125), Const(0.9939727783203125), Const(0.9942474365234375), Const(0.9945068359375), Const(0.9947509765625), Const(0.9949951171875), Const(0.9952239990234375), Const(0.9954376220703125), Const(0.9956512451171875), Const(0.995849609375), Const(0.99603271484375), Const(0.9962158203125), Const(0.99639892578125), Const(0.996551513671875), Const(0.9967193603515625), Const(0.9968719482421875), Const(0.99700927734375), Const(0.9971466064453125), Const(0.997283935546875), Const(0.997406005859375), Const(0.9975128173828125)),LUT1[Fix[TRUE,_16,_16]])
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    256 <Hierarchical>
+       Dims {0}: Cyclic: N=256, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x2079 = LUTBankedRead(x2078,Vector(List(x2077)),Vector(Const(0)),Vector(Set(x2305, x2306)),Vec[Fix[TRUE,_16,_16]]) {}
+             sigLUT(idx) (lstm.scala:248:9)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x2086: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+  x2079: LUTBankedRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: x1687
+Type: FIFO[IssuedCmd]
+Src:  lstm.scala:113:12
+Src:        bfc  load dBfc
+---------------------------------------------------------------------
+Symbol:     x1687 = FIFONew(Const(16))
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {0}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x1694 = FIFOBankedEnq(x1687,ArrayBuffer(x1693),ArrayBuffer(Set(Const(true)))) {}
+             bfc  load dBfc (lstm.scala:113:12)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x1699 = FIFOBankedDeq(x1687,ArrayBuffer(Set(Const(true))),Vec[IssuedCmd]) {}
+             bfc  load dBfc (lstm.scala:113:12)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x1720: UnitPipe (-1) [Level: OuterControl, Loop: Single, Schedule: Streaming]
+  x1695: UnitPipe (-1) [Level: InnerControl, Loop: Single, Schedule: Sequenced]
+    x1694: FIFOBankedEnq
+  x1719: UnitPipe (-1) [Level: OuterControl, Loop: Single, Schedule: Sequenced]
+    x1705: UnitPipe (-1) [Level: InnerControl, Loop: Single, Schedule: Sequenced]
+      x1699: FIFOBankedDeq
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: xContrib_0 (x1943)
+Type: Reg[Fix[TRUE,_16,_16]]
+Src:  lstm.scala:183:39
+Src:            val xContrib = Reduce(Reg[T](0.to[T]))(HIDDEN by 1) { k =>
+---------------------------------------------------------------------
+Symbol:     x1943 = RegNew(Const(0))
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List()
+     Accum:    Buffer
+     Banks:    1 <Flat>
+       Dims {}: Cyclic: N=1, B=1, alpha=<>, P=<> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+         0 [Type:RD]:
+
+
+
+Control Tree: 
+x1967: UnrolledReduce (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+  x2181: RegAccumFMA
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: x1698
+Type: Reg[Fix[TRUE,_32,_0]]
+Src:  lstm.scala:113:12
+Src:        bfc  load dBfc
+---------------------------------------------------------------------
+Symbol:     x1698 = RegNew(Const(0))
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List()
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {}: Cyclic: N=1, B=1, alpha=<>, P=<> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x1704 = RegWrite(x1698,x1703,Set()) {}
+             bfc  load dBfc (lstm.scala:113:12)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x2157 = RegRead(x1698) {}
+             bfc  load dBfc (lstm.scala:113:12)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x1719: UnitPipe (-1) [Level: OuterControl, Loop: Single, Schedule: Sequenced]
+  x1705: UnitPipe (-1) [Level: InnerControl, Loop: Single, Schedule: Sequenced]
+    x1704: RegWrite
+  x1718: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+    x2157: RegRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: x1526
+Type: StreamIn[Fix[TRUE,_16,_16]]
+Src:  lstm.scala:104:12
+Src:        bih0 load dBih0
+---------------------------------------------------------------------
+Symbol:     x1526 = StreamInNew(BurstDataBus())
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {0}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x1537 = StreamInBankedRead(x1526,ArrayBuffer(Set(b1536))) {}
+             bih0 load dBih0 (lstm.scala:104:12)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x1540: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+  x1537: StreamInBankedRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: sigLUT_0 (x1879)
+Type: LUT1[Fix[TRUE,_16,_16]]
+Src:  lstm.scala:244:27
+Src:    val sigLUT = LUT[T](256)(List.tabulate(256){ i =>
+---------------------------------------------------------------------
+Symbol:     x1879 = LUTNew(List(Const(256)),List(Const(0.002471923828125), Const(0.0025787353515625), Const(0.0027008056640625), Const(0.002838134765625), Const(0.0029754638671875), Const(0.00311279296875), Const(0.003265380859375), Const(0.0034332275390625), Const(0.0035858154296875), Const(0.0037689208984375), Const(0.0039520263671875), Const(0.0041351318359375), Const(0.00433349609375), Const(0.004547119140625), Const(0.0047607421875), Const(0.0049896240234375), Const(0.0052337646484375), Const(0.0054779052734375), Const(0.0057373046875), Const(0.006011962890625), Const(0.0063018798828125), Const(0.0066070556640625), Const(0.006927490234375), Const(0.00726318359375), Const(0.007598876953125), Const(0.007965087890625), Const(0.0083465576171875), Const(0.0087432861328125), Const(0.0091705322265625), Const(0.0095977783203125), Const(0.0100555419921875), Const(0.0105438232421875), Const(0.01104736328125), Const(0.011566162109375), Const(0.012115478515625), Const(0.0126953125), Const(0.0133056640625), Const(0.0139312744140625), Const(0.0146026611328125), Const(0.015289306640625), Const(0.016021728515625), Const(0.0167694091796875), Const(0.0175628662109375), Const(0.018402099609375), Const(0.0192718505859375), Const(0.020172119140625), Const(0.0211334228515625), Const(0.022125244140625), Const(0.023162841796875), Const(0.024261474609375), Const(0.025390625), Const(0.0265960693359375), Const(0.02783203125), Const(0.029144287109375), Const(0.0305023193359375), Const(0.03192138671875), Const(0.033416748046875), Const(0.0349578857421875), Const(0.036590576171875), Const(0.0382843017578125), Const(0.0400543212890625), Const(0.041900634765625), Const(0.0438385009765625), Const(0.0458526611328125), Const(0.0479583740234375), Const(0.050140380859375), Const(0.0524444580078125), Const(0.0548248291015625), Const(0.05731201171875), Const(0.059906005859375), Const(0.0626220703125), Const(0.0654449462890625), Const(0.0683746337890625), Const(0.071441650390625), Const(0.074615478515625), Const(0.07794189453125), Const(0.081390380859375), Const(0.0849761962890625), Const(0.088714599609375), Const(0.09259033203125), Const(0.09661865234375), Const(0.100799560546875), Const(0.1051483154296875), Const(0.1096649169921875), Const(0.114349365234375), Const(0.11920166015625), Const(0.1242218017578125), Const(0.1294403076171875), Const(0.13482666015625), Const(0.140411376953125), Const(0.1461944580078125), Const(0.15216064453125), Const(0.1583404541015625), Const(0.1647186279296875), Const(0.171295166015625), Const(0.178070068359375), Const(0.18505859375), Const(0.1922607421875), Const(0.199676513671875), Const(0.207305908203125), Const(0.21514892578125), Const(0.22320556640625), Const(0.2314605712890625), Const(0.2399444580078125), Const(0.248626708984375), Const(0.2575225830078125), Const(0.266632080078125), Const(0.2759246826171875), Const(0.285430908203125), Const(0.2951202392578125), Const(0.3050079345703125), Const(0.3150787353515625), Const(0.3253173828125), Const(0.335723876953125), Const(0.3462982177734375), Const(0.357025146484375), Const(0.3679046630859375), Const(0.3789215087890625), Const(0.390045166015625), Const(0.40130615234375), Const(0.41265869140625), Const(0.4241180419921875), Const(0.435638427734375), Const(0.4472503662109375), Const(0.4589080810546875), Const(0.470611572265625), Const(0.4823455810546875), Const(0.494110107421875), Const(0.5058746337890625), Const(0.51763916015625), Const(0.5293731689453125), Const(0.54107666015625), Const(0.552734375), Const(0.5643463134765625), Const(0.57586669921875), Const(0.5873260498046875), Const(0.5986785888671875), Const(0.6099395751953125), Const(0.621063232421875), Const(0.632080078125), Const(0.6429595947265625), Const(0.6536865234375), Const(0.6642608642578125), Const(0.6746673583984375), Const(0.684906005859375), Const(0.694976806640625), Const(0.704864501953125), Const(0.7145538330078125), Const(0.72406005859375), Const(0.7333526611328125), Const(0.742462158203125), Const(0.7513580322265625), Const(0.760040283203125), Const(0.768524169921875), Const(0.7767791748046875), Const(0.7848358154296875), Const(0.7926788330078125), Const(0.8003082275390625), Const(0.8077239990234375), Const(0.8149261474609375), Const(0.8219146728515625), Const(0.8286895751953125), Const(0.83526611328125), Const(0.841644287109375), Const(0.8478240966796875), Const(0.853790283203125), Const(0.8595733642578125), Const(0.8651580810546875), Const(0.87054443359375), Const(0.875762939453125), Const(0.8807830810546875), Const(0.8856353759765625), Const(0.89031982421875), Const(0.89483642578125), Const(0.8991851806640625), Const(0.9033660888671875), Const(0.9073944091796875), Const(0.9112701416015625), Const(0.915008544921875), Const(0.9185943603515625), Const(0.9220428466796875), Const(0.9253692626953125), Const(0.9285430908203125), Const(0.931610107421875), Const(0.934539794921875), Const(0.9373626708984375), Const(0.9400787353515625), Const(0.9426727294921875), Const(0.945159912109375), Const(0.947540283203125), Const(0.9498443603515625), Const(0.9520263671875), Const(0.954132080078125), Const(0.956146240234375), Const(0.9580841064453125), Const(0.959930419921875), Const(0.961700439453125), Const(0.9633941650390625), Const(0.96502685546875), Const(0.9665679931640625), Const(0.9680633544921875), Const(0.969482421875), Const(0.9708404541015625), Const(0.9721527099609375), Const(0.973388671875), Const(0.9745941162109375), Const(0.9757232666015625), Const(0.9768218994140625), Const(0.9778594970703125), Const(0.978851318359375), Const(0.9798126220703125), Const(0.980712890625), Const(0.9815826416015625), Const(0.982421875), Const(0.98321533203125), Const(0.9839630126953125), Const(0.9846954345703125), Const(0.985382080078125), Const(0.986053466796875), Const(0.9866790771484375), Const(0.9872894287109375), Const(0.9878692626953125), Const(0.9884185791015625), Const(0.9889373779296875), Const(0.98944091796875), Const(0.98992919921875), Const(0.990386962890625), Const(0.990814208984375), Const(0.991241455078125), Const(0.99163818359375), Const(0.9920196533203125), Const(0.9923858642578125), Const(0.9927215576171875), Const(0.9930572509765625), Const(0.993377685546875), Const(0.993682861328125), Const(0.9939727783203125), Const(0.9942474365234375), Const(0.9945068359375), Const(0.9947509765625), Const(0.9949951171875), Const(0.9952239990234375), Const(0.9954376220703125), Const(0.9956512451171875), Const(0.995849609375), Const(0.99603271484375), Const(0.9962158203125), Const(0.99639892578125), Const(0.996551513671875), Const(0.9967193603515625), Const(0.9968719482421875), Const(0.99700927734375), Const(0.9971466064453125), Const(0.997283935546875), Const(0.997406005859375), Const(0.9975128173828125)),LUT1[Fix[TRUE,_16,_16]])
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    256 <Hierarchical>
+       Dims {0}: Cyclic: N=256, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x1880 = LUTBankedRead(x1879,Vector(List(x1878)),Vector(Const(0)),Vector(Set(x2247, x2246)),Vec[Fix[TRUE,_16,_16]]) {}
+             sigLUT(idx) (lstm.scala:248:9)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x1930: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+  x1880: LUTBankedRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: x1560
+Type: StreamIn[Fix[TRUE,_16,_16]]
+Src:  lstm.scala:107:12
+Src:        wih1 load dWih1
+---------------------------------------------------------------------
+Symbol:     x1560 = StreamInNew(BurstDataBus())
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {0}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x1582 = StreamInBankedRead(x1560,ArrayBuffer(Set(b1580, b1581))) {}
+             wih1 load dWih1 (lstm.scala:107:12)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x1588: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+  x1582: StreamInBankedRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: x1656
+Type: StreamIn[Fix[TRUE,_16,_16]]
+Src:  lstm.scala:112:12
+Src:        wfc  load dWfc
+---------------------------------------------------------------------
+Symbol:     x1656 = StreamInNew(BurstDataBus())
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {0}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x1678 = StreamInBankedRead(x1656,ArrayBuffer(Set(b1676, b1677))) {}
+             wfc  load dWfc (lstm.scala:112:12)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x1684: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+  x1678: StreamInBankedRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: x1542
+Type: StreamOut[BurstCmd]
+Src:  lstm.scala:105:12
+Src:        bhh0 load dBhh0
+---------------------------------------------------------------------
+Symbol:     x1542 = StreamOutNew(BurstCmdBus)
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {0}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x1547 = StreamOutBankedWrite(x1542,ArrayBuffer(x1545),ArrayBuffer(Set(x1546))) {}
+             bhh0 load dBhh0 (lstm.scala:105:12)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+
+
+
+Control Tree: 
+x1548: UnitPipe (-1) [Level: InnerControl, Loop: Single, Schedule: Sequenced]
+  x1547: StreamOutBankedWrite
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: sigLUT_0 (x2048)
+Type: LUT1[Fix[TRUE,_16,_16]]
+Src:  lstm.scala:244:27
+Src:    val sigLUT = LUT[T](256)(List.tabulate(256){ i =>
+---------------------------------------------------------------------
+Symbol:     x2048 = LUTNew(List(Const(256)),List(Const(0.002471923828125), Const(0.0025787353515625), Const(0.0027008056640625), Const(0.002838134765625), Const(0.0029754638671875), Const(0.00311279296875), Const(0.003265380859375), Const(0.0034332275390625), Const(0.0035858154296875), Const(0.0037689208984375), Const(0.0039520263671875), Const(0.0041351318359375), Const(0.00433349609375), Const(0.004547119140625), Const(0.0047607421875), Const(0.0049896240234375), Const(0.0052337646484375), Const(0.0054779052734375), Const(0.0057373046875), Const(0.006011962890625), Const(0.0063018798828125), Const(0.0066070556640625), Const(0.006927490234375), Const(0.00726318359375), Const(0.007598876953125), Const(0.007965087890625), Const(0.0083465576171875), Const(0.0087432861328125), Const(0.0091705322265625), Const(0.0095977783203125), Const(0.0100555419921875), Const(0.0105438232421875), Const(0.01104736328125), Const(0.011566162109375), Const(0.012115478515625), Const(0.0126953125), Const(0.0133056640625), Const(0.0139312744140625), Const(0.0146026611328125), Const(0.015289306640625), Const(0.016021728515625), Const(0.0167694091796875), Const(0.0175628662109375), Const(0.018402099609375), Const(0.0192718505859375), Const(0.020172119140625), Const(0.0211334228515625), Const(0.022125244140625), Const(0.023162841796875), Const(0.024261474609375), Const(0.025390625), Const(0.0265960693359375), Const(0.02783203125), Const(0.029144287109375), Const(0.0305023193359375), Const(0.03192138671875), Const(0.033416748046875), Const(0.0349578857421875), Const(0.036590576171875), Const(0.0382843017578125), Const(0.0400543212890625), Const(0.041900634765625), Const(0.0438385009765625), Const(0.0458526611328125), Const(0.0479583740234375), Const(0.050140380859375), Const(0.0524444580078125), Const(0.0548248291015625), Const(0.05731201171875), Const(0.059906005859375), Const(0.0626220703125), Const(0.0654449462890625), Const(0.0683746337890625), Const(0.071441650390625), Const(0.074615478515625), Const(0.07794189453125), Const(0.081390380859375), Const(0.0849761962890625), Const(0.088714599609375), Const(0.09259033203125), Const(0.09661865234375), Const(0.100799560546875), Const(0.1051483154296875), Const(0.1096649169921875), Const(0.114349365234375), Const(0.11920166015625), Const(0.1242218017578125), Const(0.1294403076171875), Const(0.13482666015625), Const(0.140411376953125), Const(0.1461944580078125), Const(0.15216064453125), Const(0.1583404541015625), Const(0.1647186279296875), Const(0.171295166015625), Const(0.178070068359375), Const(0.18505859375), Const(0.1922607421875), Const(0.199676513671875), Const(0.207305908203125), Const(0.21514892578125), Const(0.22320556640625), Const(0.2314605712890625), Const(0.2399444580078125), Const(0.248626708984375), Const(0.2575225830078125), Const(0.266632080078125), Const(0.2759246826171875), Const(0.285430908203125), Const(0.2951202392578125), Const(0.3050079345703125), Const(0.3150787353515625), Const(0.3253173828125), Const(0.335723876953125), Const(0.3462982177734375), Const(0.357025146484375), Const(0.3679046630859375), Const(0.3789215087890625), Const(0.390045166015625), Const(0.40130615234375), Const(0.41265869140625), Const(0.4241180419921875), Const(0.435638427734375), Const(0.4472503662109375), Const(0.4589080810546875), Const(0.470611572265625), Const(0.4823455810546875), Const(0.494110107421875), Const(0.5058746337890625), Const(0.51763916015625), Const(0.5293731689453125), Const(0.54107666015625), Const(0.552734375), Const(0.5643463134765625), Const(0.57586669921875), Const(0.5873260498046875), Const(0.5986785888671875), Const(0.6099395751953125), Const(0.621063232421875), Const(0.632080078125), Const(0.6429595947265625), Const(0.6536865234375), Const(0.6642608642578125), Const(0.6746673583984375), Const(0.684906005859375), Const(0.694976806640625), Const(0.704864501953125), Const(0.7145538330078125), Const(0.72406005859375), Const(0.7333526611328125), Const(0.742462158203125), Const(0.7513580322265625), Const(0.760040283203125), Const(0.768524169921875), Const(0.7767791748046875), Const(0.7848358154296875), Const(0.7926788330078125), Const(0.8003082275390625), Const(0.8077239990234375), Const(0.8149261474609375), Const(0.8219146728515625), Const(0.8286895751953125), Const(0.83526611328125), Const(0.841644287109375), Const(0.8478240966796875), Const(0.853790283203125), Const(0.8595733642578125), Const(0.8651580810546875), Const(0.87054443359375), Const(0.875762939453125), Const(0.8807830810546875), Const(0.8856353759765625), Const(0.89031982421875), Const(0.89483642578125), Const(0.8991851806640625), Const(0.9033660888671875), Const(0.9073944091796875), Const(0.9112701416015625), Const(0.915008544921875), Const(0.9185943603515625), Const(0.9220428466796875), Const(0.9253692626953125), Const(0.9285430908203125), Const(0.931610107421875), Const(0.934539794921875), Const(0.9373626708984375), Const(0.9400787353515625), Const(0.9426727294921875), Const(0.945159912109375), Const(0.947540283203125), Const(0.9498443603515625), Const(0.9520263671875), Const(0.954132080078125), Const(0.956146240234375), Const(0.9580841064453125), Const(0.959930419921875), Const(0.961700439453125), Const(0.9633941650390625), Const(0.96502685546875), Const(0.9665679931640625), Const(0.9680633544921875), Const(0.969482421875), Const(0.9708404541015625), Const(0.9721527099609375), Const(0.973388671875), Const(0.9745941162109375), Const(0.9757232666015625), Const(0.9768218994140625), Const(0.9778594970703125), Const(0.978851318359375), Const(0.9798126220703125), Const(0.980712890625), Const(0.9815826416015625), Const(0.982421875), Const(0.98321533203125), Const(0.9839630126953125), Const(0.9846954345703125), Const(0.985382080078125), Const(0.986053466796875), Const(0.9866790771484375), Const(0.9872894287109375), Const(0.9878692626953125), Const(0.9884185791015625), Const(0.9889373779296875), Const(0.98944091796875), Const(0.98992919921875), Const(0.990386962890625), Const(0.990814208984375), Const(0.991241455078125), Const(0.99163818359375), Const(0.9920196533203125), Const(0.9923858642578125), Const(0.9927215576171875), Const(0.9930572509765625), Const(0.993377685546875), Const(0.993682861328125), Const(0.9939727783203125), Const(0.9942474365234375), Const(0.9945068359375), Const(0.9947509765625), Const(0.9949951171875), Const(0.9952239990234375), Const(0.9954376220703125), Const(0.9956512451171875), Const(0.995849609375), Const(0.99603271484375), Const(0.9962158203125), Const(0.99639892578125), Const(0.996551513671875), Const(0.9967193603515625), Const(0.9968719482421875), Const(0.99700927734375), Const(0.9971466064453125), Const(0.997283935546875), Const(0.997406005859375), Const(0.9975128173828125)),LUT1[Fix[TRUE,_16,_16]])
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    256 <Hierarchical>
+       Dims {0}: Cyclic: N=256, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x2049 = LUTBankedRead(x2048,Vector(List(x2047)),Vector(Const(0)),Vector(Set(x2289, x2290)),Vec[Fix[TRUE,_16,_16]]) {}
+             sigLUT(idx) (lstm.scala:248:9)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x2086: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+  x2049: LUTBankedRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: hContrib_0 (x1812)
+Type: Reg[Fix[TRUE,_16,_16]]
+Src:  lstm.scala:157:39
+Src:            val hContrib = Reduce(Reg[T](0.to[T]))(HIDDEN by 1) { k =>
+---------------------------------------------------------------------
+Symbol:     x1812 = RegNew(Const(0))
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List()
+     Accum:    Buffer
+     Banks:    1 <Flat>
+       Dims {}: Cyclic: N=1, B=1, alpha=<>, P=<> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+         0 [Type:RD]:
+
+
+
+Control Tree: 
+x1836: UnrolledReduce (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+  x2180: RegAccumFMA
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: x1559
+Type: StreamOut[BurstCmd]
+Src:  lstm.scala:107:12
+Src:        wih1 load dWih1
+---------------------------------------------------------------------
+Symbol:     x1559 = StreamOutNew(BurstCmdBus)
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {0}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x1572 = StreamOutBankedWrite(x1559,ArrayBuffer(x1570),ArrayBuffer(Set(x2201, x2200))) {}
+             wih1 load dWih1 (lstm.scala:107:12)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+
+
+
+Control Tree: 
+x1573: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Sequenced]
+  x1572: StreamOutBankedWrite
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: xContrib_0 (x1784)
+Type: Reg[Fix[TRUE,_16,_16]]
+Src:  lstm.scala:152:39
+Src:            val xContrib = Reduce(Reg[T](0.to[T]))(INPUT_SZ by 1) { k =>
+---------------------------------------------------------------------
+Symbol:     x1784 = RegNew(Const(0))
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List()
+     Accum:    Buffer
+     Banks:    1 <Flat>
+       Dims {}: Cyclic: N=1, B=1, alpha=<>, P=<> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+         0 [Type:RD]:
+
+
+
+Control Tree: 
+x1811: UnrolledReduce (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+  x2179: RegAccumFMA
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: bfc_0 (x1462)
+Type: SRAM1[Fix[TRUE,_16,_16]]
+Src:  lstm.scala:100:25
+Src:        val bfc  = SRAM[T](N_CLASS)
+---------------------------------------------------------------------
+Symbol:     x1462 = SRAMNew(List(Const(10)),SRAM1[Fix[TRUE,_16,_16]])
+Instances: 1
+  RAM36: 1.0
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {0}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x1717 = SRAMBankedWrite(x1462,Vector(x1716),Vector(List(Const(0))),Vector(x2224),Vector(Set(x2223, x2222))) {}
+             bfc  load dBfc (lstm.scala:113:12)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x2115 = SRAMBankedRead(x1462,Vector(List(Const(0))),Vector(b2091),Vector(Set()),Vec[Fix[TRUE,_16,_16]]) {}
+             logits(i) = dot.value + bfc(i) (lstm.scala:215:36)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x2178: AccelScope (-1) [Level: OuterControl, Loop: Single, Schedule: Sequenced]
+  x2173: ParallelPipe (-1) [Level: OuterControl, Loop: Single, Schedule: ForkJoin]
+    x1720: UnitPipe (-1) [Level: OuterControl, Loop: Single, Schedule: Streaming]
+      x1719: UnitPipe (-1) [Level: OuterControl, Loop: Single, Schedule: Sequenced]
+        x1718: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+          x1717: SRAMBankedWrite
+  x2121: UnrolledForeach (-1) [Level: OuterControl, Loop: Looped, Schedule: Pipelined]
+    x2120: UnitPipe (-1) [Level: InnerControl, Loop: Single, Schedule: Sequenced]
+      x2115: SRAMBankedRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: x1525
+Type: StreamOut[BurstCmd]
+Src:  lstm.scala:104:12
+Src:        bih0 load dBih0
+---------------------------------------------------------------------
+Symbol:     x1525 = StreamOutNew(BurstCmdBus)
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {0}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x1530 = StreamOutBankedWrite(x1525,ArrayBuffer(x1528),ArrayBuffer(Set(x1529))) {}
+             bih0 load dBih0 (lstm.scala:104:12)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+
+
+
+Control Tree: 
+x1531: UnitPipe (-1) [Level: InnerControl, Loop: Single, Schedule: Sequenced]
+  x1530: StreamOutBankedWrite
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: bih1_0 (x1459)
+Type: SRAM1[Fix[TRUE,_16,_16]]
+Src:  lstm.scala:96:25
+Src:        val bih1 = SRAM[T](GATE_H)
+---------------------------------------------------------------------
+Symbol:     x1459 = SRAMNew(List(Const(512)),SRAM1[Fix[TRUE,_16,_16]])
+Instances: 1
+  RAM36: 1.0
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: BRAM
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {0}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x1635 = SRAMBankedWrite(x1459,Vector(x1634),Vector(List(Const(0))),Vector(x2211),Vector(Set(x2212))) {}
+             bih1 load dBih1 (lstm.scala:109:12)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x1997 = SRAMBankedRead(x1459,Vector(List(Const(0))),Vector(x1996),Vector(Set()),Vec[Fix[TRUE,_16,_16]]) {}
+             gates1(g, j) = xContrib.value + hContrib.value + bih1(row) + bhh1(row) (lstm.scala:191:64)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x2178: AccelScope (-1) [Level: OuterControl, Loop: Single, Schedule: Sequenced]
+  x2173: ParallelPipe (-1) [Level: OuterControl, Loop: Single, Schedule: ForkJoin]
+    x1637: UnitPipe (-1) [Level: OuterControl, Loop: Single, Schedule: Streaming]
+      x1636: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+        x1635: SRAMBankedWrite
+  x2087: UnrolledForeach (-1) [Level: OuterControl, Loop: Looped, Schedule: Sequenced]
+    x2177: UnrolledForeach (-1) [Level: OuterControl, Loop: Looped, Schedule: Pipelined]
+      x2008: UnitPipe (-1) [Level: InnerControl, Loop: Single, Schedule: Sequenced]
+        x1997: SRAMBankedRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: sigLUT_0 (x1906)
+Type: LUT1[Fix[TRUE,_16,_16]]
+Src:  lstm.scala:244:27
+Src:    val sigLUT = LUT[T](256)(List.tabulate(256){ i =>
+---------------------------------------------------------------------
+Symbol:     x1906 = LUTNew(List(Const(256)),List(Const(0.002471923828125), Const(0.0025787353515625), Const(0.0027008056640625), Const(0.002838134765625), Const(0.0029754638671875), Const(0.00311279296875), Const(0.003265380859375), Const(0.0034332275390625), Const(0.0035858154296875), Const(0.0037689208984375), Const(0.0039520263671875), Const(0.0041351318359375), Const(0.00433349609375), Const(0.004547119140625), Const(0.0047607421875), Const(0.0049896240234375), Const(0.0052337646484375), Const(0.0054779052734375), Const(0.0057373046875), Const(0.006011962890625), Const(0.0063018798828125), Const(0.0066070556640625), Const(0.006927490234375), Const(0.00726318359375), Const(0.007598876953125), Const(0.007965087890625), Const(0.0083465576171875), Const(0.0087432861328125), Const(0.0091705322265625), Const(0.0095977783203125), Const(0.0100555419921875), Const(0.0105438232421875), Const(0.01104736328125), Const(0.011566162109375), Const(0.012115478515625), Const(0.0126953125), Const(0.0133056640625), Const(0.0139312744140625), Const(0.0146026611328125), Const(0.015289306640625), Const(0.016021728515625), Const(0.0167694091796875), Const(0.0175628662109375), Const(0.018402099609375), Const(0.0192718505859375), Const(0.020172119140625), Const(0.0211334228515625), Const(0.022125244140625), Const(0.023162841796875), Const(0.024261474609375), Const(0.025390625), Const(0.0265960693359375), Const(0.02783203125), Const(0.029144287109375), Const(0.0305023193359375), Const(0.03192138671875), Const(0.033416748046875), Const(0.0349578857421875), Const(0.036590576171875), Const(0.0382843017578125), Const(0.0400543212890625), Const(0.041900634765625), Const(0.0438385009765625), Const(0.0458526611328125), Const(0.0479583740234375), Const(0.050140380859375), Const(0.0524444580078125), Const(0.0548248291015625), Const(0.05731201171875), Const(0.059906005859375), Const(0.0626220703125), Const(0.0654449462890625), Const(0.0683746337890625), Const(0.071441650390625), Const(0.074615478515625), Const(0.07794189453125), Const(0.081390380859375), Const(0.0849761962890625), Const(0.088714599609375), Const(0.09259033203125), Const(0.09661865234375), Const(0.100799560546875), Const(0.1051483154296875), Const(0.1096649169921875), Const(0.114349365234375), Const(0.11920166015625), Const(0.1242218017578125), Const(0.1294403076171875), Const(0.13482666015625), Const(0.140411376953125), Const(0.1461944580078125), Const(0.15216064453125), Const(0.1583404541015625), Const(0.1647186279296875), Const(0.171295166015625), Const(0.178070068359375), Const(0.18505859375), Const(0.1922607421875), Const(0.199676513671875), Const(0.207305908203125), Const(0.21514892578125), Const(0.22320556640625), Const(0.2314605712890625), Const(0.2399444580078125), Const(0.248626708984375), Const(0.2575225830078125), Const(0.266632080078125), Const(0.2759246826171875), Const(0.285430908203125), Const(0.2951202392578125), Const(0.3050079345703125), Const(0.3150787353515625), Const(0.3253173828125), Const(0.335723876953125), Const(0.3462982177734375), Const(0.357025146484375), Const(0.3679046630859375), Const(0.3789215087890625), Const(0.390045166015625), Const(0.40130615234375), Const(0.41265869140625), Const(0.4241180419921875), Const(0.435638427734375), Const(0.4472503662109375), Const(0.4589080810546875), Const(0.470611572265625), Const(0.4823455810546875), Const(0.494110107421875), Const(0.5058746337890625), Const(0.51763916015625), Const(0.5293731689453125), Const(0.54107666015625), Const(0.552734375), Const(0.5643463134765625), Const(0.57586669921875), Const(0.5873260498046875), Const(0.5986785888671875), Const(0.6099395751953125), Const(0.621063232421875), Const(0.632080078125), Const(0.6429595947265625), Const(0.6536865234375), Const(0.6642608642578125), Const(0.6746673583984375), Const(0.684906005859375), Const(0.694976806640625), Const(0.704864501953125), Const(0.7145538330078125), Const(0.72406005859375), Const(0.7333526611328125), Const(0.742462158203125), Const(0.7513580322265625), Const(0.760040283203125), Const(0.768524169921875), Const(0.7767791748046875), Const(0.7848358154296875), Const(0.7926788330078125), Const(0.8003082275390625), Const(0.8077239990234375), Const(0.8149261474609375), Const(0.8219146728515625), Const(0.8286895751953125), Const(0.83526611328125), Const(0.841644287109375), Const(0.8478240966796875), Const(0.853790283203125), Const(0.8595733642578125), Const(0.8651580810546875), Const(0.87054443359375), Const(0.875762939453125), Const(0.8807830810546875), Const(0.8856353759765625), Const(0.89031982421875), Const(0.89483642578125), Const(0.8991851806640625), Const(0.9033660888671875), Const(0.9073944091796875), Const(0.9112701416015625), Const(0.915008544921875), Const(0.9185943603515625), Const(0.9220428466796875), Const(0.9253692626953125), Const(0.9285430908203125), Const(0.931610107421875), Const(0.934539794921875), Const(0.9373626708984375), Const(0.9400787353515625), Const(0.9426727294921875), Const(0.945159912109375), Const(0.947540283203125), Const(0.9498443603515625), Const(0.9520263671875), Const(0.954132080078125), Const(0.956146240234375), Const(0.9580841064453125), Const(0.959930419921875), Const(0.961700439453125), Const(0.9633941650390625), Const(0.96502685546875), Const(0.9665679931640625), Const(0.9680633544921875), Const(0.969482421875), Const(0.9708404541015625), Const(0.9721527099609375), Const(0.973388671875), Const(0.9745941162109375), Const(0.9757232666015625), Const(0.9768218994140625), Const(0.9778594970703125), Const(0.978851318359375), Const(0.9798126220703125), Const(0.980712890625), Const(0.9815826416015625), Const(0.982421875), Const(0.98321533203125), Const(0.9839630126953125), Const(0.9846954345703125), Const(0.985382080078125), Const(0.986053466796875), Const(0.9866790771484375), Const(0.9872894287109375), Const(0.9878692626953125), Const(0.9884185791015625), Const(0.9889373779296875), Const(0.98944091796875), Const(0.98992919921875), Const(0.990386962890625), Const(0.990814208984375), Const(0.991241455078125), Const(0.99163818359375), Const(0.9920196533203125), Const(0.9923858642578125), Const(0.9927215576171875), Const(0.9930572509765625), Const(0.993377685546875), Const(0.993682861328125), Const(0.9939727783203125), Const(0.9942474365234375), Const(0.9945068359375), Const(0.9947509765625), Const(0.9949951171875), Const(0.9952239990234375), Const(0.9954376220703125), Const(0.9956512451171875), Const(0.995849609375), Const(0.99603271484375), Const(0.9962158203125), Const(0.99639892578125), Const(0.996551513671875), Const(0.9967193603515625), Const(0.9968719482421875), Const(0.99700927734375), Const(0.9971466064453125), Const(0.997283935546875), Const(0.997406005859375), Const(0.9975128173828125)),LUT1[Fix[TRUE,_16,_16]])
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    256 <Hierarchical>
+       Dims {0}: Cyclic: N=256, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x1907 = LUTBankedRead(x1906,Vector(List(x1905)),Vector(Const(0)),Vector(Set(x2247, x2246)),Vec[Fix[TRUE,_16,_16]]) {}
+             sigLUT(idx) (lstm.scala:248:9)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x1930: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+  x1907: LUTBankedRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: xContrib_1 (x1944)
+Type: Reg[Fix[TRUE,_16,_16]]
+Src:  lstm.scala:183:39
+Src:            val xContrib = Reduce(Reg[T](0.to[T]))(HIDDEN by 1) { k =>
+---------------------------------------------------------------------
+Symbol:     x1944 = RegNew(Const(0))
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: BRAM
+     Depth:    2
+     Padding:  List()
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {}: Cyclic: N=1, B=1, alpha=<>, P=<> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x1966 = RegWrite(x1944,x2181,Set()) {}
+             }{_ + _} (lstm.scala:185:12)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+         1 [Type:WR]:
+         1 [Type:RD]:
+           - Mux Port #0: 
+             x1994 = RegRead(x1944) {}
+             gates1(g, j) = xContrib.value + hContrib.value + bih1(row) + bhh1(row) (lstm.scala:191:35)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         M [Type:WR]:
+         M [Type:RD]:
+
+
+
+Control Tree: 
+x2177: UnrolledForeach (-1) [Level: OuterControl, Loop: Looped, Schedule: Pipelined]
+  x2176: ParallelPipe (-1) [Level: OuterControl, Loop: Single, Schedule: ForkJoin]
+    x1967: UnrolledReduce (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+      x1966: RegWrite
+  x2008: UnitPipe (-1) [Level: InnerControl, Loop: Single, Schedule: Sequenced]
+    x1994: RegRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: bih0_0 (x1455)
+Type: SRAM1[Fix[TRUE,_16,_16]]
+Src:  lstm.scala:91:25
+Src:        val bih0 = SRAM[T](GATE_H)
+---------------------------------------------------------------------
+Symbol:     x1455 = SRAMNew(List(Const(512)),SRAM1[Fix[TRUE,_16,_16]])
+Instances: 1
+  RAM36: 1.0
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: BRAM
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {0}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x1539 = SRAMBankedWrite(x1455,Vector(x1538),Vector(List(Const(0))),Vector(x2195),Vector(Set(x2196))) {}
+             bih0 load dBih0 (lstm.scala:104:12)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x1841 = SRAMBankedRead(x1455,Vector(List(Const(0))),Vector(x1840),Vector(Set()),Vec[Fix[TRUE,_16,_16]]) {}
+             gates0(g, j) = xContrib.value + hContrib.value + bih0(row) + bhh0(row) (lstm.scala:161:64)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x2178: AccelScope (-1) [Level: OuterControl, Loop: Single, Schedule: Sequenced]
+  x2173: ParallelPipe (-1) [Level: OuterControl, Loop: Single, Schedule: ForkJoin]
+    x1541: UnitPipe (-1) [Level: OuterControl, Loop: Single, Schedule: Streaming]
+      x1540: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+        x1539: SRAMBankedWrite
+  x2087: UnrolledForeach (-1) [Level: OuterControl, Loop: Looped, Schedule: Sequenced]
+    x2175: UnrolledForeach (-1) [Level: OuterControl, Loop: Looped, Schedule: Pipelined]
+      x1852: UnitPipe (-1) [Level: InnerControl, Loop: Single, Schedule: Sequenced]
+        x1841: SRAMBankedRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: bhh0_0 (x1456)
+Type: SRAM1[Fix[TRUE,_16,_16]]
+Src:  lstm.scala:92:25
+Src:        val bhh0 = SRAM[T](GATE_H)
+---------------------------------------------------------------------
+Symbol:     x1456 = SRAMNew(List(Const(512)),SRAM1[Fix[TRUE,_16,_16]])
+Instances: 1
+  RAM36: 1.0
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: BRAM
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {0}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x1556 = SRAMBankedWrite(x1456,Vector(x1555),Vector(List(Const(0))),Vector(x2198),Vector(Set(x2199))) {}
+             bhh0 load dBhh0 (lstm.scala:105:12)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x1844 = SRAMBankedRead(x1456,Vector(List(Const(0))),Vector(x1840),Vector(Set()),Vec[Fix[TRUE,_16,_16]]) {}
+             gates0(g, j) = xContrib.value + hContrib.value + bih0(row) + bhh0(row) (lstm.scala:161:76)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x2178: AccelScope (-1) [Level: OuterControl, Loop: Single, Schedule: Sequenced]
+  x2173: ParallelPipe (-1) [Level: OuterControl, Loop: Single, Schedule: ForkJoin]
+    x1558: UnitPipe (-1) [Level: OuterControl, Loop: Single, Schedule: Streaming]
+      x1557: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+        x1556: SRAMBankedWrite
+  x2087: UnrolledForeach (-1) [Level: OuterControl, Loop: Looped, Schedule: Sequenced]
+    x2175: UnrolledForeach (-1) [Level: OuterControl, Loop: Looped, Schedule: Pipelined]
+      x1852: UnitPipe (-1) [Level: InnerControl, Loop: Single, Schedule: Sequenced]
+        x1844: SRAMBankedRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: whh1_0 (x1458)
+Type: SRAM2[Fix[TRUE,_16,_16]]
+Src:  lstm.scala:95:25
+Src:        val whh1 = SRAM[T](GATE_H, HIDDEN)
+---------------------------------------------------------------------
+Symbol:     x1458 = SRAMNew(List(Const(512), Const(128)),SRAM2[Fix[TRUE,_16,_16]])
+Instances: 1
+  RAM36: 1.0
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: BRAM
+     Depth:    1
+     Padding:  List(0, 0)
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {0,1}: Cyclic: N=1, B=1, alpha=<1,1>, P=<1,1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x1618 = SRAMBankedWrite(x1458,Vector(x1614),Vector(List(Const(0))),Vector(x1617),Vector(Set(x2209, x2208))) {}
+             whh1 load dWhh1 (lstm.scala:108:12)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x1978 = SRAMBankedRead(x1458,Vector(List(Const(0))),Vector(x1977),Vector(Set(x2281, x2278, x2279, x2280)),Vec[Fix[TRUE,_16,_16]]) {}
+             whh1(row, k) * h1(k) (lstm.scala:188:17)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x2178: AccelScope (-1) [Level: OuterControl, Loop: Single, Schedule: Sequenced]
+  x2173: ParallelPipe (-1) [Level: OuterControl, Loop: Single, Schedule: ForkJoin]
+    x1620: UnitPipe (-1) [Level: OuterControl, Loop: Single, Schedule: Streaming]
+      x1619: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+        x1618: SRAMBankedWrite
+  x2087: UnrolledForeach (-1) [Level: OuterControl, Loop: Looped, Schedule: Sequenced]
+    x2177: UnrolledForeach (-1) [Level: OuterControl, Loop: Looped, Schedule: Pipelined]
+      x2176: ParallelPipe (-1) [Level: OuterControl, Loop: Single, Schedule: ForkJoin]
+        x1992: UnrolledReduce (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+          x1978: SRAMBankedRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: x1590
+Type: StreamOut[BurstCmd]
+Src:  lstm.scala:108:12
+Src:        whh1 load dWhh1
+---------------------------------------------------------------------
+Symbol:     x1590 = StreamOutNew(BurstCmdBus)
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {0}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x1603 = StreamOutBankedWrite(x1590,ArrayBuffer(x1601),ArrayBuffer(Set(x2206, x2205))) {}
+             whh1 load dWhh1 (lstm.scala:108:12)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+
+
+
+Control Tree: 
+x1604: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Sequenced]
+  x1603: StreamOutBankedWrite
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: logits_0 (x2088)
+Type: SRAM1[Fix[TRUE,_16,_16]]
+Src:  lstm.scala:210:27
+Src:        val logits = SRAM[T](N_CLASS)
+---------------------------------------------------------------------
+Symbol:     x2088 = SRAMNew(List(Const(10)),SRAM1[Fix[TRUE,_16,_16]])
+Instances: 1
+  RAM36: 1.0
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {0}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x2119 = SRAMBankedWrite(x2088,Vector(x2118),Vector(List(Const(0))),Vector(x2320),Vector(Set())) {}
+             logits(i) = dot.value + bfc(i) (lstm.scala:215:19)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x2128 = SRAMBankedRead(x2088,Vector(List(Const(0))),Vector(x2322),Vector(Set(x2321)),Vec[Fix[TRUE,_16,_16]]) {}
+             if (logits(i) > maxVal.value) { (lstm.scala:222:19)
+               Directly Banked: true
+               Port: <offset: 1, castgroup: (1), broadcast: (0)>
+
+             x2133 = SRAMBankedRead(x2088,Vector(List(Const(0))),Vector(x2324),Vector(Set(x2131)),Vec[Fix[TRUE,_16,_16]]) {}
+             maxVal := logits(i) (lstm.scala:223:27)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x2178: AccelScope (-1) [Level: OuterControl, Loop: Single, Schedule: Sequenced]
+  x2121: UnrolledForeach (-1) [Level: OuterControl, Loop: Looped, Schedule: Pipelined]
+    x2120: UnitPipe (-1) [Level: InnerControl, Loop: Single, Schedule: Sequenced]
+      x2119: SRAMBankedWrite
+  x2140: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Sequenced]
+    x2128: SRAMBankedRead
+    x2133: SRAMBankedRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: x1621
+Type: StreamOut[BurstCmd]
+Src:  lstm.scala:109:12
+Src:        bih1 load dBih1
+---------------------------------------------------------------------
+Symbol:     x1621 = StreamOutNew(BurstCmdBus)
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {0}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x1626 = StreamOutBankedWrite(x1621,ArrayBuffer(x1624),ArrayBuffer(Set(x1625))) {}
+             bih1 load dBih1 (lstm.scala:109:12)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+
+
+
+Control Tree: 
+x1627: UnitPipe (-1) [Level: InnerControl, Loop: Single, Schedule: Sequenced]
+  x1626: StreamOutBankedWrite
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: wfc_0 (x1461)
+Type: SRAM2[Fix[TRUE,_16,_16]]
+Src:  lstm.scala:99:25
+Src:        val wfc  = SRAM[T](N_CLASS, HIDDEN)
+---------------------------------------------------------------------
+Symbol:     x1461 = SRAMNew(List(Const(10), Const(128)),SRAM2[Fix[TRUE,_16,_16]])
+Instances: 1
+  RAM36: 1.0
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: BRAM
+     Depth:    1
+     Padding:  List(0, 0)
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {0,1}: Cyclic: N=1, B=1, alpha=<1,1>, P=<1,1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x1683 = SRAMBankedWrite(x1461,Vector(x1679),Vector(List(Const(0))),Vector(x1682),Vector(Set(x2219, x2220))) {}
+             wfc  load dWfc (lstm.scala:112:12)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x2102 = SRAMBankedRead(x1461,Vector(List(Const(0))),Vector(x2101),Vector(Set(x2315, x2316)),Vec[Fix[TRUE,_16,_16]]) {}
+             wfc(i, j) * h1(j) (lstm.scala:213:14)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x2178: AccelScope (-1) [Level: OuterControl, Loop: Single, Schedule: Sequenced]
+  x2173: ParallelPipe (-1) [Level: OuterControl, Loop: Single, Schedule: ForkJoin]
+    x1685: UnitPipe (-1) [Level: OuterControl, Loop: Single, Schedule: Streaming]
+      x1684: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+        x1683: SRAMBankedWrite
+  x2121: UnrolledForeach (-1) [Level: OuterControl, Loop: Looped, Schedule: Pipelined]
+    x2114: UnrolledReduce (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+      x2102: SRAMBankedRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: x1639
+Type: StreamIn[Fix[TRUE,_16,_16]]
+Src:  lstm.scala:110:12
+Src:        bhh1 load dBhh1
+---------------------------------------------------------------------
+Symbol:     x1639 = StreamInNew(BurstDataBus())
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {0}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x1650 = StreamInBankedRead(x1639,ArrayBuffer(Set(b1649))) {}
+             bhh1 load dBhh1 (lstm.scala:110:12)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x1653: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+  x1650: StreamInBankedRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: x1697
+Type: Reg[Fix[TRUE,_32,_0]]
+Src:  lstm.scala:113:12
+Src:        bfc  load dBfc
+---------------------------------------------------------------------
+Symbol:     x1697 = RegNew(Const(0))
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List()
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {}: Cyclic: N=1, B=1, alpha=<>, P=<> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x1702 = RegWrite(x1697,x1701,Set()) {}
+             bfc  load dBfc (lstm.scala:113:12)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x1712 = RegRead(x1697) {}
+             bfc  load dBfc (lstm.scala:113:12)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x1719: UnitPipe (-1) [Level: OuterControl, Loop: Single, Schedule: Sequenced]
+  x1705: UnitPipe (-1) [Level: InnerControl, Loop: Single, Schedule: Sequenced]
+    x1702: RegWrite
+  x1718: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+    x1712: RegRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: gates0_0 (x1766)
+Type: SRAM2[Fix[TRUE,_16,_16]]
+Src:  lstm.scala:137:27
+Src:        val gates0 = SRAM[T](GATES, HIDDEN).conflictable
+---------------------------------------------------------------------
+Symbol:     x1766 = SRAMNew(List(Const(4), Const(128)),SRAM2[Fix[TRUE,_16,_16]])
+Instances: 1
+  RAM36: 1.0
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: BRAM
+     Depth:    1
+     Padding:  List(0, 0)
+     Accum:    None
+     Banks:    4, 1 <Hierarchical>
+       Dims {0}: Cyclic: N=4, B=1, alpha=<1>, P=<4> (5 solutions, 7 checks)
+       Dims {1}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x1851 = SRAMBankedWrite(x1766,Vector(x1846),Vector(List(x2243, Const(0))),Vector(x2244),Vector(Set())) {}
+             gates0(g, j) = xContrib.value + hContrib.value + bih0(row) + bhh0(row) (lstm.scala:161:24)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x1858 = SRAMBankedRead(x1766,Vector(List(Const(0), Const(0))),Vector(b1856),Vector(Set(b1857, b1771)),Vec[Fix[TRUE,_16,_16]]) {}
+             val i_gate = sigmoid(gates0(0, j)) (lstm.scala:167:38)
+               Directly Banked: true
+               Port: <offset: 1, castgroup: (1), broadcast: (0)>
+
+             x1870 = SRAMBankedRead(x1766,Vector(List(Const(1), Const(0))),Vector(b1856),Vector(Set(b1857, b1771)),Vec[Fix[TRUE,_16,_16]]) {}
+             val f_gate = sigmoid(gates0(1, j)) (lstm.scala:168:38)
+               Directly Banked: true
+               Port: <offset: 3, castgroup: (3), broadcast: (0)>
+
+             x1882 = SRAMBankedRead(x1766,Vector(List(Const(2), Const(0))),Vector(b1856),Vector(Set(b1857, b1771)),Vec[Fix[TRUE,_16,_16]]) {}
+             val g_gate = tanh_approx(gates0(2, j)) (lstm.scala:169:42)
+               Directly Banked: true
+               Port: <offset: 2, castgroup: (2), broadcast: (0)>
+
+             x1897 = SRAMBankedRead(x1766,Vector(List(Const(3), Const(0))),Vector(b1856),Vector(Set(b1857, b1771)),Vec[Fix[TRUE,_16,_16]]) {}
+             val o_gate = sigmoid(gates0(3, j)) (lstm.scala:170:38)
+               Directly Banked: true
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x2087: UnrolledForeach (-1) [Level: OuterControl, Loop: Looped, Schedule: Sequenced]
+  x2175: UnrolledForeach (-1) [Level: OuterControl, Loop: Looped, Schedule: Pipelined]
+    x1852: UnitPipe (-1) [Level: InnerControl, Loop: Single, Schedule: Sequenced]
+      x1851: SRAMBankedWrite
+  x1930: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+    x1882: SRAMBankedRead
+    x1858: SRAMBankedRead
+    x1897: SRAMBankedRead
+    x1870: SRAMBankedRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: x1779
+Type: Reg[Fix[TRUE,_32,_0]]
+Src:  lstm.scala:149:32
+Src:            val row = g * HIDDEN + j(Pass 28)
+---------------------------------------------------------------------
+Symbol:     x1779 = RegNew(Const(0))
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: BRAM
+     Depth:    3
+     Padding:  List()
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {}: Cyclic: N=1, B=1, alpha=<>, P=<> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+           - Mux Port #0: 
+             x1782 = RegWrite(x1779,x1781,Set()) {}
+             val row = g * HIDDEN + j(Pass 28)(Pass 28) (lstm.scala:149:32)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         0 [Type:RD]:
+         1 [Type:WR]:
+         1 [Type:RD]:
+           - Mux Port #0: 
+             x1818 = RegRead(x1779) {}
+             val row = g * HIDDEN + j(Pass 28)(Pass 28) (lstm.scala:149:32)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+           - Mux Port #1: 
+             x1790 = RegRead(x1779) {}
+             val row = g * HIDDEN + j(Pass 28)(Pass 28) (lstm.scala:149:32)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         2 [Type:WR]:
+         2 [Type:RD]:
+           - Mux Port #0: 
+             x1840 = RegRead(x1779) {}
+             val row = g * HIDDEN + j(Pass 28)(Pass 28) (lstm.scala:149:32)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+         M [Type:WR]:
+         M [Type:RD]:
+
+
+
+Control Tree: 
+x2175: UnrolledForeach (-1) [Level: OuterControl, Loop: Looped, Schedule: Pipelined]
+  x1783: UnitPipe (-1) [Level: InnerControl, Loop: Single, Schedule: Sequenced]
+    x1782: RegWrite
+  x2174: ParallelPipe (-1) [Level: OuterControl, Loop: Single, Schedule: ForkJoin]
+    x1811: UnrolledReduce (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+      x1790: RegRead
+    x1836: UnrolledReduce (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+      x1818: RegRead
+  x1852: UnitPipe (-1) [Level: InnerControl, Loop: Single, Schedule: Sequenced]
+    x1840: RegRead
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Name: x1543
+Type: StreamIn[Fix[TRUE,_16,_16]]
+Src:  lstm.scala:105:12
+Src:        bhh0 load dBhh0
+---------------------------------------------------------------------
+Symbol:     x1543 = StreamInNew(BurstDataBus())
+Instances: 1
+
+
+Instance Summary: 
+  #0: Banked
+     Resource: LUTs
+     Depth:    1
+     Padding:  List(0)
+     Accum:    None
+     Banks:    1 <Flat>
+       Dims {0}: Cyclic: N=1, B=1, alpha=<1>, P=<1> (1 solutions, 0 checks)
+     Ports: 
+         0 [Type:WR]:
+         0 [Type:RD]:
+           - Mux Port #0: 
+             x1554 = StreamInBankedRead(x1543,ArrayBuffer(Set(b1553))) {}
+             bhh0 load dBhh0 (lstm.scala:105:12)
+               Directly Banked: false
+               Port: <offset: 0, castgroup: (0), broadcast: (0)>
+
+
+
+
+Control Tree: 
+x1557: UnrolledForeach (-1) [Level: InnerControl, Loop: Looped, Schedule: Pipelined]
+  x1554: StreamInBankedRead
+---------------------------------------------------------------------
+
+
+
+
