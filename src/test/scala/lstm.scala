@@ -84,6 +84,10 @@ import spatial.dsl._
     val predOut = ArgOut[Int]
 
     Accel {
+      val sigLUT = LUT[T](256)(List.tabulate(256){ i =>
+        val xv = -6.0 + i * 12.0 / 255.0
+        (1.0 / (1.0 + scala.math.exp(-xv))).to[T]
+      } :_*)
 
       // ---- Load weights into on-chip SRAMs ----
       val wih0 = SRAM[T](GATE_H, INPUT_SZ)
@@ -164,13 +168,13 @@ import spatial.dsl._
         // Apply gate activations and update cell/hidden state — layer 0
         // PyTorch LSTM gate order: i=0, f=1, g=2, o=3
         Foreach(HIDDEN by 1) { j =>
-          val i_gate = sigmoid(gates0(0, j))
-          val f_gate = sigmoid(gates0(1, j))
-          val g_gate = tanh_approx(gates0(2, j))
-          val o_gate = sigmoid(gates0(3, j))
+          val i_gate = sigmoid(gates0(0, j), sigLUT)
+          val f_gate = sigmoid(gates0(1, j), sigLUT)
+          val g_gate = tanh_approx(gates0(2, j), sigLUT)
+          val o_gate = sigmoid(gates0(3, j), sigLUT)
 
           val c0_new = f_gate * c0(j) + i_gate * g_gate
-          val h0_new = o_gate * tanh_approx(c0_new)
+          val h0_new = o_gate * tanh_approx(c0_new, sigLUT)
 
           c0(j) = c0_new
           h0(j) = h0_new
@@ -192,13 +196,13 @@ import spatial.dsl._
         }
 
         Foreach(HIDDEN by 1) { j =>
-          val i_gate = sigmoid(gates1(0, j))
-          val f_gate = sigmoid(gates1(1, j))
-          val g_gate = tanh_approx(gates1(2, j))
-          val o_gate = sigmoid(gates1(3, j))
+          val i_gate = sigmoid(gates1(0, j), sigLUT)
+          val f_gate = sigmoid(gates1(1, j), sigLUT)
+          val g_gate = tanh_approx(gates1(2, j), sigLUT)
+          val o_gate = sigmoid(gates1(3, j), sigLUT)
 
           val c1_new = f_gate * c1(j) + i_gate * g_gate
-          val h1_new = o_gate * tanh_approx(c1_new)
+          val h1_new = o_gate * tanh_approx(c1_new, sigLUT)
 
           c1(j) = c1_new
           h1(j) = h1_new
@@ -238,16 +242,15 @@ import spatial.dsl._
     assert(cksum)
   }
 
-def sigmoid(x: T): T = {
+
+
+
+def sigmoid(x: T, sigLUT: LUT1[T]): T = {
   val clipped = mux(x > 6.to[T], 6.to[T], mux(x < -6.to[T], -6.to[T], x))
   val idx = ((clipped + 6.to[T]) * (255.to[T] / 12.to[T])).to[Int]
-  val sigLUT = LUT[T](256)(List.tabulate(256){ i =>
-    val xv = -6.0 + i * 12.0 / 255.0
-    (1.0 / (1.0 + scala.math.exp(-xv))).to[T]
-  } :_*)
   sigLUT(idx)
 }
 
-def tanh_approx(x: T): T = {
-  2.to[T] * sigmoid(2.to[T] * x) - 1.to[T]
+def tanh_approx(x: T, sigLUT: LUT1[T]): T = {
+  2.to[T] * sigmoid(2.to[T] * x, sigLUT) - 1.to[T]
 }}
