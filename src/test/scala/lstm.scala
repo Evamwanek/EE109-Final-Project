@@ -93,6 +93,9 @@ import spatial.dsl._
       val gates0 = SRAM[T](GATES, HIDDEN).conflictable
       val gates1 = SRAM[T](GATES, HIDDEN).conflictable
 
+      // helper macro: clip x to [-6,6], compute LUT index into a Reg, return sigLUT value
+      // (avoids .to[Int] inline which triggers Spatial's Math.v rdy redeclaration bug)
+
       Sequential.Foreach(T_STEPS by 1) { t =>
 
         // --- Layer 0 gate pre-activations ---
@@ -107,34 +110,40 @@ import spatial.dsl._
           gates0(g, j) = xC.value + hC.value + bih0(row) + bhh0(row)
         }
 
-        // --- Layer 0 gate activations + state update (fully inlined) ---
+        // --- Layer 0 gate activations + state update ---
         Foreach(HIDDEN by 1) { j =>
-          // sigmoid(gates0(0,j))
+
+          // i gate: sigmoid(gates0(0,j))
           val ig = gates0(0, j)
           val ic = mux(ig > 6.to[T], 6.to[T], mux(ig < -6.to[T], -6.to[T], ig))
-          val i_gate = sigLUT(((ic + 6.to[T]) * (255.to[T] / 12.to[T])).to[Int])
+          val i_idx = Reg[Int](0); i_idx := ((ic + 6.to[T]) * (255.to[T] / 12.to[T])).to[Int]
+          val i_gate = sigLUT(i_idx.value)
 
-          // sigmoid(gates0(1,j))
+          // f gate: sigmoid(gates0(1,j))
           val fg = gates0(1, j)
           val fc_clip = mux(fg > 6.to[T], 6.to[T], mux(fg < -6.to[T], -6.to[T], fg))
-          val f_gate = sigLUT(((fc_clip + 6.to[T]) * (255.to[T] / 12.to[T])).to[Int])
+          val f_idx = Reg[Int](0); f_idx := ((fc_clip + 6.to[T]) * (255.to[T] / 12.to[T])).to[Int]
+          val f_gate = sigLUT(f_idx.value)
 
-          // tanh(gates0(2,j)) = 2*sigmoid(2*x)-1
+          // g gate: tanh(gates0(2,j)) = 2*sigmoid(2*x)-1
           val gg = gates0(2, j) * 2.to[T]
           val gc = mux(gg > 6.to[T], 6.to[T], mux(gg < -6.to[T], -6.to[T], gg))
-          val g_gate = 2.to[T] * sigLUT(((gc + 6.to[T]) * (255.to[T] / 12.to[T])).to[Int]) - 1.to[T]
+          val g_idx = Reg[Int](0); g_idx := ((gc + 6.to[T]) * (255.to[T] / 12.to[T])).to[Int]
+          val g_gate = 2.to[T] * sigLUT(g_idx.value) - 1.to[T]
 
-          // sigmoid(gates0(3,j))
+          // o gate: sigmoid(gates0(3,j))
           val og = gates0(3, j)
           val oc = mux(og > 6.to[T], 6.to[T], mux(og < -6.to[T], -6.to[T], og))
-          val o_gate = sigLUT(((oc + 6.to[T]) * (255.to[T] / 12.to[T])).to[Int])
+          val o_idx = Reg[Int](0); o_idx := ((oc + 6.to[T]) * (255.to[T] / 12.to[T])).to[Int]
+          val o_gate = sigLUT(o_idx.value)
 
           val c0_new = f_gate * c0(j) + i_gate * g_gate
 
           // tanh(c0_new)
           val tc = c0_new * 2.to[T]
           val tcc = mux(tc > 6.to[T], 6.to[T], mux(tc < -6.to[T], -6.to[T], tc))
-          val tanh_c0 = 2.to[T] * sigLUT(((tcc + 6.to[T]) * (255.to[T] / 12.to[T])).to[Int]) - 1.to[T]
+          val tc_idx = Reg[Int](0); tc_idx := ((tcc + 6.to[T]) * (255.to[T] / 12.to[T])).to[Int]
+          val tanh_c0 = 2.to[T] * sigLUT(tc_idx.value) - 1.to[T]
 
           c0(j) = c0_new
           h0(j) = o_gate * tanh_c0
@@ -152,29 +161,35 @@ import spatial.dsl._
           gates1(g, j) = xC.value + hC.value + bih1(row) + bhh1(row)
         }
 
-        // --- Layer 1 gate activations + state update (fully inlined) ---
+        // --- Layer 1 gate activations + state update ---
         Foreach(HIDDEN by 1) { j =>
+
           val ig = gates1(0, j)
           val ic = mux(ig > 6.to[T], 6.to[T], mux(ig < -6.to[T], -6.to[T], ig))
-          val i_gate = sigLUT(((ic + 6.to[T]) * (255.to[T] / 12.to[T])).to[Int])
+          val i_idx = Reg[Int](0); i_idx := ((ic + 6.to[T]) * (255.to[T] / 12.to[T])).to[Int]
+          val i_gate = sigLUT(i_idx.value)
 
           val fg = gates1(1, j)
           val fc_clip = mux(fg > 6.to[T], 6.to[T], mux(fg < -6.to[T], -6.to[T], fg))
-          val f_gate = sigLUT(((fc_clip + 6.to[T]) * (255.to[T] / 12.to[T])).to[Int])
+          val f_idx = Reg[Int](0); f_idx := ((fc_clip + 6.to[T]) * (255.to[T] / 12.to[T])).to[Int]
+          val f_gate = sigLUT(f_idx.value)
 
           val gg = gates1(2, j) * 2.to[T]
           val gc = mux(gg > 6.to[T], 6.to[T], mux(gg < -6.to[T], -6.to[T], gg))
-          val g_gate = 2.to[T] * sigLUT(((gc + 6.to[T]) * (255.to[T] / 12.to[T])).to[Int]) - 1.to[T]
+          val g_idx = Reg[Int](0); g_idx := ((gc + 6.to[T]) * (255.to[T] / 12.to[T])).to[Int]
+          val g_gate = 2.to[T] * sigLUT(g_idx.value) - 1.to[T]
 
           val og = gates1(3, j)
           val oc = mux(og > 6.to[T], 6.to[T], mux(og < -6.to[T], -6.to[T], og))
-          val o_gate = sigLUT(((oc + 6.to[T]) * (255.to[T] / 12.to[T])).to[Int])
+          val o_idx = Reg[Int](0); o_idx := ((oc + 6.to[T]) * (255.to[T] / 12.to[T])).to[Int]
+          val o_gate = sigLUT(o_idx.value)
 
           val c1_new = f_gate * c1(j) + i_gate * g_gate
 
           val tc = c1_new * 2.to[T]
           val tcc = mux(tc > 6.to[T], 6.to[T], mux(tc < -6.to[T], -6.to[T], tc))
-          val tanh_c1 = 2.to[T] * sigLUT(((tcc + 6.to[T]) * (255.to[T] / 12.to[T])).to[Int]) - 1.to[T]
+          val tc_idx = Reg[Int](0); tc_idx := ((tcc + 6.to[T]) * (255.to[T] / 12.to[T])).to[Int]
+          val tanh_c1 = 2.to[T] * sigLUT(tc_idx.value) - 1.to[T]
 
           c1(j) = c1_new
           h1(j) = o_gate * tanh_c1
