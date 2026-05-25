@@ -8,7 +8,7 @@ of audio input. A Hamming window is used on time domain samples,
 @spatial class Butterfly extends SpatialTest {
     val N = 1024 
     val numStages = 10  // log2(1024), as defined by Cooley Tookey alg
-    type T = FixPt[TRUE, _16, _24]  // fine precision
+    type T = FixPt[TRUE, _8, _24] // fine precision
 
 def main(args: Array[String]): Unit = {
     val n = 1024
