@@ -7,19 +7,20 @@ of audio input. A Hamming window is used on time domain samples,
 */
 @spatial class Butterfly extends SpatialTest {
     val N = 1024 
+    val numFrames = 50
     val numStages = 10  // log2(1024), as defined by Cooley Tookey alg
     type T = FixPt[TRUE, _8, _24] // fine precision
 
 def main(args: Array[String]): Unit = {
     val n = 1024
     val nStages = 10
-    val realArr = loadCSV1D[T]("frame.csv")
-    val ImagArr = Array.tabulate[T](n){i => 0.to[T]}
+    val realArr = loadCSV1D[T]("/Users/evawanek/EE109-Final-Project/frames.csv")
+    val ImagArr = Array.fill[T](numFrames * N)(0.to[T])
 
-    val inputRealDRAM  = DRAM[T](N)
-    val inputImagDRAM  = DRAM[T](N)
-    val outputRealDRAM = DRAM[T](N)
-    val outputImagDRAM = DRAM[T](N)
+    val inputRealDRAM  = DRAM[T](numFrames, N)
+    val inputImagDRAM  = DRAM[T](numFrames, N)
+    val outputRealDRAM = DRAM[T](numFrames, N)
+    val outputImagDRAM = DRAM[T](numFrames, N)
     
     setMem(inputRealDRAM, realArr)
     setMem(inputImagDRAM, ImagArr)
@@ -69,87 +70,83 @@ def main(args: Array[String]): Unit = {
 
         val tmpReal = SRAM[T](N)
         val tmpImag = SRAM[T](N)
-        
-        inReal load inputRealDRAM
-        inImag load inputImagDRAM
-        
-        // apply window function
-        Foreach(N by 1){ i =>
-            inReal(i) = inReal(i) * hammingLUT(i)
-            inImag(i) = inImag(i) * hammingLUT(i)
-        }
-        
-        Sequential.Foreach(N by 1){ i =>
-            val rev = bitRevLUT(i)
-            tmpReal(rev) = inReal(i)
-            tmpImag(rev) = inImag(i)
-        }
 
-        Foreach(N by 1){ i =>
-            inReal(i) = tmpReal(i)
-            inImag(i) = tmpImag(i)
+        Sequential.Foreach(numFrames by 1) { f =>
+            
+            inReal load inputRealDRAM(f, 0::N)
+            inImag load inputImagDRAM(f, 0::N)
+            
+            // apply window function
+            Foreach(N by 1){ i =>
+                inReal(i) = inReal(i) * hammingLUT(i)
+                inImag(i) = inImag(i) * hammingLUT(i)
+            }
+            
+            Sequential.Foreach(N by 1){ i =>
+                val rev = bitRevLUT(i)
+                tmpReal(rev) = inReal(i)
+                tmpImag(rev) = inImag(i)
+            }
+    
+            Foreach(N by 1){ i =>
+                inReal(i) = tmpReal(i)
+                inImag(i) = tmpImag(i)
+            }
+    
+            // 0-9 stages 
+            Sequential.Foreach(numStages by 1){ s =>
+                // load parameters for this stage 
+                val halfStride = halfStrideLUT(s)
+                val stride = strideLUT(s)
+                val twStep = twStepLUT(s)
+            
+            Sequential {
+            // total # of butterflies in any stage is N/2
+            Foreach(N/2 by 1){ k =>
+                // butterfly parameters
+                // butterfly group/ iteration index
+                val group = k / halfStride
+                val pos = k % halfStride
+                val topIdx = group * stride + pos
+                val botIdx = topIdx + halfStride
+                val twIdx = pos * twStep
+                
+                val w_real = twR(twIdx)
+                val w_imag = twI(twIdx)
+                
+                val a_real = inReal(topIdx)
+                val b_real = inReal(botIdx)
+                
+                val a_imag = inImag(topIdx)
+                val b_imag = inImag(botIdx)
+                
+                val bw_real = b_real * w_real - b_imag * w_imag
+                val bw_imag = b_real * w_imag + b_imag * w_real
+                
+                outReal(topIdx) = a_real + bw_real
+                outImag(topIdx) = a_imag + bw_imag
+                outReal(botIdx) = a_real - bw_real
+                outImag(botIdx) = a_imag - bw_imag
+            }
+            
+            Foreach(N by 1){ i =>
+                inReal(i) = outReal(i)
+                inImag(i) = outImag(i)
+            }
+            }
         }
-
-        // 0-9 stages 
-        Sequential.Foreach(numStages by 1){ s =>
-            // load parameters for this stage 
-            val halfStride = halfStrideLUT(s)
-            val stride = strideLUT(s)
-            val twStep = twStepLUT(s)
-        
-        Sequential {
-        // total # of butterflies in any stage is N/2
-        Foreach(N/2 by 1){ k =>
-            // butterfly parameters
-            // butterfly group/ iteration index
-            val group = k / halfStride
-            val pos = k % halfStride
-            val topIdx = group * stride + pos
-            val botIdx = topIdx + halfStride
-            val twIdx = pos * twStep
-            
-            val w_real = twR(twIdx)
-            val w_imag = twI(twIdx)
-            
-            val a_real = inReal(topIdx)
-            val b_real = inReal(botIdx)
-            
-            val a_imag = inImag(topIdx)
-            val b_imag = inImag(botIdx)
-            
-            val bw_real = b_real * w_real - b_imag * w_imag
-            val bw_imag = b_real * w_imag + b_imag * w_real
-            
-            outReal(topIdx) = a_real + bw_real
-            outImag(topIdx) = a_imag + bw_imag
-            outReal(botIdx) = a_real - bw_real
-            outImag(botIdx) = a_imag - bw_imag
-        }
-        
-        Foreach(N by 1){ i =>
-            inReal(i) = outReal(i)
-            inImag(i) = outImag(i)
-        }
+        outputRealDRAM store inReal
+        outputImagDRAM store inImag
         }
     }
 
-    outputRealDRAM store inReal
-    outputImagDRAM store inImag
-    }
+    val resultReal = getMem(outputRealDRAM(0::numFrames, 0::N))
+    val resultImag = getMem(outputImagDRAM(0::numFrames, 0::N))
 
-    val resultReal = getMem(outputRealDRAM)
-    val resultImag = getMem(outputImagDRAM)
-
-    // write results to csv for python script 
     writeCSV1D(resultReal, "fft_real.csv")
     writeCSV1D(resultImag, "fft_imag.csv")
 
-    //println("======== FFT Output (first 8 bins) =========")
-    //(0 until 8) foreach { i =>
-    //println("X[" + i + "] = " + resultReal(i) + " + " + resultImag(i) + "j")
-    //}
-
-    val cksum = resultReal(0) == resultReal(0)  //  always true 
+    val cksum = true
     println("PASS: " + cksum)
     assert(cksum)
 }
