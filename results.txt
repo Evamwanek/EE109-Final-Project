@@ -1,0 +1,7 @@
+frames shape: (50, 1024)
+Saved frames.csv
+File: rock01 2.wav
+Predicted genre: rock
+Software prediction: rock
+frames shape: (50, 1024)
+Saved frames.csv

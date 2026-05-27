@@ -14,7 +14,7 @@ of audio input. A Hamming window is used on time domain samples,
 def main(args: Array[String]): Unit = {
     val n = 1024
     val nStages = 10
-    val realArr = loadCSV1D[T]("/Users/evawanek/EE109-Final-Project/frames.csv")
+    val realArr = loadCSV1D[T]("frames.csv")
     val ImagArr = Array.fill[T](numFrames * N)(0.to[T])
 
     val inputRealDRAM  = DRAM[T](numFrames, N)
@@ -135,8 +135,8 @@ def main(args: Array[String]): Unit = {
             }
             }
         }
-        outputRealDRAM store inReal
-        outputImagDRAM store inImag
+        outputRealDRAM(f, 0::N) store inReal
+        outputImagDRAM(f, 0::N) store inImag
         }
     }
 
