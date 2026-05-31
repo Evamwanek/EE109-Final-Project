@@ -3,3 +3,4 @@ gen/
 target/
 *.log
 project/target/
+*.csv
