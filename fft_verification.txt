@@ -1,0 +1,75 @@
+The followings shows the FFT file's (src/test/scala/fft.scala) output and the 
+mean and max difference with the NumPy version, showing correctness. 
+
+Song: rock01.wav
+Mean diff: 9.110733112295072e-05
+Max diff: 0.006450171028724583
+PASS
+Song: rock02.wav
+Mean diff: 0.0007138165105683499
+Max diff: 0.04556983150780525
+PASS
+Song: blues01.wav
+Mean diff: 2.3047861437416704e-05
+Max diff: 0.0008640264667718611
+PASS
+Song: blues02.wav
+Mean diff: 0.00033470075043891544
+Max diff: 0.00999532008831494
+PASS
+Song: pop01.wav
+Mean diff: 1.6773230901869497e-05
+Max diff: 0.0005692311673826111
+PASS
+Song: jazz02.wav
+Mean diff: 6.364785134365427e-05
+Max diff: 0.002039232473819652
+PASS
+Song: pop02.wav
+Mean diff: 0.0005813176774109828
+Max diff: 0.03370761823363466
+PASS
+Song: jazz01.wav
+Mean diff: 0.00022930103250687513
+Max diff: 0.0263357540504785
+PASS
+Song: reggae02.wav
+Mean diff: 0.0012031632044046086
+Max diff: 0.03946580273358791
+PASS
+Song: metal02.wav
+Mean diff: 0.002038531413557261
+Max diff: 0.03605937256735103
+PASS
+Song: reggae01.wav
+Mean diff: 9.110733112295072e-05
+Max diff: 0.006450171028724583
+PASS
+Song: metal01.wav
+Mean diff: 0.00043521440194102046
+Max diff: 0.013036888693633841
+PASS
+Song: hiphop01.wav
+Mean diff: 1.20772498527269e-05
+Max diff: 0.0003984503185314736
+PASS
+Song: country01.wav
+Mean diff: 0.00016524128803039988
+Max diff: 0.02119963657985835
+PASS
+Song: disco02.wav
+Mean diff: 0.0002149311454913705
+Max diff: 0.008152338896522338
+PASS
+Song: country02.wav
+Mean diff: 0.00023601975244172196
+Max diff: 0.018192844354743443
+PASS
+Song: hiphop02.wav
+Mean diff: 0.00024929627629774584
+Max diff: 0.0065265792511297605
+PASS
+Song: disco01.wav
+Mean diff: 0.00011765652017593397
+Max diff: 0.0028100927660688058
+PASS
