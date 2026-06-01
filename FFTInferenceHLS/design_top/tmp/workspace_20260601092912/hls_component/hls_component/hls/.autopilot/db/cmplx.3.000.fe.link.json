@@ -1,0 +1,29 @@
+{
+  "0": {
+    "basicblocks": 55,
+    "calls": "1",
+    "file": "fft_kernel.cpp",
+    "fileloc": 16,
+    "instructions": 269,
+    "loads": {
+      "G": 3,
+      "L": 14,
+      "T": 2
+    },
+    "name": "fft_kernel",
+    "stores": {
+      "L": 14,
+      "T": 2
+    },
+    "total_instructions": 285
+  },
+  "1": {
+    "basicblocks": 7,
+    "calls": "",
+    "file": "fft_kernel.cpp",
+    "fileloc": 6,
+    "instructions": 16,
+    "name": "bit_reverse",
+    "total_instructions": 16
+  }
+}

@@ -1,0 +1,169 @@
+---
+MainSourceFile:  /home/ubuntu/EE109-Final-Project/FFTInferenceHLS/design_top/tmp/workspace_20260601092912/hls_component/hls_component/hls/.autopilot/db/fft_kernel.pp.0.cpp
+Diagnostics:     
+  - DiagnosticName:  xilinx-label-all-loops
+    Message:         'Added loop label VITIS_LOOP_1223_1:  '
+    FileOffset:      1223
+    FilePath:        /opt/Xilinx/Vitis_HLS/2024.1/common/technology/autopilot/etc/ap_int_base.h
+    Replacements:    
+      - FilePath:        /home/ubuntu/EE109-Final-Project/FFTInferenceHLS/design_top/tmp/workspace_20260601092912/hls_component/hls_component/hls/.autopilot/db/fft_kernel.pp.0.cpp
+        Offset:          55492
+        Length:          0
+        ReplacementText: 'VITIS_LOOP_1223_1: '
+  - DiagnosticName:  xilinx-label-all-loops
+    Message:         'Added loop label VITIS_LOOP_676_1:  '
+    FileOffset:      676
+    FilePath:        /opt/Xilinx/Vitis_HLS/2024.1/common/technology/autopilot/etc/ap_int_ref.h
+    Replacements:    
+      - FilePath:        /home/ubuntu/EE109-Final-Project/FFTInferenceHLS/design_top/tmp/workspace_20260601092912/hls_component/hls_component/hls/.autopilot/db/fft_kernel.pp.0.cpp
+        Offset:          282886
+        Length:          0
+        ReplacementText: 'VITIS_LOOP_676_1: '
+  - DiagnosticName:  xilinx-label-all-loops
+    Message:         'Added loop label VITIS_LOOP_690_1:  '
+    FileOffset:      690
+    FilePath:        /opt/Xilinx/Vitis_HLS/2024.1/common/technology/autopilot/etc/ap_int_ref.h
+    Replacements:    
+      - FilePath:        /home/ubuntu/EE109-Final-Project/FFTInferenceHLS/design_top/tmp/workspace_20260601092912/hls_component/hls_component/hls/.autopilot/db/fft_kernel.pp.0.cpp
+        Offset:          283350
+        Length:          0
+        ReplacementText: 'VITIS_LOOP_690_1: '
+  - DiagnosticName:  xilinx-label-all-loops
+    Message:         'Added loop label VITIS_LOOP_704_1:  '
+    FileOffset:      704
+    FilePath:        /opt/Xilinx/Vitis_HLS/2024.1/common/technology/autopilot/etc/ap_int_ref.h
+    Replacements:    
+      - FilePath:        /home/ubuntu/EE109-Final-Project/FFTInferenceHLS/design_top/tmp/workspace_20260601092912/hls_component/hls_component/hls/.autopilot/db/fft_kernel.pp.0.cpp
+        Offset:          283815
+        Length:          0
+        ReplacementText: 'VITIS_LOOP_704_1: '
+  - DiagnosticName:  xilinx-label-all-loops
+    Message:         'Added loop label VITIS_LOOP_1247_1:  '
+    FileOffset:      1247
+    FilePath:        /opt/Xilinx/Vitis_HLS/2024.1/common/technology/autopilot/etc/ap_fixed_base.h
+    Replacements:    
+      - FilePath:        /home/ubuntu/EE109-Final-Project/FFTInferenceHLS/design_top/tmp/workspace_20260601092912/hls_component/hls_component/hls/.autopilot/db/fft_kernel.pp.0.cpp
+        Offset:          566769
+        Length:          0
+        ReplacementText: 'VITIS_LOOP_1247_1: '
+  - DiagnosticName:  xilinx-label-all-loops
+    Message:         'Added loop label VITIS_LOOP_8_1:  '
+    FileOffset:      8
+    FilePath:        /home/ubuntu/EE109-Final-Project/FFTInferenceHLS/src/fft_kernel.cpp
+    Replacements:    
+      - FilePath:        /home/ubuntu/EE109-Final-Project/FFTInferenceHLS/design_top/tmp/workspace_20260601092912/hls_component/hls_component/hls/.autopilot/db/fft_kernel.pp.0.cpp
+        Offset:          953165
+        Length:          0
+        ReplacementText: 'VITIS_LOOP_8_1: '
+  - DiagnosticName:  clang-diagnostic-error
+    Message:         'Invalid Directive: for current device, ram_2p + bram is invalid combination for BIND_STORAGE''s option ''type + impl'''
+    FileOffset:      40
+    FilePath:        /home/ubuntu/EE109-Final-Project/FFTInferenceHLS/src/fft_kernel.cpp
+    Replacements:    
+  - DiagnosticName:  clang-diagnostic-error
+    Message:         'Invalid Directive: for current device, ram_2p + bram is invalid combination for BIND_STORAGE''s option ''type + impl'''
+    FileOffset:      41
+    FilePath:        /home/ubuntu/EE109-Final-Project/FFTInferenceHLS/src/fft_kernel.cpp
+    Replacements:    
+  - DiagnosticName:  clang-diagnostic-error
+    Message:         'Invalid Directive: for current device, ram_2p + bram is invalid combination for BIND_STORAGE''s option ''type + impl'''
+    FileOffset:      42
+    FilePath:        /home/ubuntu/EE109-Final-Project/FFTInferenceHLS/src/fft_kernel.cpp
+    Replacements:    
+  - DiagnosticName:  clang-diagnostic-error
+    Message:         'Invalid Directive: for current device, ram_2p + bram is invalid combination for BIND_STORAGE''s option ''type + impl'''
+    FileOffset:      43
+    FilePath:        /home/ubuntu/EE109-Final-Project/FFTInferenceHLS/src/fft_kernel.cpp
+    Replacements:    
+  - DiagnosticName:  clang-diagnostic-error
+    Message:         'Invalid Directive: for current device, ram_2p + bram is invalid combination for BIND_STORAGE''s option ''type + impl'''
+    FileOffset:      44
+    FilePath:        /home/ubuntu/EE109-Final-Project/FFTInferenceHLS/src/fft_kernel.cpp
+    Replacements:    
+  - DiagnosticName:  clang-diagnostic-error
+    Message:         'Invalid Directive: for current device, ram_2p + bram is invalid combination for BIND_STORAGE''s option ''type + impl'''
+    FileOffset:      45
+    FilePath:        /home/ubuntu/EE109-Final-Project/FFTInferenceHLS/src/fft_kernel.cpp
+    Replacements:    
+  - DiagnosticName:  xilinx-label-all-loops
+    Message:         'Added loop label VITIS_LOOP_47_1:  '
+    FileOffset:      47
+    FilePath:        /home/ubuntu/EE109-Final-Project/FFTInferenceHLS/src/fft_kernel.cpp
+    Replacements:    
+      - FilePath:        /home/ubuntu/EE109-Final-Project/FFTInferenceHLS/design_top/tmp/workspace_20260601092912/hls_component/hls_component/hls/.autopilot/db/fft_kernel.pp.0.cpp
+        Offset:          954687
+        Length:          0
+        ReplacementText: 'VITIS_LOOP_47_1: '
+  - DiagnosticName:  xilinx-label-all-loops
+    Message:         'Added loop label VITIS_LOOP_49_2:  '
+    FileOffset:      49
+    FilePath:        /home/ubuntu/EE109-Final-Project/FFTInferenceHLS/src/fft_kernel.cpp
+    Replacements:    
+      - FilePath:        /home/ubuntu/EE109-Final-Project/FFTInferenceHLS/design_top/tmp/workspace_20260601092912/hls_component/hls_component/hls/.autopilot/db/fft_kernel.pp.0.cpp
+        Offset:          954727
+        Length:          0
+        ReplacementText: 'VITIS_LOOP_49_2: '
+  - DiagnosticName:  xilinx-label-all-loops
+    Message:         'Added loop label VITIS_LOOP_55_3:  '
+    FileOffset:      55
+    FilePath:        /home/ubuntu/EE109-Final-Project/FFTInferenceHLS/src/fft_kernel.cpp
+    Replacements:    
+      - FilePath:        /home/ubuntu/EE109-Final-Project/FFTInferenceHLS/design_top/tmp/workspace_20260601092912/hls_component/hls_component/hls/.autopilot/db/fft_kernel.pp.0.cpp
+        Offset:          954890
+        Length:          0
+        ReplacementText: 'VITIS_LOOP_55_3: '
+  - DiagnosticName:  xilinx-label-all-loops
+    Message:         'Added loop label VITIS_LOOP_62_4:  '
+    FileOffset:      62
+    FilePath:        /home/ubuntu/EE109-Final-Project/FFTInferenceHLS/src/fft_kernel.cpp
+    Replacements:    
+      - FilePath:        /home/ubuntu/EE109-Final-Project/FFTInferenceHLS/design_top/tmp/workspace_20260601092912/hls_component/hls_component/hls/.autopilot/db/fft_kernel.pp.0.cpp
+        Offset:          955079
+        Length:          0
+        ReplacementText: 'VITIS_LOOP_62_4: '
+  - DiagnosticName:  xilinx-label-all-loops
+    Message:         'Added loop label VITIS_LOOP_69_5:  '
+    FileOffset:      69
+    FilePath:        /home/ubuntu/EE109-Final-Project/FFTInferenceHLS/src/fft_kernel.cpp
+    Replacements:    
+      - FilePath:        /home/ubuntu/EE109-Final-Project/FFTInferenceHLS/design_top/tmp/workspace_20260601092912/hls_component/hls_component/hls/.autopilot/db/fft_kernel.pp.0.cpp
+        Offset:          955258
+        Length:          0
+        ReplacementText: 'VITIS_LOOP_69_5: '
+  - DiagnosticName:  xilinx-label-all-loops
+    Message:         'Added loop label VITIS_LOOP_75_6:  '
+    FileOffset:      75
+    FilePath:        /home/ubuntu/EE109-Final-Project/FFTInferenceHLS/src/fft_kernel.cpp
+    Replacements:    
+      - FilePath:        /home/ubuntu/EE109-Final-Project/FFTInferenceHLS/design_top/tmp/workspace_20260601092912/hls_component/hls_component/hls/.autopilot/db/fft_kernel.pp.0.cpp
+        Offset:          955395
+        Length:          0
+        ReplacementText: 'VITIS_LOOP_75_6: '
+  - DiagnosticName:  xilinx-label-all-loops
+    Message:         'Added loop label VITIS_LOOP_80_7:  '
+    FileOffset:      80
+    FilePath:        /home/ubuntu/EE109-Final-Project/FFTInferenceHLS/src/fft_kernel.cpp
+    Replacements:    
+      - FilePath:        /home/ubuntu/EE109-Final-Project/FFTInferenceHLS/design_top/tmp/workspace_20260601092912/hls_component/hls_component/hls/.autopilot/db/fft_kernel.pp.0.cpp
+        Offset:          955561
+        Length:          0
+        ReplacementText: 'VITIS_LOOP_80_7: '
+  - DiagnosticName:  xilinx-label-all-loops
+    Message:         'Added loop label VITIS_LOOP_109_8:  '
+    FileOffset:      109
+    FilePath:        /home/ubuntu/EE109-Final-Project/FFTInferenceHLS/src/fft_kernel.cpp
+    Replacements:    
+      - FilePath:        /home/ubuntu/EE109-Final-Project/FFTInferenceHLS/design_top/tmp/workspace_20260601092912/hls_component/hls_component/hls/.autopilot/db/fft_kernel.pp.0.cpp
+        Offset:          956529
+        Length:          0
+        ReplacementText: 'VITIS_LOOP_109_8: '
+  - DiagnosticName:  xilinx-label-all-loops
+    Message:         'Added loop label VITIS_LOOP_116_9:  '
+    FileOffset:      116
+    FilePath:        /home/ubuntu/EE109-Final-Project/FFTInferenceHLS/src/fft_kernel.cpp
+    Replacements:    
+      - FilePath:        /home/ubuntu/EE109-Final-Project/FFTInferenceHLS/design_top/tmp/workspace_20260601092912/hls_component/hls_component/hls/.autopilot/db/fft_kernel.pp.0.cpp
+        Offset:          956684
+        Length:          0
+        ReplacementText: 'VITIS_LOOP_116_9: '
+...

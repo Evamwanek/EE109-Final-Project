@@ -1,0 +1,18 @@
+{
+  "0": {
+    "basicblocks": 28,
+    "calls": "",
+    "file": "fft_kernel.cpp",
+    "fileloc": 16,
+    "instructions": 257,
+    "loads": {
+      "G": 3,
+      "L": 14
+    },
+    "name": "fft_kernel",
+    "stores": {
+      "L": 14
+    },
+    "total_instructions": 257
+  }
+}
