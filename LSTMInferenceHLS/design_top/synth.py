@@ -87,7 +87,7 @@ print("Concatenation complete!")
 
 # Clean up, delete the workspace
 if (os.path.isdir(tmpdir)):
-    shutil.rmtree(tmpdir, ignore_errors=True)
+#     shutil.rmtree(tmpdir, ignore_errors=True)
     print(f"Deleted workspaces in {tmpdir}")
 
 # Close the client connection and terminate the vitis server

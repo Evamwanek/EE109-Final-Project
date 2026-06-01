@@ -5,7 +5,7 @@ import os
 
 LAB_DIR = '.'
 num_frames = 50
-folder = '/Users/mayabridgman/Documents/EE109 Songs'
+folder = '/home/ubuntu/EE109-Final-Project/EE109 Songs'
 for filename in os.listdir(folder):
     if not filename.endswith(".wav"):
         continue
