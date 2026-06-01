@@ -1,0 +1,3 @@
+relativeroot=/home/ubuntu/EE109-Final-Project/LSTMInferenceHLS/design_top/tmp/workspace_20260601125538/hls_component
+original_argv=-c --mode hls --config /home/ubuntu/EE109-Final-Project/LSTMInferenceHLS/design_top/tmp/workspace_20260601125538/hls_component/hls_config.cfg --work_dir hls_component 
+

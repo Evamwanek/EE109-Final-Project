@@ -38,6 +38,11 @@ print "Reading CL IP blocks"
 
 #---- User would uncomment and/or list IPs required in their design ----
 
+## HLS Floating Point IPs
+source ${scripts_dir}/vadd_fcmp_32ns_32ns_1_2_no_dsp_1_ip.tcl
+source ${scripts_dir}/vadd_fadd_32ns_32ns_32_10_full_dsp_1_ip.tcl
+source ${scripts_dir}/vadd_fmul_32ns_32ns_32_5_max_dsp_1_ip.tcl
+
 ## DDR IP
 read_ip ${HDK_IP_SRC_DIR}/cl_ddr4/cl_ddr4.xci
 
