@@ -1,0 +1,4 @@
+fft_kernel_gmem0_m_axi
+fft_kernel_control_s_axi
+fft_kernel_flow_control_loop_pipe
+fft_kernel

@@ -1,0 +1,332 @@
+--- !Failure
+Pass:            generate-ir-wrapper
+Name:            MAXIDepthUnspecified
+DebugLoc:        { File: ../../../../src/fft_kernel.cpp, Line: 21, Column: 0 }
+Function:        fft_kernel
+Args:            
+  - String:          'A depth specification is required for MAXI interface port '''
+  - Name:            input_real
+  - String:          ''' for cosimulation.'
+...
+--- !Failure
+Pass:            generate-ir-wrapper
+Name:            MAXIDepthUnspecified
+DebugLoc:        { File: ../../../../src/fft_kernel.cpp, Line: 21, Column: 0 }
+Function:        fft_kernel
+Args:            
+  - String:          'A depth specification is required for MAXI interface port '''
+  - Name:            input_imag
+  - String:          ''' for cosimulation.'
+...
+--- !Failure
+Pass:            generate-ir-wrapper
+Name:            MAXIDepthUnspecified
+DebugLoc:        { File: ../../../../src/fft_kernel.cpp, Line: 21, Column: 0 }
+Function:        fft_kernel
+Args:            
+  - String:          'A depth specification is required for MAXI interface port '''
+  - Name:            output_real
+  - String:          ''' for cosimulation.'
+...
+--- !Failure
+Pass:            generate-ir-wrapper
+Name:            MAXIDepthUnspecified
+DebugLoc:        { File: ../../../../src/fft_kernel.cpp, Line: 21, Column: 0 }
+Function:        fft_kernel
+Args:            
+  - String:          'A depth specification is required for MAXI interface port '''
+  - Name:            output_imag
+  - String:          ''' for cosimulation.'
+...
+--- !Passed
+Pass:            reflow-burst-inference
+Name:            BurstInferred
+DebugLoc:        { File: ../../../../src/fft_kernel.cpp, Line: 35, Column: 19 }
+Function:        fft_kernel
+Args:            
+  - String:          'Sequential '
+  - Direction:       read
+  - String:          ' of length '
+  - Length:          '51200'
+  - String:          ' has been inferred'
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        input_realseq
+  - ArrayName:       input_real
+  - String:          ' '
+  - BundleName:      gmem0
+  - String:          ' '
+  - LoopName:        VITIS_LOOP_35_1
+  - String:          ' '
+  - LoopLoc:         '../../../../src/fft_kernel.cpp:35:19'
+  - String:          ' '
+  - Function:        fft_kernel
+    DebugLoc:        { File: ../../../../src/fft_kernel.cpp, Line: 21, 
+                       Column: 0 }
+  - String:          ' '
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      load
+    DebugLoc:        { File: ../../../../src/fft_kernel.cpp, Line: 38, 
+                       Column: 30 }
+  - OrigDirection:   read
+  - OrigID:          for.inc.load.6
+...
+--- !Passed
+Pass:            reflow-burst-inference
+Name:            BurstInferred
+DebugLoc:        { File: ../../../../src/fft_kernel.cpp, Line: 35, Column: 19 }
+Function:        fft_kernel
+Args:            
+  - String:          'Sequential '
+  - Direction:       read
+  - String:          ' of length '
+  - Length:          '51200'
+  - String:          ' has been inferred'
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        input_imagseq
+  - ArrayName:       input_imag
+  - String:          ' '
+  - BundleName:      gmem0
+  - String:          ' '
+  - LoopName:        VITIS_LOOP_35_1
+  - String:          ' '
+  - LoopLoc:         '../../../../src/fft_kernel.cpp:35:19'
+  - String:          ' '
+  - Function:        fft_kernel
+    DebugLoc:        { File: ../../../../src/fft_kernel.cpp, Line: 21, 
+                       Column: 0 }
+  - String:          ' '
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      load
+    DebugLoc:        { File: ../../../../src/fft_kernel.cpp, Line: 39, 
+                       Column: 37 }
+  - OrigDirection:   read
+  - OrigID:          for.inc.load.12
+...
+--- !Passed
+Pass:            reflow-burst-inference
+Name:            BurstInferred
+DebugLoc:        { File: ../../../../src/fft_kernel.cpp, Line: 35, Column: 19 }
+Function:        fft_kernel
+Args:            
+  - String:          'Sequential '
+  - Direction:       write
+  - String:          ' of length '
+  - Length:          '51200'
+  - String:          ' has been inferred'
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        output_realseq
+  - ArrayName:       output_real
+  - String:          ' '
+  - BundleName:      gmem0
+  - String:          ' '
+  - LoopName:        VITIS_LOOP_35_1
+  - String:          ' '
+  - LoopLoc:         '../../../../src/fft_kernel.cpp:35:19'
+  - String:          ' '
+  - Function:        fft_kernel
+    DebugLoc:        { File: ../../../../src/fft_kernel.cpp, Line: 21, 
+                       Column: 0 }
+  - String:          ' '
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      store
+    DebugLoc:        { File: ../../../../src/fft_kernel.cpp, Line: 38, 
+                       Column: 28 }
+  - OrigDirection:   write
+  - OrigID:          for.inc.store.11
+...
+--- !Passed
+Pass:            reflow-burst-inference
+Name:            BurstInferred
+DebugLoc:        { File: ../../../../src/fft_kernel.cpp, Line: 35, Column: 19 }
+Function:        fft_kernel
+Args:            
+  - String:          'Sequential '
+  - Direction:       write
+  - String:          ' of length '
+  - Length:          '51200'
+  - String:          ' has been inferred'
+  - String:          ' _XLX_SEP_ '
+  - AccessID:        output_imagseq
+  - ArrayName:       output_imag
+  - String:          ' '
+  - BundleName:      gmem0
+  - String:          ' '
+  - LoopName:        VITIS_LOOP_35_1
+  - String:          ' '
+  - LoopLoc:         '../../../../src/fft_kernel.cpp:35:19'
+  - String:          ' '
+  - Function:        fft_kernel
+    DebugLoc:        { File: ../../../../src/fft_kernel.cpp, Line: 21, 
+                       Column: 0 }
+  - String:          ' '
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      store
+    DebugLoc:        { File: ../../../../src/fft_kernel.cpp, Line: 39, 
+                       Column: 35 }
+  - OrigDirection:   write
+  - OrigID:          for.inc.store.18
+...
+--- !Missed
+Pass:            reflow-burst-widen
+Name:            GreaterOrEqualThreshold
+DebugLoc:        { File: ../../../../src/fft_kernel.cpp, Line: 35, Column: 19 }
+Function:        fft_kernel
+Args:            
+  - String:          'Could not widen since type '
+  - Type:            i32
+  - String:          ' size is greater than or equal to the max_widen_bitwidth threshold of '
+  - Threshold:       '0'
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      call
+    DebugLoc:        { File: ../../../../src/fft_kernel.cpp, Line: 35, 
+                       Column: 19 }
+  - OrigDirection:   read
+  - OrigID:          input_realseq
+  - ArrayName:       input_real
+  - String:          ' '
+  - BundleName:      gmem0
+  - String:          ' '
+  - LoopName:        VITIS_LOOP_36_2
+  - String:          ' '
+  - LoopLoc:         '../../../../src/fft_kernel.cpp:36:22'
+  - String:          ' '
+  - Function:        fft_kernel
+    DebugLoc:        { File: ../../../../src/fft_kernel.cpp, Line: 21, 
+                       Column: 0 }
+  - String:          ' '
+...
+--- !Missed
+Pass:            reflow-burst-widen
+Name:            GreaterOrEqualThreshold
+DebugLoc:        { File: ../../../../src/fft_kernel.cpp, Line: 35, Column: 19 }
+Function:        fft_kernel
+Args:            
+  - String:          'Could not widen since type '
+  - Type:            i32
+  - String:          ' size is greater than or equal to the max_widen_bitwidth threshold of '
+  - Threshold:       '0'
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      call
+    DebugLoc:        { File: ../../../../src/fft_kernel.cpp, Line: 35, 
+                       Column: 19 }
+  - OrigDirection:   read
+  - OrigID:          input_imagseq
+  - ArrayName:       input_imag
+  - String:          ' '
+  - BundleName:      gmem0
+  - String:          ' '
+  - LoopName:        VITIS_LOOP_36_2
+  - String:          ' '
+  - LoopLoc:         '../../../../src/fft_kernel.cpp:36:22'
+  - String:          ' '
+  - Function:        fft_kernel
+    DebugLoc:        { File: ../../../../src/fft_kernel.cpp, Line: 21, 
+                       Column: 0 }
+  - String:          ' '
+...
+--- !Missed
+Pass:            reflow-burst-widen
+Name:            GreaterOrEqualThreshold
+DebugLoc:        { File: ../../../../src/fft_kernel.cpp, Line: 35, Column: 19 }
+Function:        fft_kernel
+Args:            
+  - String:          'Could not widen since type '
+  - Type:            i32
+  - String:          ' size is greater than or equal to the max_widen_bitwidth threshold of '
+  - Threshold:       '0'
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      call
+    DebugLoc:        { File: ../../../../src/fft_kernel.cpp, Line: 35, 
+                       Column: 19 }
+  - OrigDirection:   write
+  - OrigID:          output_realseq
+  - ArrayName:       output_real
+  - String:          ' '
+  - BundleName:      gmem0
+  - String:          ' '
+  - LoopName:        VITIS_LOOP_36_2
+  - String:          ' '
+  - LoopLoc:         '../../../../src/fft_kernel.cpp:36:22'
+  - String:          ' '
+  - Function:        fft_kernel
+    DebugLoc:        { File: ../../../../src/fft_kernel.cpp, Line: 21, 
+                       Column: 0 }
+  - String:          ' '
+...
+--- !Missed
+Pass:            reflow-burst-widen
+Name:            GreaterOrEqualThreshold
+DebugLoc:        { File: ../../../../src/fft_kernel.cpp, Line: 35, Column: 19 }
+Function:        fft_kernel
+Args:            
+  - String:          'Could not widen since type '
+  - Type:            i32
+  - String:          ' size is greater than or equal to the max_widen_bitwidth threshold of '
+  - Threshold:       '0'
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      call
+    DebugLoc:        { File: ../../../../src/fft_kernel.cpp, Line: 35, 
+                       Column: 19 }
+  - OrigDirection:   write
+  - OrigID:          output_imagseq
+  - ArrayName:       output_imag
+  - String:          ' '
+  - BundleName:      gmem0
+  - String:          ' '
+  - LoopName:        VITIS_LOOP_36_2
+  - String:          ' '
+  - LoopLoc:         '../../../../src/fft_kernel.cpp:36:22'
+  - String:          ' '
+  - Function:        fft_kernel
+    DebugLoc:        { File: ../../../../src/fft_kernel.cpp, Line: 21, 
+                       Column: 0 }
+  - String:          ' '
+...
+--- !Missed
+Pass:            reflow-burst-inference
+Name:            BurstConflict
+DebugLoc:        { File: ../../../../src/fft_kernel.cpp, Line: 35, Column: 19 }
+Function:        fft_kernel
+Args:            
+  - String:          'Could not burst due to multiple potential '
+  - Direction:       reads
+  - String:          ' to the same bundle in the same region.'
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      call
+    DebugLoc:        { File: ../../../../src/fft_kernel.cpp, Line: 35, 
+                       Column: 19 }
+  - OrigDirection:   read
+  - OrigID:          seq
+  - ArrayName:       ''
+  - String:          ' '
+  - BundleName:      gmem0
+  - String:          ' '
+  - Function:        fft_kernel
+    DebugLoc:        { File: ../../../../src/fft_kernel.cpp, Line: 21, 
+                       Column: 0 }
+  - String:          ' '
+...
+--- !Missed
+Pass:            reflow-burst-inference
+Name:            BurstConflict
+DebugLoc:        { File: ../../../../src/fft_kernel.cpp, Line: 35, Column: 19 }
+Function:        fft_kernel
+Args:            
+  - String:          'Could not burst due to multiple potential '
+  - Direction:       writes
+  - String:          ' to the same bundle in the same region.'
+  - String:          ' _XLX_SEP_ '
+  - OrigAccess:      call
+    DebugLoc:        { File: ../../../../src/fft_kernel.cpp, Line: 35, 
+                       Column: 19 }
+  - OrigDirection:   write
+  - OrigID:          seq2
+  - ArrayName:       ''
+  - String:          ' '
+  - BundleName:      gmem0
+  - String:          ' '
+  - Function:        fft_kernel
+    DebugLoc:        { File: ../../../../src/fft_kernel.cpp, Line: 21, 
+                       Column: 0 }
+  - String:          ' '
+...

@@ -47,8 +47,12 @@ static int ddr_rd32(int bar_handle, uint64_t addr, uint32_t *data) {
 #define NUM_FRAMES  50
 #define TOTAL_SIZE  (N * NUM_FRAMES)
 
-// fixed_t is ap_fixed<32,8>, stored as 32-bit words in DDR
+// fixed_t in fft_kernel.h is a signed 32-bit integer
+// using Q18.14 fixed-point format.
 #define WORD_BYTES 4
+
+#define FRAC_BITS 14
+#define FIXED_SCALE (1 << FRAC_BITS)
 
 // DDR layout
 #define INPUT_REAL_PTR   0x0000000000000000ULL
@@ -56,10 +60,20 @@ static int ddr_rd32(int bar_handle, uint64_t addr, uint32_t *data) {
 #define OUTPUT_REAL_PTR  (INPUT_IMAG_PTR  + TOTAL_SIZE * WORD_BYTES)
 #define OUTPUT_IMAG_PTR  (OUTPUT_REAL_PTR + TOTAL_SIZE * WORD_BYTES)
 
-// Convert float-ish test data into simple fixed-point Q24 fractional format.
-// ap_fixed<32,8> has 24 fractional bits.
+#define WORD_BYTES 4
+
+#define FRAC_BITS 14
+#define FIXED_SCALE (1 << FRAC_BITS)
+
+// DDR layout
+#define INPUT_REAL_PTR   0x0000000000000000ULL
+#define INPUT_IMAG_PTR   (INPUT_REAL_PTR  + TOTAL_SIZE * WORD_BYTES)
+#define OUTPUT_REAL_PTR  (INPUT_IMAG_PTR  + TOTAL_SIZE * WORD_BYTES)
+#define OUTPUT_IMAG_PTR  (OUTPUT_REAL_PTR + TOTAL_SIZE * WORD_BYTES)
+
 static uint32_t float_to_fixed_word(float x) {
-    int32_t fixed = (int32_t)(x * (float)(1 << 24));
+    int32_t fixed = (int32_t)(x * (float)FIXED_SCALE);
+
     uint32_t bits;
     memcpy(&bits, &fixed, sizeof(uint32_t));
     return bits;
@@ -68,7 +82,8 @@ static uint32_t float_to_fixed_word(float x) {
 static float fixed_word_to_float(uint32_t bits) {
     int32_t fixed;
     memcpy(&fixed, &bits, sizeof(int32_t));
-    return ((float)fixed) / (float)(1 << 24);
+
+    return ((float)fixed) / (float)FIXED_SCALE;
 }
 
 static int write_test_inputs(int bar_handle) {
@@ -123,6 +138,14 @@ int main(int argc, char **argv) {
     printf("Loading input frames into DDR...\n");
     if (write_test_inputs(pcis_handle)) goto fail;
 
+    uint32_t check0 = 0, check1 = 0, check2 = 0;
+
+    if (ddr_rd32(pcis_handle, INPUT_REAL_PTR + 0 * WORD_BYTES, &check0)) goto fail;
+    if (ddr_rd32(pcis_handle, INPUT_REAL_PTR + 1 * WORD_BYTES, &check1)) goto fail;
+    if (ddr_rd32(pcis_handle, INPUT_REAL_PTR + 2 * WORD_BYTES, &check2)) goto fail;
+
+    printf("DEBUG input raw: 0x%08x 0x%08x 0x%08x\n", check0, check1, check2);
+
     if (ocl_wr32(ocl_handle, ADDR_TRANSFER_EN, 0)) goto fail;
 
     // Configure FFT kernel pointer registers
@@ -146,7 +169,24 @@ int main(int argc, char **argv) {
 
     // Wait for completion
     printf("Waiting for completion...\n");
-    usleep(500000);
+
+    // uint32_t ctrl = 0;
+    // int timeout = 1000000;
+
+    // do {
+    //     if (ocl_rd32(ocl_handle, ADDR_CTRL, &ctrl)) goto fail;
+    //     timeout--;
+    // } while (((ctrl & 0x2) == 0) && timeout > 0);
+
+    // printf("DEBUG ctrl after wait = 0x%08x\n", ctrl);
+
+    // if (timeout == 0) {
+    //     fprintf(stderr, "ERROR: FFT kernel timeout waiting for ap_done\n");
+    //     errors++;
+    // }
+
+    printf("Waiting for completion...\n");
+ usleep(500000);   // 0.5 seconds
 
     // Read back a few outputs and sanity-check
     if (ocl_wr32(ocl_handle, ADDR_TRANSFER_EN, 1)) goto fail;

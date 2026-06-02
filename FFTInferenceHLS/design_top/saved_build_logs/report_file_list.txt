@@ -1,0 +1,8 @@
+build/reports/design_top.2026_05_31-235352.post_opt_timing.rpt
+build/reports/design_top.2026_05_31-235352.post_phy_opt_timing.rpt
+build/reports/design_top.2026_05_31-235352.post_place_timing.rpt
+build/reports/design_top.2026_05_31-235352.post_route_timing.rpt
+build/reports/design_top.2026_06_01-192657.post_opt_timing.rpt
+build/reports/design_top.2026_06_01-192657.post_phy_opt_timing.rpt
+build/reports/design_top.2026_06_01-192657.post_place_timing.rpt
+build/reports/design_top.2026_06_01-192657.post_route_timing.rpt

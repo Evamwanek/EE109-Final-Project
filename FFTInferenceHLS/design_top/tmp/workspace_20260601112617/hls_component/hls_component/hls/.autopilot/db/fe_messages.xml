@@ -1,0 +1,48 @@
+<xilinx:hls_fe_msgs>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="directive:1:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaContext="directive" ARG_PragmaFunction="fft_kernel" ARG_PragmaIsValid="1" ARG_PragmaOptions="name=fft_kernel" ARG_PragmaType="top" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="../../../../src/fft_kernel.cpp:24:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="fft_kernel" ARG_PragmaIsValid="1" ARG_PragmaOptions="m_axi port=input_real offset=slave bundle=gmem0" ARG_PragmaType="interface" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="../../../../src/fft_kernel.cpp:25:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="fft_kernel" ARG_PragmaIsValid="1" ARG_PragmaOptions="m_axi port=input_imag offset=slave bundle=gmem0" ARG_PragmaType="interface" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="../../../../src/fft_kernel.cpp:26:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="fft_kernel" ARG_PragmaIsValid="1" ARG_PragmaOptions="m_axi port=output_real offset=slave bundle=gmem0" ARG_PragmaType="interface" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="../../../../src/fft_kernel.cpp:27:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="fft_kernel" ARG_PragmaIsValid="1" ARG_PragmaOptions="m_axi port=output_imag offset=slave bundle=gmem0" ARG_PragmaType="interface" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="../../../../src/fft_kernel.cpp:29:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="fft_kernel" ARG_PragmaIsValid="1" ARG_PragmaOptions="s_axilite port=input_real bundle=control" ARG_PragmaType="interface" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="../../../../src/fft_kernel.cpp:30:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="fft_kernel" ARG_PragmaIsValid="1" ARG_PragmaOptions="s_axilite port=input_imag bundle=control" ARG_PragmaType="interface" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="../../../../src/fft_kernel.cpp:31:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="fft_kernel" ARG_PragmaIsValid="1" ARG_PragmaOptions="s_axilite port=output_real bundle=control" ARG_PragmaType="interface" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="../../../../src/fft_kernel.cpp:32:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="fft_kernel" ARG_PragmaIsValid="1" ARG_PragmaOptions="s_axilite port=output_imag bundle=control" ARG_PragmaType="interface" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="../../../../src/fft_kernel.cpp:33:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="fft_kernel" ARG_PragmaIsValid="1" ARG_PragmaOptions="ap_ctrl_hs port=return" ARG_PragmaType="interface" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_VERBOSE_DUMP" msg_id="207-5471" msg_severity="WARNING" msg_loc="../../../../src/fft_kernel.cpp:37:9" msg_body="HLS pragma dump">
+        <args ARG_PragmaFunction="fft_kernel" ARG_PragmaIsValid="1" ARG_PragmaOptions="II=1" ARG_PragmaType="pipeline" ClangWarningOption="dump-hls-pragmas"/>
+    </msg>
+    <msg msg_groups="PRAGMA_INTERFACE" msg_id="214-386" msg_severity="WARNING" msg_loc="../../../../src/fft_kernel.cpp:21:0" msg_body="A depth specification is required for MAXI interface port 'input_real' for cosimulation.">
+        <args Name="input_real"/>
+    </msg>
+    <msg msg_groups="PRAGMA_INTERFACE" msg_id="214-386" msg_severity="WARNING" msg_loc="../../../../src/fft_kernel.cpp:21:0" msg_body="A depth specification is required for MAXI interface port 'input_imag' for cosimulation.">
+        <args Name="input_imag"/>
+    </msg>
+    <msg msg_groups="PRAGMA_INTERFACE" msg_id="214-386" msg_severity="WARNING" msg_loc="../../../../src/fft_kernel.cpp:21:0" msg_body="A depth specification is required for MAXI interface port 'output_real' for cosimulation.">
+        <args Name="output_real"/>
+    </msg>
+    <msg msg_groups="PRAGMA_INTERFACE" msg_id="214-386" msg_severity="WARNING" msg_loc="../../../../src/fft_kernel.cpp:21:0" msg_body="A depth specification is required for MAXI interface port 'output_imag' for cosimulation.">
+        <args Name="output_imag"/>
+    </msg>
+</xilinx:hls_fe_msgs>
+

@@ -1,0 +1,13 @@
+build/scripts/2026_05_31-234057.vivado.log
+build/scripts/2026_05_31-234126.vivado.log
+build/scripts/2026_05_31-234800.vivado.log
+build/scripts/2026_05_31-235206.vivado.log
+build/scripts/2026_05_31-235352.vivado.log
+build/scripts/2026_06_01-084129.vivado.log
+build/scripts/2026_06_01-084658.vivado.log
+build/scripts/2026_06_01-085445.vivado.log
+build/scripts/2026_06_01-085745.vivado.log
+build/scripts/2026_06_01-090111.vivado.log
+build/scripts/2026_06_01-093031.vivado.log
+build/scripts/2026_06_01-192046.vivado.log
+build/scripts/2026_06_01-192657.vivado.log

@@ -3,8 +3,8 @@
 # SW Build 5076996 on Wed May 22 18:36:09 MDT 2024
 # IP Build 5075265 on Wed May 22 21:45:21 MDT 2024
 # SharedData Build 5076995 on Wed May 22 18:29:18 MDT 2024
-# Start of session at: Mon Jun  1 08:36:25 2026
-# Process ID: 18317
+# Start of session at: Mon Jun  1 21:41:49 2026
+# Process ID: 14239
 # Current directory: /home/ubuntu/EE109-Final-Project/FFTInferenceHLS/design_top/verif/sim/xsim/design_top_base_test_sv
 # Command line: xsim -log design_top_base_test.log -mode tcl -source {xsim.dir/tb/xsim_script.tcl}
 # Log file: /home/ubuntu/EE109-Final-Project/FFTInferenceHLS/design_top/verif/sim/xsim/design_top_base_test_sv/design_top_base_test.log
@@ -13,13 +13,13 @@
 # Platform          :Ubuntu
 # Operating System  :Ubuntu 20.04.6 LTS
 # Processor Detail  :AMD EPYC 7R13 Processor
-# CPU Frequency     :2650.000 MHz
+# CPU Frequency     :2649.998 MHz
 # CPU Physical cores:12
 # CPU Logical cores :24
 # Host memory       :268108 MB
 # Swap memory       :10737 MB
 # Total Virtual     :278846 MB
-# Available Virtual :277616 MB
+# Available Virtual :277600 MB
 #-----------------------------------------------------------
 source xsim.dir/tb/xsim_script.tcl
 source /home/ubuntu/EE109-Final-Project/FFTInferenceHLS/design_top/verif/scripts/waves.tcl

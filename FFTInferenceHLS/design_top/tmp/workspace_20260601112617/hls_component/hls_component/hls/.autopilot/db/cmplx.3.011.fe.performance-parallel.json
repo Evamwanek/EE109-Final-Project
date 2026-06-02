@@ -1,0 +1,11 @@
+{
+  "0": {
+    "basicblocks": 5,
+    "calls": "",
+    "file": "fft_kernel.cpp",
+    "fileloc": 16,
+    "instructions": 34,
+    "name": "fft_kernel",
+    "total_instructions": 34
+  }
+}

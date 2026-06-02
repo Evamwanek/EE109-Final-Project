@@ -19,5 +19,4 @@ generate_afi () {
     echo "export AFI=$AFI" >> generated_afid.sh
     echo "export AGFI=$AGFI" >> generated_afid.sh
     echo "AFI is set to: $AFI"
-    echo "AGFI is set to: $AGFI"
-}
+    echo "AGFI is set to: $AGFI

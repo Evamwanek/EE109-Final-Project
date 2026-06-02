@@ -1,0 +1,178 @@
+
+
+================================================================
+== Synthesis Summary Report of 'fft_kernel'
+================================================================
++ General Information: 
+    * Date:           Mon Jun  1 23:26:38 2026
+    * Version:        2024.1 (Build 5069499 on May 21 2024)
+    * Project:        hls_component
+    * Solution:       hls (Vivado IP Flow Target)
+    * Product family: virtexuplusHBM
+    * Target device:  xcvu47p-fsvh2892-2-e
+    
+
++ Performance & Resource Estimates: 
+    
+    PS: '+' for module; 'o' for loop; '*' for dataflow
+    +------------------------------------+------+------+---------+-----------+----------+---------+-------+----------+---------+----+------------+------------+-----+
+    |               Modules              | Issue|      | Latency |  Latency  | Iteration|         |  Trip |          |         |    |            |            |     |
+    |               & Loops              | Type | Slack| (cycles)|    (ns)   |  Latency | Interval| Count | Pipelined|  BRAM   | DSP|     FF     |     LUT    | URAM|
+    +------------------------------------+------+------+---------+-----------+----------+---------+-------+----------+---------+----+------------+------------+-----+
+    |+ fft_kernel                        |    II|  0.00|   102431|  3.073e+05|         -|   102400|      -|    rewind|  2 (~0%)|   -|  2061 (~0%)|  2085 (~0%)|    -|
+    | o VITIS_LOOP_35_1_VITIS_LOOP_36_2  |    II|  2.19|   102429|  3.073e+05|        32|        2|  51200|       yes|        -|   -|           -|           -|    -|
+    +------------------------------------+------+------+---------+-----------+----------+---------+-------+----------+---------+----+------------+------------+-----+
+
+
+================================================================
+== HW Interfaces
+================================================================
+* M_AXI
++-------------+------------+------------+---------------+---------+--------+----------+-----------+--------------+--------------+-------------+-------------+-------------------+
+| Interface   | Read/Write | Data Width | Address Width | Latency | Offset | Register | Max Widen | Max Read     | Max Write    | Num Read    | Num Write   | Resource Estimate |
+|             |            | (SW->HW)   |               |         |        |          | Bitwidth  | Burst Length | Burst Length | Outstanding | Outstanding |                   |
++-------------+------------+------------+---------------+---------+--------+----------+-----------+--------------+--------------+-------------+-------------+-------------------+
+| m_axi_gmem0 | READ_WRITE | 32 -> 32   | 64            | 0       | slave  | 0        | 0         | 16           | 16           | 16          | 16          | BRAM=2            |
++-------------+------------+------------+---------------+---------+--------+----------+-----------+--------------+--------------+-------------+-------------+-------------------+
+
+* S_AXILITE Interfaces
++---------------+------------+---------------+--------+----------+
+| Interface     | Data Width | Address Width | Offset | Register |
++---------------+------------+---------------+--------+----------+
+| s_axi_control | 32         | 6             | 16     | 0        |
++---------------+------------+---------------+--------+----------+
+
+* S_AXILITE Registers
++---------------+---------------+--------+-------+--------+----------------------------+
+| Interface     | Register      | Offset | Width | Access | Description                |
++---------------+---------------+--------+-------+--------+----------------------------+
+| s_axi_control | input_real_1  | 0x10   | 32    | W      | Data signal of input_real  |
+| s_axi_control | input_real_2  | 0x14   | 32    | W      | Data signal of input_real  |
+| s_axi_control | input_imag_1  | 0x1c   | 32    | W      | Data signal of input_imag  |
+| s_axi_control | input_imag_2  | 0x20   | 32    | W      | Data signal of input_imag  |
+| s_axi_control | output_real_1 | 0x28   | 32    | W      | Data signal of output_real |
+| s_axi_control | output_real_2 | 0x2c   | 32    | W      | Data signal of output_real |
+| s_axi_control | output_imag_1 | 0x34   | 32    | W      | Data signal of output_imag |
+| s_axi_control | output_imag_2 | 0x38   | 32    | W      | Data signal of output_imag |
++---------------+---------------+--------+-------+--------+----------------------------+
+
+* TOP LEVEL CONTROL
++-----------+------------+-----------------------------------+
+| Interface | Type       | Ports                             |
++-----------+------------+-----------------------------------+
+| ap_clk    | clock      | ap_clk                            |
+| ap_rst_n  | reset      | ap_rst_n                          |
+| ap_ctrl   | ap_ctrl_hs | ap_done ap_idle ap_ready ap_start |
++-----------+------------+-----------------------------------+
+
+
+================================================================
+== SW I/O Information
+================================================================
+* Top Function Arguments
++-------------+-----------+----------+
+| Argument    | Direction | Datatype |
++-------------+-----------+----------+
+| input_real  | inout     | int*     |
+| input_imag  | inout     | int*     |
+| output_real | inout     | int*     |
+| output_imag | inout     | int*     |
++-------------+-----------+----------+
+
+* SW-to-HW Mapping
++-------------+---------------+-----------+----------+-----------------------------------------+
+| Argument    | HW Interface  | HW Type   | HW Usage | HW Info                                 |
++-------------+---------------+-----------+----------+-----------------------------------------+
+| input_real  | m_axi_gmem0   | interface |          | channel=0                               |
+| input_real  | s_axi_control | register  | offset   | name=input_real_1 offset=0x10 range=32  |
+| input_real  | s_axi_control | register  | offset   | name=input_real_2 offset=0x14 range=32  |
+| input_imag  | m_axi_gmem0   | interface |          | channel=0                               |
+| input_imag  | s_axi_control | register  | offset   | name=input_imag_1 offset=0x1c range=32  |
+| input_imag  | s_axi_control | register  | offset   | name=input_imag_2 offset=0x20 range=32  |
+| output_real | m_axi_gmem0   | interface |          | channel=0                               |
+| output_real | s_axi_control | register  | offset   | name=output_real_1 offset=0x28 range=32 |
+| output_real | s_axi_control | register  | offset   | name=output_real_2 offset=0x2c range=32 |
+| output_imag | m_axi_gmem0   | interface |          | channel=0                               |
+| output_imag | s_axi_control | register  | offset   | name=output_imag_1 offset=0x34 range=32 |
+| output_imag | s_axi_control | register  | offset   | name=output_imag_2 offset=0x38 range=32 |
++-------------+---------------+-----------+----------+-----------------------------------------+
+
+
+================================================================
+== M_AXI Burst Information
+================================================================
+ Note: All burst requests might be further partitioned into multiple requests during RTL generation based on max_read_burst_length or max_write_burst_length settings.
+
+* All M_AXI Variable Accesses
++--------------+-------------+--------------------------------------+-----------+--------------+--------+-----------------+--------------------------------------+------------+-------------------------------------------------------------------------------------------------------+
+| HW Interface | Variable    | Access Location                      | Direction | Burst Status | Length | Loop            | Loop Location                        | Resolution | Problem                                                                                               |
++--------------+-------------+--------------------------------------+-----------+--------------+--------+-----------------+--------------------------------------+------------+-------------------------------------------------------------------------------------------------------+
+| m_axi_gmem0  |             | ../../../../src/fft_kernel.cpp:35:19 | write     | Fail         |        |                 |                                      | 214-224    | Could not burst due to multiple potential writes to the same bundle in the same region.               |
+| m_axi_gmem0  |             | ../../../../src/fft_kernel.cpp:35:19 | read      | Fail         |        |                 |                                      | 214-224    | Could not burst due to multiple potential reads to the same bundle in the same region.                |
+| m_axi_gmem0  | output_real | ../../../../src/fft_kernel.cpp:38:28 | write     | Widen Fail   |        | VITIS_LOOP_36_2 | ../../../../src/fft_kernel.cpp:36:22 | 214-353    | Could not widen since type i32 size is greater than or equal to the max_widen_bitwidth threshold of 0 |
+| m_axi_gmem0  | input_real  | ../../../../src/fft_kernel.cpp:38:30 | read      | Widen Fail   |        | VITIS_LOOP_36_2 | ../../../../src/fft_kernel.cpp:36:22 | 214-353    | Could not widen since type i32 size is greater than or equal to the max_widen_bitwidth threshold of 0 |
+| m_axi_gmem0  | output_real | ../../../../src/fft_kernel.cpp:38:28 | write     | Inferred     | 51200  | VITIS_LOOP_35_1 | ../../../../src/fft_kernel.cpp:35:19 |            |                                                                                                       |
+| m_axi_gmem0  | input_real  | ../../../../src/fft_kernel.cpp:38:30 | read      | Inferred     | 51200  | VITIS_LOOP_35_1 | ../../../../src/fft_kernel.cpp:35:19 |            |                                                                                                       |
+| m_axi_gmem0  | output_imag | ../../../../src/fft_kernel.cpp:39:35 | write     | Widen Fail   |        | VITIS_LOOP_36_2 | ../../../../src/fft_kernel.cpp:36:22 | 214-353    | Could not widen since type i32 size is greater than or equal to the max_widen_bitwidth threshold of 0 |
+| m_axi_gmem0  | input_imag  | ../../../../src/fft_kernel.cpp:39:37 | read      | Widen Fail   |        | VITIS_LOOP_36_2 | ../../../../src/fft_kernel.cpp:36:22 | 214-353    | Could not widen since type i32 size is greater than or equal to the max_widen_bitwidth threshold of 0 |
+| m_axi_gmem0  | output_imag | ../../../../src/fft_kernel.cpp:39:35 | write     | Inferred     | 51200  | VITIS_LOOP_35_1 | ../../../../src/fft_kernel.cpp:35:19 |            |                                                                                                       |
+| m_axi_gmem0  | input_imag  | ../../../../src/fft_kernel.cpp:39:37 | read      | Inferred     | 51200  | VITIS_LOOP_35_1 | ../../../../src/fft_kernel.cpp:35:19 |            |                                                                                                       |
++--------------+-------------+--------------------------------------+-----------+--------------+--------+-----------------+--------------------------------------+------------+-------------------------------------------------------------------------------------------------------+
+
+    * Resolution URL: docs.xilinx.com/access/sources/dita/topic?Doc_Version=2024.1%20English&url=ug1448-hls-guidance&resourceid=XXX-YYY.html (replace XXX-YYY with column value)
+
+================================================================
+== Bind Op Report
+================================================================
++-------------------------+-----+--------+-------------+--------+----------+---------+
+| Name                    | DSP | Pragma | Variable    | Op     | Impl     | Latency |
++-------------------------+-----+--------+-------------+--------+----------+---------+
+| + fft_kernel            | 0   |        |             |        |          |         |
+|   select_ln35_fu_299_p3 |     |        | select_ln35 | select | auto_sel | 0       |
+|   f_fu_307_p3           |     |        | f           | select | auto_sel | 0       |
+|   add_ln38_fu_344_p2    |     |        | add_ln38    | add    | fabric   | 0       |
+|   add_ln38_1_fu_354_p2  |     |        | add_ln38_1  | add    | fabric   | 0       |
+|   add_ln38_2_fu_402_p2  |     |        | add_ln38_2  | add    | fabric   | 0       |
+|   add_ln39_fu_416_p2    |     |        | add_ln39    | add    | fabric   | 0       |
+|   add_ln39_1_fu_430_p2  |     |        | add_ln39_1  | add    | fabric   | 0       |
+|   i_fu_369_p2           |     |        | i           | add    | fabric   | 0       |
+|   add_ln35_1_fu_374_p2  |     |        | add_ln35_1  | add    | fabric   | 0       |
+|   icmp_ln36_fu_380_p2   |     |        | icmp_ln36   | seteq  | auto     | 0       |
+|   add_ln35_fu_315_p2    |     |        | add_ln35    | add    | fabric   | 0       |
+|   icmp_ln35_fu_386_p2   |     |        | icmp_ln35   | seteq  | auto     | 0       |
++-------------------------+-----+--------+-------------+--------+----------+---------+
+
+
+================================================================
+== Storage Report
+================================================================
++-------------------+-----------+-----------+------+------+--------+----------+------+---------+------------------+
+| Name              | Usage     | Type      | BRAM | URAM | Pragma | Variable | Impl | Latency | Bitwidth, Depth, |
+|                   |           |           |      |      |        |          |      |         | Banks            |
++-------------------+-----------+-----------+------+------+--------+----------+------+---------+------------------+
+| + fft_kernel      |           |           | 2    | 0    |        |          |      |         |                  |
+|   control_s_axi_U | interface | s_axilite |      |      |        |          |      |         |                  |
+|   gmem0_m_axi_U   | interface | m_axi     | 2    |      |        |          |      |         |                  |
++-------------------+-----------+-----------+------+------+--------+----------+------+---------+------------------+
+
+
+================================================================
+== Pragma Report
+================================================================
+* Valid Pragma Syntax
++-----------+--------------------------------------------------+--------------------------------------------------------------+
+| Type      | Options                                          | Location                                                     |
++-----------+--------------------------------------------------+--------------------------------------------------------------+
+| interface | m_axi port=input_real offset=slave bundle=gmem0  | ../../../../src/fft_kernel.cpp:24 in fft_kernel, input_real  |
+| interface | m_axi port=input_imag offset=slave bundle=gmem0  | ../../../../src/fft_kernel.cpp:25 in fft_kernel, input_imag  |
+| interface | m_axi port=output_real offset=slave bundle=gmem0 | ../../../../src/fft_kernel.cpp:26 in fft_kernel, output_real |
+| interface | m_axi port=output_imag offset=slave bundle=gmem0 | ../../../../src/fft_kernel.cpp:27 in fft_kernel, output_imag |
+| interface | s_axilite port=input_real bundle=control         | ../../../../src/fft_kernel.cpp:29 in fft_kernel, input_real  |
+| interface | s_axilite port=input_imag bundle=control         | ../../../../src/fft_kernel.cpp:30 in fft_kernel, input_imag  |
+| interface | s_axilite port=output_real bundle=control        | ../../../../src/fft_kernel.cpp:31 in fft_kernel, output_real |
+| interface | s_axilite port=output_imag bundle=control        | ../../../../src/fft_kernel.cpp:32 in fft_kernel, output_imag |
+| interface | ap_ctrl_hs port=return                           | ../../../../src/fft_kernel.cpp:33 in fft_kernel, return      |
+| pipeline  | II=1                                             | ../../../../src/fft_kernel.cpp:37 in fft_kernel              |
++-----------+--------------------------------------------------+--------------------------------------------------------------+
+
+

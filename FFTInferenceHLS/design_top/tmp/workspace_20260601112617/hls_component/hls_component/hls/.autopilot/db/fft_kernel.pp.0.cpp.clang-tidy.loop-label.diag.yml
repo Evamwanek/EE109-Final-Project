@@ -1,0 +1,76 @@
+---
+MainSourceFile:  /home/ubuntu/EE109-Final-Project/FFTInferenceHLS/design_top/tmp/workspace_20260601112617/hls_component/hls_component/hls/.autopilot/db/fft_kernel.pp.0.cpp
+Diagnostics:     
+  - DiagnosticName:  xilinx-label-all-loops
+    Message:         'Added loop label VITIS_LOOP_1223_1:  '
+    FileOffset:      1223
+    FilePath:        /opt/Xilinx/Vitis_HLS/2024.1/common/technology/autopilot/etc/ap_int_base.h
+    Replacements:    
+      - FilePath:        /home/ubuntu/EE109-Final-Project/FFTInferenceHLS/design_top/tmp/workspace_20260601112617/hls_component/hls_component/hls/.autopilot/db/fft_kernel.pp.0.cpp
+        Offset:          55492
+        Length:          0
+        ReplacementText: 'VITIS_LOOP_1223_1: '
+  - DiagnosticName:  xilinx-label-all-loops
+    Message:         'Added loop label VITIS_LOOP_676_1:  '
+    FileOffset:      676
+    FilePath:        /opt/Xilinx/Vitis_HLS/2024.1/common/technology/autopilot/etc/ap_int_ref.h
+    Replacements:    
+      - FilePath:        /home/ubuntu/EE109-Final-Project/FFTInferenceHLS/design_top/tmp/workspace_20260601112617/hls_component/hls_component/hls/.autopilot/db/fft_kernel.pp.0.cpp
+        Offset:          282886
+        Length:          0
+        ReplacementText: 'VITIS_LOOP_676_1: '
+  - DiagnosticName:  xilinx-label-all-loops
+    Message:         'Added loop label VITIS_LOOP_690_1:  '
+    FileOffset:      690
+    FilePath:        /opt/Xilinx/Vitis_HLS/2024.1/common/technology/autopilot/etc/ap_int_ref.h
+    Replacements:    
+      - FilePath:        /home/ubuntu/EE109-Final-Project/FFTInferenceHLS/design_top/tmp/workspace_20260601112617/hls_component/hls_component/hls/.autopilot/db/fft_kernel.pp.0.cpp
+        Offset:          283350
+        Length:          0
+        ReplacementText: 'VITIS_LOOP_690_1: '
+  - DiagnosticName:  xilinx-label-all-loops
+    Message:         'Added loop label VITIS_LOOP_704_1:  '
+    FileOffset:      704
+    FilePath:        /opt/Xilinx/Vitis_HLS/2024.1/common/technology/autopilot/etc/ap_int_ref.h
+    Replacements:    
+      - FilePath:        /home/ubuntu/EE109-Final-Project/FFTInferenceHLS/design_top/tmp/workspace_20260601112617/hls_component/hls_component/hls/.autopilot/db/fft_kernel.pp.0.cpp
+        Offset:          283815
+        Length:          0
+        ReplacementText: 'VITIS_LOOP_704_1: '
+  - DiagnosticName:  xilinx-label-all-loops
+    Message:         'Added loop label VITIS_LOOP_1247_1:  '
+    FileOffset:      1247
+    FilePath:        /opt/Xilinx/Vitis_HLS/2024.1/common/technology/autopilot/etc/ap_fixed_base.h
+    Replacements:    
+      - FilePath:        /home/ubuntu/EE109-Final-Project/FFTInferenceHLS/design_top/tmp/workspace_20260601112617/hls_component/hls_component/hls/.autopilot/db/fft_kernel.pp.0.cpp
+        Offset:          566769
+        Length:          0
+        ReplacementText: 'VITIS_LOOP_1247_1: '
+  - DiagnosticName:  xilinx-label-all-loops
+    Message:         'Added loop label VITIS_LOOP_8_1:  '
+    FileOffset:      8
+    FilePath:        /home/ubuntu/EE109-Final-Project/FFTInferenceHLS/src/fft_kernel.cpp
+    Replacements:    
+      - FilePath:        /home/ubuntu/EE109-Final-Project/FFTInferenceHLS/design_top/tmp/workspace_20260601112617/hls_component/hls_component/hls/.autopilot/db/fft_kernel.pp.0.cpp
+        Offset:          953165
+        Length:          0
+        ReplacementText: 'VITIS_LOOP_8_1: '
+  - DiagnosticName:  xilinx-label-all-loops
+    Message:         'Added loop label VITIS_LOOP_35_1:  '
+    FileOffset:      35
+    FilePath:        /home/ubuntu/EE109-Final-Project/FFTInferenceHLS/src/fft_kernel.cpp
+    Replacements:    
+      - FilePath:        /home/ubuntu/EE109-Final-Project/FFTInferenceHLS/design_top/tmp/workspace_20260601112617/hls_component/hls_component/hls/.autopilot/db/fft_kernel.pp.0.cpp
+        Offset:          954135
+        Length:          0
+        ReplacementText: 'VITIS_LOOP_35_1: '
+  - DiagnosticName:  xilinx-label-all-loops
+    Message:         'Added loop label VITIS_LOOP_36_2:  '
+    FileOffset:      36
+    FilePath:        /home/ubuntu/EE109-Final-Project/FFTInferenceHLS/src/fft_kernel.cpp
+    Replacements:    
+      - FilePath:        /home/ubuntu/EE109-Final-Project/FFTInferenceHLS/design_top/tmp/workspace_20260601112617/hls_component/hls_component/hls/.autopilot/db/fft_kernel.pp.0.cpp
+        Offset:          954170
+        Length:          0
+        ReplacementText: 'VITIS_LOOP_36_2: '
+...

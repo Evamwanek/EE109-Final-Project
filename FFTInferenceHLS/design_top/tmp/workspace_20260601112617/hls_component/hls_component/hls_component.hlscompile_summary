@@ -1,0 +1,245 @@
+<ENTRY>
+{
+ "thisFile": "/home/ubuntu/EE109-Final-Project/FFTInferenceHLS/design_top/tmp/workspace_20260601112617/hls_component/hls_component/hls_component.hlscompile_summary",
+ "connectId": "",
+ "serverToken": "",
+ "timestamp": "0"
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_CmdStep",
+ "dateTimestamp": "Mon Jun  1 23:26:25 2026",
+ "timestampMillis": "1780356385186",
+ "buildStep": {
+  "cmdId": "6436b825-e6db-4e03-954b-5a5be48741dd",
+  "name": "v++",
+  "logFile": "/home/ubuntu/EE109-Final-Project/FFTInferenceHLS/design_top/tmp/workspace_20260601112617/hls_component/hls_component/logs/hls_component.steps.log",
+  "commandLine": "/opt/Xilinx/Vitis/2024.1/bin/unwrapped/lnx64.o/v++  -c --mode hls --config /home/ubuntu/EE109-Final-Project/FFTInferenceHLS/design_top/tmp/workspace_20260601112617/hls_component/hls_config.cfg --work_dir hls_component ",
+  "args": [
+   "-c",
+   "--mode",
+   "hls",
+   "--config",
+   "/home/ubuntu/EE109-Final-Project/FFTInferenceHLS/design_top/tmp/workspace_20260601112617/hls_component/hls_config.cfg",
+   "--work_dir",
+   "hls_component"
+  ],
+  "iniFiles": [
+   {
+    "path": "/home/ubuntu/EE109-Final-Project/FFTInferenceHLS/design_top/tmp/workspace_20260601112617/hls_component/hls_config.cfg",
+    "content": "part=xcvu47p-fsvh2892-2-e\n\n[hls]\nflow_target=vivado\npackage.output.format=rtl\npackage.output.syn=false\nsyn.file=/home/ubuntu/EE109-Final-Project/FFTInferenceHLS/design_top/../src/fft_kernel.cpp\ntb.file=/home/ubuntu/EE109-Final-Project/FFTInferenceHLS/design_top/../src/host.cpp\ntb.file=/home/ubuntu/aws-fpga/vitis/examples/vitis_examples/common/includes/xcl2/xcl2.cpp\ntb.cflags=-I/home/ubuntu/aws-fpga/vitis/examples/vitis_examples/common/includes/xcl2 -I/opt/xilinx/xrt/include -I/home/ubuntu/EE109-Final-Project/FFTInferenceHLS/design_top/../src\nsyn.top=fft_kernel\nclock=3ns"
+   }
+  ],
+  "cwd": "/home/ubuntu/EE109-Final-Project/FFTInferenceHLS/design_top/tmp/workspace_20260601112617/hls_component"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Mon Jun  1 23:26:25 2026",
+ "timestampMillis": "1780356385187",
+ "status": {
+  "cmdId": "6436b825-e6db-4e03-954b-5a5be48741dd",
+  "state": "CS_RUNNING"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_FlowMetaData",
+ "dateTimestamp": "Mon Jun  1 23:26:28 2026",
+ "timestampMillis": "1780356388606",
+ "buildSummary": {
+  "hardwarePlatform": "",
+  "hardwareDsa": "",
+  "platformDirectory": "",
+  "runtime": "",
+  "systemConfig": "",
+  "flow": "BF_COMPILE",
+  "target": "TT_HW",
+  "kernels": [
+   {
+    "base": {
+     "type": "KERNEL",
+     "name": "fft_kernel",
+     "file": "",
+     "reports": [],
+     "uuid": ""
+    },
+    "sources": [
+     "/home/ubuntu/EE109-Final-Project/FFTInferenceHLS/src/fft_kernel.cpp"
+    ],
+    "psSources": [],
+    "cuNames": [],
+    "type": "HLS",
+    "frequency": 0,
+    "freqUnits": ""
+   }
+  ],
+  "toolVersion": "2024.1"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_SubCmdStep",
+ "dateTimestamp": "Mon Jun  1 23:26:28 2026",
+ "timestampMillis": "1780356388607",
+ "buildStep": {
+  "cmdId": "77f696d2-2a97-49e8-bad9-7fd0242bbc51",
+  "name": "csynth_design",
+  "logFile": "/home/ubuntu/EE109-Final-Project/FFTInferenceHLS/design_top/tmp/workspace_20260601112617/hls_component/hls_component/hls/hls.log",
+  "commandLine": "csynth_design",
+  "args": [],
+  "iniFiles": [],
+  "cwd": "/home/ubuntu/EE109-Final-Project/FFTInferenceHLS/design_top/tmp/workspace_20260601112617/hls_component"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Mon Jun  1 23:26:28 2026",
+ "timestampMillis": "1780356388607",
+ "status": {
+  "cmdId": "77f696d2-2a97-49e8-bad9-7fd0242bbc51",
+  "state": "CS_RUNNING"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Mon Jun  1 23:26:28 2026",
+ "timestampMillis": "1780356388607",
+ "report": {
+  "path": "/home/ubuntu/EE109-Final-Project/FFTInferenceHLS/design_top/tmp/workspace_20260601112617/hls_component/hls_component/hls/hls_data.json",
+  "name": "",
+  "fileType": "JSON",
+  "reportType": "HLS_SYNTHESIS",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Mon Jun  1 23:26:28 2026",
+ "timestampMillis": "1780356388607",
+ "report": {
+  "path": "/home/ubuntu/EE109-Final-Project/FFTInferenceHLS/design_top/tmp/workspace_20260601112617/hls_component/hls_component/hls/syn/report/csynth.rpt",
+  "name": "",
+  "fileType": "TEXT",
+  "reportType": "HLS_SYNTHESIS",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Mon Jun  1 23:26:28 2026",
+ "timestampMillis": "1780356388608",
+ "report": {
+  "path": "/home/ubuntu/EE109-Final-Project/FFTInferenceHLS/design_top/tmp/workspace_20260601112617/hls_component/hls_component/hls/syn/report/csynth.xml",
+  "name": "",
+  "fileType": "XML",
+  "reportType": "HLS_SYNTHESIS",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Mon Jun  1 23:26:39 2026",
+ "timestampMillis": "1780356399380",
+ "report": {
+  "path": "/home/ubuntu/EE109-Final-Project/FFTInferenceHLS/design_top/tmp/workspace_20260601112617/hls_component/hls_component/hls",
+  "name": "",
+  "fileType": "DIR",
+  "reportType": "HLS_DATAFLOW",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Mon Jun  1 23:26:39 2026",
+ "timestampMillis": "1780356399381",
+ "report": {
+  "path": "/home/ubuntu/EE109-Final-Project/FFTInferenceHLS/design_top/tmp/workspace_20260601112617/hls_component/hls_component/hls",
+  "name": "",
+  "fileType": "DIR",
+  "reportType": "HLS_FUNCTION_CALL_GRAPH",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Mon Jun  1 23:26:39 2026",
+ "timestampMillis": "1780356399381",
+ "report": {
+  "path": "/home/ubuntu/EE109-Final-Project/FFTInferenceHLS/design_top/tmp/workspace_20260601112617/hls_component/hls_component/hls",
+  "name": "",
+  "fileType": "DIR",
+  "reportType": "HLS_SCHEDULE",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Mon Jun  1 23:26:39 2026",
+ "timestampMillis": "1780356399381",
+ "status": {
+  "cmdId": "77f696d2-2a97-49e8-bad9-7fd0242bbc51",
+  "state": "CS_PASSED"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Mon Jun  1 23:26:39 2026",
+ "timestampMillis": "1780356399442",
+ "status": {
+  "cmdId": "6436b825-e6db-4e03-954b-5a5be48741dd",
+  "state": "CS_PASSED"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Mon Jun  1 23:26:39 2026",
+ "timestampMillis": "1780356399489",
+ "report": {
+  "path": "/home/ubuntu/EE109-Final-Project/FFTInferenceHLS/design_top/tmp/workspace_20260601112617/hls_component/hls_component/reports/v++_compile_hls_component_guidance.html",
+  "name": "",
+  "fileType": "HTML",
+  "reportType": "GLOBAL_RULECHECK_GUIDANCE",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Mon Jun  1 23:26:39 2026",
+ "timestampMillis": "1780356399489",
+ "report": {
+  "path": "/home/ubuntu/EE109-Final-Project/FFTInferenceHLS/design_top/tmp/workspace_20260601112617/hls_component/hls_component/reports/.db/v++_compile_hls_component_guidance.pb3",
+  "name": "",
+  "fileType": "BINARY_PROTOBUF",
+  "reportType": "GLOBAL_RULECHECK_GUIDANCE",
+  "cmdId": ""
+ }
+}
+</ENTRY>
