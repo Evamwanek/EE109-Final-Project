@@ -154,6 +154,7 @@ def generate_dcp_tarball(cl, tag, clock_recipe_a, clock_recipe_b, clock_recipe_c
 
     generate_manifest_file(tag, './to_aws', manifest)
 
+    os.system("cp ../../design/*.dat ./to_aws/ 2>/dev/null || true")
     os.system(f"tar -cf {checkpoints_dir}/{tag}.Developer_CL.tar ./to_aws")
     os.system('rm -rf to_aws')
 

@@ -34,10 +34,10 @@ void fft_kernel(
 
     for (int f = 0; f < NUM_FRAMES; f++) {
     for (int i = 0; i < N; i++) {
-#pragma HLS PIPELINE II=1
-        output_real[f * N + i] = input_real[f * N + i];
-        output_imag[f * N + i] = input_imag[f * N + i];
-    }
+        #pragma HLS PIPELINE II=1
+        output_real[f * N + i] = hamming[i];
+        output_imag[f * N + i] = 0;
+}
 }
  }}
 

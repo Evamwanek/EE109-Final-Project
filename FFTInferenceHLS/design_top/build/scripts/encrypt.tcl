@@ -29,6 +29,11 @@ foreach f [glob -directory ${design_dir} *.{v,sv,vh,svh,inc}] {
   file copy -force $f ${src_post_enc_dir}/
 }
 
+# Copy HLS ROM initialization files needed by $readmemh
+foreach f [glob -nocomplain -directory ${design_dir} *.dat] {
+  file copy -force $f ${src_post_enc_dir}/
+}
+
 # Make sure files have write permissions for the encryption
 exec chmod +w {*}[glob ${src_post_enc_dir}/*]
 
