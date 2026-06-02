@@ -4,3 +4,4 @@ target/
 *.log
 project/target/
 *.csv
+*.tar.gz
