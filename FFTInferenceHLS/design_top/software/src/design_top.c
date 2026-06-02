@@ -194,7 +194,7 @@ int main(int argc, char **argv) {
     printf("Reading FFT outputs...\n");
 
     int nonzero_count = 0;
-    for (int i = 0; i < 16; i++) {
+    for (int i = 0; i < 256; i++) {
         uint32_t real_bits = 0;
         uint32_t imag_bits = 0;
 
