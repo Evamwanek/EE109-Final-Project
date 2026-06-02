@@ -227,7 +227,7 @@ int main(int argc, char **argv)
 
     // Wait for completion
     printf("Waiting for completion...\n");
-    usleep(500000);  // 500ms — LSTM takes longer than GEMM
+    usleep(3000000);
 
     // Read result
     if (ocl_wr32(ocl_handle, ADDR_TRANSFER_EN, 1)) goto fail;
