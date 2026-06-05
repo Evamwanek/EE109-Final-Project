@@ -3,6 +3,20 @@ export CL_DESIGN_DESCRIPTION='LSTMInference'
 export CL_DIR=$(pwd)
 
 export DONT_GENERATE_FILE_LIST=1
+export CL_DESIGN_NAME=design_top
+export CL_DESIGN_DESCRIPTION='LSTMInference'
+export CL_DIR=$(pwd)
+
+export DONT_GENERATE_FILE_LIST=1
+
+# Add these here, at the top level
+export DCP_BUCKET_NAME=evawanek
+export DCP_FOLDER_NAME=EE109_SPR2026
+export LOGS_BUCKET_NAME=evawanek
+export LOGS_FOLDER_NAME=EE109_SPR2026/logs
+export REGION=us-east-1
+
+
 
 generate_afi () {
     export CL_DESIGN_NAME=design_top
@@ -19,4 +33,6 @@ generate_afi () {
     echo "export AFI=$AFI" >> generated_afid.sh
     echo "export AGFI=$AGFI" >> generated_afid.sh
     echo "AFI is set to: $AFI"
-    echo "AGFI is set to: $AGFI
+    echo "AGFI is set to: $AGFI"
+    
+    }

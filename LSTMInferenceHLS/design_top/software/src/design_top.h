@@ -4,7 +4,9 @@
 
 // HLS vadd kernel control register offsets (AXI-Lite, OCL BAR)
 #define ADDR_CTRL     0x0000
-#define AP_START      (1 << 0)
+#define AP_START      (1 << 0)   // bit 0: write 1 to start kernel
+#define AP_DONE       (1 << 1)   // bit 1: set by kernel on completion (clears on read)
+#define AP_IDLE       (1 << 2)   // bit 2: high when kernel is idle/ready
 
 // Cycle counter registers (read-only via OCL)
 #define ADDR_COMPUTE_CYCLES  0x0100
