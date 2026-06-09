@@ -1,6 +1,6 @@
 -------------------------------------
 | Tool Version : Vivado v.2024.1
-| Date         : Tue Jun  2 21:35:46 2026
+| Date         : Sat Jun  6 15:32:55 2026
 | Host         : ip-172-31-40-27
 | Design       : design_1
 | Device       : xcvu47p-fsvh2892-2-E-
@@ -28,16 +28,16 @@ Pre-CRP Checker took 0 secs
 ********************************
 Clock Net Route Info (CRP Input)
 ********************************
-Clock 1: WRAPPER/CL/SH_DDR/genblk1.IS_DDR_PRESENT.DDR4_0/inst/u_ddr4_infrastructure/div_clk
-	Clock source type: BUFGCE
-	Clock source region: X4Y10
-	Clock regions with locked loads: X4Y9 X4Y10 X4Y11 
-	initial rect ((0, 0), (7, 11))
-
-Clock 2: WRAPPER/IO_SHIM/RL_CLKS/clk_main_a0
+Clock 1: WRAPPER/IO_SHIM/RL_CLKS/clk_main_a0
 	Clock source type: BUFGCE fixed to track 15
 	Clock source region: X4Y5
 	Clock locked root: X3Y5
+	initial rect ((0, 0), (7, 11))
+
+Clock 2: WRAPPER/CL/SH_DDR/genblk1.IS_DDR_PRESENT.DDR4_0/inst/u_ddr4_infrastructure/div_clk
+	Clock source type: BUFGCE
+	Clock source region: X4Y10
+	Clock regions with locked loads: X4Y9 X4Y10 X4Y11 
 	initial rect ((0, 0), (7, 11))
 
 Clock 3: WRAPPER/IO_SHIM/RL_CLKS/clk_main_a0_int

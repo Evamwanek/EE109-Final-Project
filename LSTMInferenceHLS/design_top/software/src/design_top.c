@@ -287,7 +287,7 @@ int main(int argc, char **argv)
     // ---- Poll for completion ----
 printf("Waiting for AP_DONE...\n");
 {
-    const int MAX_POLLS = 60000;   // 60 s timeout at 1ms/poll — covers worst-case DMA + compute
+    const int MAX_POLLS = 600000;   // 60 s timeout at 1ms/poll — covers worst-case DMA + compute
     const int SLEEP_US  = 1000;
     int done = 0;
 
@@ -312,6 +312,15 @@ printf("Waiting for AP_DONE...\n");
         }
         usleep(SLEEP_US);
     }
+    // for (int i = 0; i < 10000000; i++) {  // tight loop, no sleep
+    //     uint32_t ctrl_val = 0;
+    //     if (ocl_rd32(ocl_handle, ADDR_CTRL, &ctrl_val)) goto fail;
+    //     if (ctrl_val & AP_DONE) {
+    //         printf("AP_DONE caught (ctrl=0x%08x)\n", ctrl_val);
+    //         done = 1;
+    //         break;
+    //     }
+    // }
 
     if (!done) {
         // Kernel may still have finished — AP_DONE self-cleared before we caught it.

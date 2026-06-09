@@ -186,35 +186,23 @@ module design_top_base_test();
     tb.power_up(.clk_recipe_a(ClockRecipe::A0));
     initialize_ddr();
 
+    #the weight loading is commented out
     // --- Load all buffers into DDR ---
     $display("[%t] Loading LSTM inputs and weights into DDR...", $realtime);
     ocl_wr32(ADDR_TRANSFER_EN, 32'h1);
 
-    load_and_dma("/home/ubuntu/EE109-Final-Project/input_seq.bin",
-                 ADDR_INPUT_SEQ, N_INPUT_SEQ);
+    load_and_dma("/home/ubuntu/EE109-Final-Project/input_seq.bin", ADDR_INPUT_SEQ, N_INPUT_SEQ);
+    load_and_dma("/home/ubuntu/EE109-Final-Project/weights/weight_ih_l0.bin", ADDR_WIH0, N_WIH0);
+    load_and_dma("/home/ubuntu/EE109-Final-Project/weights/weight_hh_l0.bin", ADDR_WHH0, N_WHH0);
+    load_and_dma("/home/ubuntu/EE109-Final-Project/weights/bias_ih_l0.bin",   ADDR_BIH0, N_BIH0);
+    load_and_dma("/home/ubuntu/EE109-Final-Project/weights/bias_hh_l0.bin",   ADDR_BHH0, N_BHH0);
+    load_and_dma("/home/ubuntu/EE109-Final-Project/weights/weight_ih_l1.bin", ADDR_WIH1, N_WIH1);
+    load_and_dma("/home/ubuntu/EE109-Final-Project/weights/weight_hh_l1.bin", ADDR_WHH1, N_WHH1);
+    load_and_dma("/home/ubuntu/EE109-Final-Project/weights/bias_ih_l1.bin",   ADDR_BIH1, N_BIH1);
+    load_and_dma("/home/ubuntu/EE109-Final-Project/weights/bias_hh_l1.bin",   ADDR_BHH1, N_BHH1);
+    load_and_dma("/home/ubuntu/EE109-Final-Project/weights/fc_weight.bin",    ADDR_WFC,  N_WFC);
+    load_and_dma("/home/ubuntu/EE109-Final-Project/weights/fc_bias.bin",      ADDR_BFC,  N_BFC);
 
-    load_and_dma("/home/ubuntu/EE109-Final-Project/weights/weight_ih_l0.bin",
-                 ADDR_WIH0, N_WIH0);
-    load_and_dma("/home/ubuntu/EE109-Final-Project/weights/weight_hh_l0.bin",
-                 ADDR_WHH0, N_WHH0);
-    load_and_dma("/home/ubuntu/EE109-Final-Project/weights/bias_ih_l0.bin",
-                 ADDR_BIH0, N_BIH0);
-    load_and_dma("/home/ubuntu/EE109-Final-Project/weights/bias_hh_l0.bin",
-                 ADDR_BHH0, N_BHH0);
-
-    load_and_dma("/home/ubuntu/EE109-Final-Project/weights/weight_ih_l1.bin",
-                 ADDR_WIH1, N_WIH1);
-    load_and_dma("/home/ubuntu/EE109-Final-Project/weights/weight_hh_l1.bin",
-                 ADDR_WHH1, N_WHH1);
-    load_and_dma("/home/ubuntu/EE109-Final-Project/weights/bias_ih_l1.bin",
-                 ADDR_BIH1, N_BIH1);
-    load_and_dma("/home/ubuntu/EE109-Final-Project/weights/bias_hh_l1.bin",
-                 ADDR_BHH1, N_BHH1);
-
-    load_and_dma("/home/ubuntu/EE109-Final-Project/weights/fc_weight.bin",
-                 ADDR_WFC, N_WFC);
-    load_and_dma("/home/ubuntu/EE109-Final-Project/weights/fc_bias.bin",
-                 ADDR_BFC, N_BFC);
 
     ocl_wr32(ADDR_TRANSFER_EN, 32'h0);
 

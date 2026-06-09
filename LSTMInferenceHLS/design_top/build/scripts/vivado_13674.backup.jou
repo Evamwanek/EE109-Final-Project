@@ -1,0 +1,24 @@
+#-----------------------------------------------------------
+# Vivado v2024.1 (64-bit)
+# SW Build 5076996 on Wed May 22 18:36:09 MDT 2024
+# IP Build 5075265 on Wed May 22 21:45:21 MDT 2024
+# SharedData Build 5076995 on Wed May 22 18:29:18 MDT 2024
+# Start of session at: Fri Jun  5 21:23:57 2026
+# Process ID: 13674
+# Current directory: /home/ubuntu/EE109-Final-Project/LSTMInferenceHLS/design_top/build/scripts
+# Command line: vivado -mode batch -source build_all.tcl -log 2026_06_05-212356.vivado.log -tclargs SSI_SpreadLogic_high AggressiveExplore AggressiveExplore A1 B2 C0 H2
+# Log file: /home/ubuntu/EE109-Final-Project/LSTMInferenceHLS/design_top/build/scripts/2026_06_05-212356.vivado.log
+# Journal file: /home/ubuntu/EE109-Final-Project/LSTMInferenceHLS/design_top/build/scripts/vivado.jou
+# Running On        :ip-172-31-40-27
+# Platform          :Ubuntu
+# Operating System  :Ubuntu 20.04.6 LTS
+# Processor Detail  :AMD EPYC 7R13 Processor
+# CPU Frequency     :2649.998 MHz
+# CPU Physical cores:12
+# CPU Logical cores :24
+# Host memory       :268108 MB
+# Swap memory       :10737 MB
+# Total Virtual     :278846 MB
+# Available Virtual :275113 MB
+#-----------------------------------------------------------
+source build_all.tcl

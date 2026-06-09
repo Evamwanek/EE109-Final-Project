@@ -1,0 +1,247 @@
+mkdir -p /home/ubuntu/EE109-Final-Project/LSTMInferenceHLS/design_top/logs
+cd /home/ubuntu/EE109-Final-Project/LSTMInferenceHLS/design_top/verif/scripts && make design_top_base_test 2>&1 | tee /home/ubuntu/EE109-Final-Project/LSTMInferenceHLS/design_top/logs/hw_sim.log.txt
+make[1]: Entering directory '/home/ubuntu/EE109-Final-Project/LSTMInferenceHLS/design_top/verif/scripts'
+VIVADO_TOOL_VERSION = 2024.1
+CL_DIR = /home/ubuntu/EE109-Final-Project/LSTMInferenceHLS/design_top
+Running from /home/ubuntu/EE109-Final-Project/LSTMInferenceHLS/design_top/verif/scripts
+#
+#- CREATE SIM_ROOT ----------
+#
+Copying XSIM hbm model config files
+mkdir -p /home/ubuntu/aws-fpga/hdk/common/verif/ip_simulation_libraries/xsim_compiled_cl_ips && touch /home/ubuntu/aws-fpga/hdk/common/verif/ip_simulation_libraries/xsim_compile_cl_ips_dir_in_progress
+mkdir -p /home/ubuntu/aws-fpga/hdk/common/verif/ip_simulation_libraries/xsim_complib && touch /home/ubuntu/aws-fpga/hdk/common/verif/ip_simulation_libraries/xsim_complib_dir_in_progress
+" WARNING: XSIM does not require simulation library compilation "
+rm -f /home/ubuntu/aws-fpga/hdk/common/verif/ip_simulation_libraries/xsim_complib_dir_in_progress
+make copy_xsim_ini
+make[2]: Entering directory '/home/ubuntu/EE109-Final-Project/LSTMInferenceHLS/design_top/verif/scripts'
+VIVADO_TOOL_VERSION = 2024.1
+CL_DIR = /home/ubuntu/EE109-Final-Project/LSTMInferenceHLS/design_top
+Running from /home/ubuntu/EE109-Final-Project/LSTMInferenceHLS/design_top/verif/scripts
+make[2]: Nothing to be done for 'copy_xsim_ini'.
+make[2]: Leaving directory '/home/ubuntu/EE109-Final-Project/LSTMInferenceHLS/design_top/verif/scripts'
+rm -f /home/ubuntu/aws-fpga/hdk/common/verif/ip_simulation_libraries/xsim_compile_cl_ips_dir_in_progress
+cd /home/ubuntu/EE109-Final-Project/LSTMInferenceHLS/design_top/verif/sim/xsim/design_top_base_test_sv && ln -s -f /home/ubuntu/aws-fpga/hdk/common/verif/ip_simulation_libraries/xsim_complib/xsim.ini
+cd /home/ubuntu/EE109-Final-Project/LSTMInferenceHLS/design_top/verif/sim/xsim/design_top_base_test_sv && xsc /home/ubuntu/aws-fpga/sdk/userspace/utils/sh_dpi_tasks.c /home/ubuntu/aws-fpga/hdk/common/software/src/fpga_pci_sv.c --gcc_compile_options "-I/home/ubuntu/aws-fpga/sdk/userspace/include" --gcc_compile_options "-I/home/ubuntu/aws-fpga/sdk/userspace/utils" --gcc_compile_options "-I/home/ubuntu/aws-fpga/hdk/common/software/include" --gcc_compile_options "-I/home/ubuntu/aws-fpga/hdk/common/software/src" --gcc_compile_options "-I/home/ubuntu/EE109-Final-Project/LSTMInferenceHLS/design_top/software/runtime" --gcc_compile_options "-I/home/ubuntu/EE109-Final-Project/LSTMInferenceHLS/design_top/software/include" --gcc_compile_options "-DVIVADO_SIM" --gcc_compile_options "-DSV_TEST" --gcc_compile_options "-DDMA_TEST"
+Multi-threading is on. Using 22 slave threads.
+Running compilation flow/opt/Xilinx/Vivado/2024.1/lib/lnx64.o/../../tps/lnx64/gcc-9.3.0/bin/gcc  -fPIC -c -Wa,-W -fPIC -m64 -B/opt/Xilinx/Vivado/2024.1/lib/lnx64.o/../../tps/lnx64/gcc-9.3.0/bin/../../binutils-2.37/bin/ -I/home/ubuntu/aws-fpga/sdk/userspace/include -I/home/ubuntu/aws-fpga/sdk/userspace/utils -I/home/ubuntu/aws-fpga/hdk/common/software/include -I/home/ubuntu/aws-fpga/hdk/common/software/src -I/home/ubuntu/EE109-Final-Project/LSTMInferenceHLS/design_top/software/runtime -I/home/ubuntu/EE109-Final-Project/LSTMInferenceHLS/design_top/software/include -DVIVADO_SIM -DSV_TEST -DDMA_TEST    -I"/opt/Xilinx/Vivado/2024.1/data/xsim/include" -I"/opt/Xilinx/Vivado/2024.1/data/xsim/systemc" "/home/ubuntu/aws-fpga/hdk/common/software/src/fpga_pci_sv.c" -o "xsim.dir/work/xsc/fpga_pci_sv.lnx64.o" -DXILINX_SIMULATOR -Wno-deprecated-declarations 
+/opt/Xilinx/Vivado/2024.1/lib/lnx64.o/../../tps/lnx64/gcc-9.3.0/bin/gcc  -fPIC -c -Wa,-W -fPIC -m64 -B/opt/Xilinx/Vivado/2024.1/lib/lnx64.o/../../tps/lnx64/gcc-9.3.0/bin/../../binutils-2.37/bin/ -I/home/ubuntu/aws-fpga/sdk/userspace/include -I/home/ubuntu/aws-fpga/sdk/userspace/utils -I/home/ubuntu/aws-fpga/hdk/common/software/include -I/home/ubuntu/aws-fpga/hdk/common/software/src -I/home/ubuntu/EE109-Final-Project/LSTMInferenceHLS/design_top/software/runtime -I/home/ubuntu/EE109-Final-Project/LSTMInferenceHLS/design_top/software/include -DVIVADO_SIM -DSV_TEST -DDMA_TEST    -I"/opt/Xilinx/Vivado/2024.1/data/xsim/include" -I"/opt/Xilinx/Vivado/2024.1/data/xsim/systemc" "/home/ubuntu/aws-fpga/sdk/userspace/utils/sh_dpi_tasks.c" -o "xsim.dir/work/xsc/sh_dpi_tasks.lnx64.o" -DXILINX_SIMULATOR -Wno-deprecated-declarations 
+Done compilation
+Linking with command:
+/opt/Xilinx/Vivado/2024.1/lib/lnx64.o/../../tps/lnx64/gcc-9.3.0/bin/g++ -Wa,-W  -O -fPIC  -m64  -shared  -o "xsim.dir/work/xsc/dpi.so" "xsim.dir/work/xsc/fpga_pci_sv.lnx64.o" "xsim.dir/work/xsc/sh_dpi_tasks.lnx64.o"   -I/home/ubuntu/aws-fpga/sdk/userspace/include -I/home/ubuntu/aws-fpga/sdk/userspace/utils -I/home/ubuntu/aws-fpga/hdk/common/software/include -I/home/ubuntu/aws-fpga/hdk/common/software/src -I/home/ubuntu/EE109-Final-Project/LSTMInferenceHLS/design_top/software/runtime -I/home/ubuntu/EE109-Final-Project/LSTMInferenceHLS/design_top/software/include -DVIVADO_SIM -DSV_TEST -DDMA_TEST   -L/opt/Xilinx/Vivado/2024.1/lib/lnx64.o -lrdi_simulator_kernel  -L/opt/Xilinx/Vivado/2024.1/lib/lnx64.o/../../tps/lnx64/gcc-9.3.0/bin/../lib64 -Wl,--disable-new-dtags -Wl,-rpath=/opt/Xilinx/Vivado/2024.1/lib/lnx64.o/../../tps/lnx64/gcc-9.3.0/bin/../lib64 -lrdi_xsim_systemc -std=c++11 -L/opt/Xilinx/Vivado/2024.1/lib/lnx64.o/Default  -B/opt/Xilinx/Vivado/2024.1/lib/lnx64.o/../../tps/lnx64/gcc-9.3.0/bin/../../binutils-2.37/bin/ 
+
+Done linking: "xsim.dir/work/xsc/dpi.so"
+cd /home/ubuntu/EE109-Final-Project/LSTMInferenceHLS/design_top/verif/sim/xsim/design_top_base_test_sv && xvlog --sv -m64 --define DMA_TEST   --define plusarg_save  --define timeout=1ms  --define AWS_SIM --define USE_64GB_DDR_DIMM=1 --work xil_defaultlib --incr --relax -f /home/ubuntu/EE109-Final-Project/LSTMInferenceHLS/design_top/verif/scripts/top.xsim.f
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/EE109-Final-Project/LSTMInferenceHLS/design_top/design/design_top.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module vadd_lstm_inference_Pipeline_VITIS_LOOP_263_26_VITIS_LOOP_265_27
+INFO: [VRFC 10-311] analyzing module vadd_lstm_inference_Pipeline_VITIS_LOOP_239_24
+INFO: [VRFC 10-311] analyzing module vadd_lstm_inference_Pipeline_VITIS_LOOP_248_25
+INFO: [VRFC 10-311] analyzing module vadd_lstm_inference_Pipeline_VITIS_LOOP_171_10
+INFO: [VRFC 10-311] analyzing module vadd_lstm_inference_Pipeline_VITIS_LOOP_164_3
+INFO: [VRFC 10-311] analyzing module vadd_lstm_inference_wfc_buf_RAM_AUTO_1R1W
+INFO: [VRFC 10-311] analyzing module vadd_lstm_inference_Pipeline_VITIS_LOOP_234_23
+INFO: [VRFC 10-311] analyzing module vadd_lstm_inference_Pipeline_VITIS_LOOP_172_11
+INFO: [VRFC 10-311] analyzing module vadd_sigmoid_sigmoid_lut_ROM_AUTO_1R
+INFO: [VRFC 10-311] analyzing module vadd_lstm_inference_Pipeline_VITIS_LOOP_213_19
+INFO: [VRFC 10-311] analyzing module vadd_lstm_inference_x_local_RAM_AUTO_1R1W
+INFO: [VRFC 10-311] analyzing module vadd_lstm_inference_Pipeline_VITIS_LOOP_189_14
+INFO: [VRFC 10-311] analyzing module vadd_lstm_inference_bfc_buf_RAM_AUTO_1R1W
+INFO: [VRFC 10-311] analyzing module vadd_lstm_inference_wih0_buf_RAM_AUTO_1R1W
+INFO: [VRFC 10-311] analyzing module vadd_lstm_inference_Pipeline_VITIS_LOOP_182_13
+INFO: [VRFC 10-311] analyzing module vadd_lstm_inference_Pipeline_VITIS_LOOP_204_18
+INFO: [VRFC 10-311] analyzing module vadd_mul_32s_22ns_54_3_1
+INFO: [VRFC 10-311] analyzing module vadd_lstm_inference_bih0_buf_RAM_AUTO_1R1W
+INFO: [VRFC 10-311] analyzing module vadd_lstm_inference_Pipeline_VITIS_LOOP_224_20
+INFO: [VRFC 10-311] analyzing module vadd_mul_42s_42s_80_3_1
+INFO: [VRFC 10-311] analyzing module vadd_sigmoid
+INFO: [VRFC 10-311] analyzing module vadd_flow_control_loop_pipe_sequential_init
+INFO: [VRFC 10-311] analyzing module vadd_gmem0_m_axi
+INFO: [VRFC 10-311] analyzing module vadd_gmem0_m_axi_load
+INFO: [VRFC 10-311] analyzing module vadd_gmem0_m_axi_store
+INFO: [VRFC 10-311] analyzing module vadd_gmem0_m_axi_read
+INFO: [VRFC 10-311] analyzing module vadd_gmem0_m_axi_write
+INFO: [VRFC 10-311] analyzing module vadd_gmem0_m_axi_burst_converter
+INFO: [VRFC 10-311] analyzing module vadd_gmem0_m_axi_throttle
+INFO: [VRFC 10-311] analyzing module vadd_gmem0_m_axi_reg_slice
+INFO: [VRFC 10-311] analyzing module vadd_gmem0_m_axi_fifo
+INFO: [VRFC 10-311] analyzing module vadd_gmem0_m_axi_srl
+INFO: [VRFC 10-311] analyzing module vadd_gmem0_m_axi_mem
+INFO: [VRFC 10-311] analyzing module vadd_lstm_inference_Pipeline_VITIS_LOOP_275_28
+INFO: [VRFC 10-311] analyzing module vadd_lstm_inference_sigmoid_lut_ROM_AUTO_1R
+INFO: [VRFC 10-311] analyzing module vadd_lstm_inference_Pipeline_VITIS_LOOP_199_17
+INFO: [VRFC 10-311] analyzing module vadd_lstm_inference_Pipeline_VITIS_LOOP_168_7
+INFO: [VRFC 10-311] analyzing module vadd_mul_23s_22ns_45_3_1
+INFO: [VRFC 10-311] analyzing module vadd_lstm_inference_Pipeline_VITIS_LOOP_170_9
+INFO: [VRFC 10-311] analyzing module vadd_lstm_inference_Pipeline_VITIS_LOOP_166_5
+INFO: [VRFC 10-311] analyzing module vadd_lstm_inference
+INFO: [VRFC 10-311] analyzing module vadd_lstm_inference_Pipeline_VITIS_LOOP_138_1
+INFO: [VRFC 10-311] analyzing module vadd_sparsemux_7_2_22_1_1
+INFO: [VRFC 10-311] analyzing module vadd_mul_32ns_28ns_59_3_1
+INFO: [VRFC 10-311] analyzing module vadd_lstm_inference_Pipeline_VITIS_LOOP_163_2
+INFO: [VRFC 10-311] analyzing module vadd_lstm_inference_Pipeline_VITIS_LOOP_165_4
+INFO: [VRFC 10-311] analyzing module vadd_lstm_inference_Pipeline_VITIS_LOOP_167_6
+INFO: [VRFC 10-311] analyzing module vadd_control_s_axi
+INFO: [VRFC 10-311] analyzing module vadd_lstm_inference_Pipeline_VITIS_LOOP_169_8
+INFO: [VRFC 10-311] analyzing module vadd_lstm_inference_gates0_RAM_1WNR_AUTO_1R1W
+INFO: [VRFC 10-311] analyzing module vadd_sparsemux_257_7_32_1_1
+INFO: [VRFC 10-311] analyzing module vadd
+INFO: [VRFC 10-311] analyzing module design_top
+WARNING: [VRFC 10-3381] ignoring re-definition of command line macro 'CL_NAME' [/home/ubuntu/EE109-Final-Project/LSTMInferenceHLS/design_top/design/design_top_defines.vh:21]
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/opt/Xilinx/Vivado/2024.1/data/verilog/src/glbl.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module glbl
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/aws-fpga/hdk/common/lib/aws_clk_gen.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module aws_clk_gen
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/aws-fpga/hdk/common/lib/aws_clk_regs.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module aws_clk_regs
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/aws-fpga/hdk/common/lib/axil_to_cfg_cnv.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module axil_to_cfg_cnv
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/aws-fpga/hdk/common/lib/axi_clock_conv.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module axi_clock_conv
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/aws-fpga/hdk/common/lib/bram_1w1r.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module bram_1w1r
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/aws-fpga/hdk/common/lib/cdc_sync.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module cdc_sync
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/aws-fpga/hdk/common/lib/flop_fifo.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module flop_fifo
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/aws-fpga/hdk/common/lib/ft_fifo.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module ft_fifo
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/aws-fpga/hdk/common/lib/hbm_wrapper.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module hbm_wrapper
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/aws-fpga/hdk/common/lib/lib_pipe.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module lib_pipe
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/aws-fpga/hdk/common/lib/ram_fifo_ft.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module ram_fifo_ft
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/aws-fpga/hdk/common/lib/srl_fifo.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module srl_fifo
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/aws-fpga/hdk/common/lib/xpm_fifo.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module xpm_fifo
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/aws-fpga/hdk/common/lib/axis_flop_fifo.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module axis_flop_fifo
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/aws-fpga/hdk/common/lib/bram_2rw.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module bram_2rw
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/aws-fpga/hdk/common/lib/cdc_async_fifo.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module cdc_async_fifo
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/aws-fpga/hdk/common/lib/flop_fifo_in.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module flop_fifo_in
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/aws-fpga/hdk/common/lib/ft_fifo_p.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module ft_fifo_p
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/aws-fpga/hdk/common/lib/interfaces.sv" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/aws-fpga/hdk/common/lib/rr_arb.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module rr_arb
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/aws-fpga/hdk/common/shell_stable/design/sh_ddr/sim/sync.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module sync
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/aws-fpga/hdk/common/shell_stable/design/sh_ddr/sim/mgt_acc_axl.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module mgt_acc_axl
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/aws-fpga/hdk/common/shell_stable/design/sh_ddr/sim/mgt_gen_axl.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module mgt_gen_axl
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/aws-fpga/hdk/common/shell_stable/design/sh_ddr/sim/ccf_ctl.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module ccf_ctl
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/aws-fpga/hdk/common/shell_stable/design/sh_ddr/sim/flop_ccf.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module flop_ccf
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/aws-fpga/hdk/common/shell_stable/design/sh_ddr/sim/sh_ddr.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module sh_ddr
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/aws-fpga/hdk/common/shell_stable/design/sh_ddr/sim/axi4_slave_bfm.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module axi4_slave_bfm
+WARNING: [VRFC 10-3824] variable 'awready_cnt' must explicitly be declared as automatic or static [/home/ubuntu/aws-fpga/hdk/common/shell_stable/design/sh_ddr/sim/axi4_slave_bfm.sv:144]
+WARNING: [VRFC 10-3824] variable 'wready_cnt' must explicitly be declared as automatic or static [/home/ubuntu/aws-fpga/hdk/common/shell_stable/design/sh_ddr/sim/axi4_slave_bfm.sv:178]
+WARNING: [VRFC 10-3824] variable 'wready_nonzero_wait' must explicitly be declared as automatic or static [/home/ubuntu/aws-fpga/hdk/common/shell_stable/design/sh_ddr/sim/axi4_slave_bfm.sv:179]
+WARNING: [VRFC 10-3824] variable 'arready_cnt' must explicitly be declared as automatic or static [/home/ubuntu/aws-fpga/hdk/common/shell_stable/design/sh_ddr/sim/axi4_slave_bfm.sv:242]
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/aws-fpga/hdk/common/verif/models/xilinx_axi_pc/axi_protocol_checker_v1_1_vl_rfs.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module axi_protocol_checker_v1_1_12_axi4litepc_asr_inline
+INFO: [VRFC 10-311] analyzing module axi_protocol_checker_v1_1_12_axi4pc_asr_inline
+INFO: [VRFC 10-311] analyzing module axi_protocol_checker_v1_1_12_core
+INFO: [VRFC 10-311] analyzing module axi_protocol_checker_v1_1_12_syn_fifo
+INFO: [VRFC 10-311] analyzing module axi_protocol_checker_v1_1_12_reporter
+INFO: [VRFC 10-311] analyzing module axi_protocol_checker_v1_1_12_top
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/aws-fpga/hdk/common/verif/models/ddr4_model/ddr4_sdram_model_wrapper.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module StateTable
+INFO: [VRFC 10-311] analyzing module ddr4_model
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/aws-fpga/hdk/common/verif/models/ddr4_rdimm_wrapper/ddr4_rcd_model.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module ddr4_rcd_model
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/aws-fpga/hdk/common/verif/models/ddr4_rdimm_wrapper/ddr4_rdimm_wrapper.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module ddr4_rdimm_wrapper
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/aws-fpga/hdk/common/verif/models/ddr4_rdimm_wrapper/ddr4_dimm.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module ddr4_dimm
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/aws-fpga/hdk/common/verif/models/ddr4_rdimm_wrapper/ddr4_bi_delay.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module bi_delay_ddr4
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/aws-fpga/hdk/common/verif/models/ddr4_rdimm_wrapper/ddr4_db_delay_model.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module ddr4_db_delay_model
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/aws-fpga/hdk/common/verif/models/ddr4_rdimm_wrapper/ddr4_dir_detect.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module dir_detect
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/aws-fpga/hdk/common/verif/models/ddr4_rdimm_wrapper/ddr4_db_dly_dir.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module ddr_dly_dir_detect
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/aws-fpga/hdk/common/verif/models/ddr4_rdimm_wrapper/ddr4_rank.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module ddr4_rank
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/aws-fpga/hdk/common/verif/packages/anp_base_pkg.sv" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/aws-fpga/hdk/common/verif/models/fpga/fpga.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module fpga
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/aws-fpga/hdk/common/verif/models/fpga/card.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module card
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/aws-fpga/hdk/common/verif/tb/sv/tb_type_defines_pkg.sv" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/aws-fpga/hdk/common/verif/tb/sv/tb.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module tb
+WARNING: [VRFC 10-3824] variable 'debug' must explicitly be declared as automatic or static [/home/ubuntu/aws-fpga/hdk/common/verif/include/sh_dpi_tasks.svh:215]
+WARNING: [VRFC 10-3824] variable 'debug' must explicitly be declared as automatic or static [/home/ubuntu/aws-fpga/hdk/common/verif/include/sh_dpi_tasks.svh:257]
+INFO: [VRFC 10-311] analyzing module short
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/aws-fpga/hdk/common/verif/models/sh_bfm/axil_bfm.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module axil_bfm
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/aws-fpga/hdk/common/verif/models/sh_bfm/axis_bfm_pkg.sv" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/aws-fpga/hdk/common/verif/models/sh_bfm/axis_bfm.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module axis_bfm
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/aws-fpga/hdk/common/verif/models/sh_bfm/sh_bfm.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module sh_bfm
+WARNING: [VRFC 10-3824] variable 'awready_cnt' must explicitly be declared as automatic or static [/home/ubuntu/aws-fpga/hdk/common/verif/models/sh_bfm/sh_bfm.sv:880]
+WARNING: [VRFC 10-3824] variable 'wready_cnt' must explicitly be declared as automatic or static [/home/ubuntu/aws-fpga/hdk/common/verif/models/sh_bfm/sh_bfm.sv:919]
+WARNING: [VRFC 10-3824] variable 'wready_nonzero_wait' must explicitly be declared as automatic or static [/home/ubuntu/aws-fpga/hdk/common/verif/models/sh_bfm/sh_bfm.sv:920]
+WARNING: [VRFC 10-3824] variable 'arready_cnt' must explicitly be declared as automatic or static [/home/ubuntu/aws-fpga/hdk/common/verif/models/sh_bfm/sh_bfm.sv:982]
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/aws-fpga/hdk/common/ip/cl_ip/cl_ip.gen/sources_1/bd/cl_axi_sc_1x1/hdl/cl_axi_sc_1x1_wrapper.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module cl_axi_sc_1x1_wrapper
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/aws-fpga/hdk/common/ip/cl_ip/cl_ip.gen/sources_1/bd/cl_axi_sc_2x2/hdl/cl_axi_sc_2x2_wrapper.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module cl_axi_sc_2x2_wrapper
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/aws-fpga/hdk/common/verif/models/base/gen_buf_t.sv" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/aws-fpga/hdk/common/verif/models/stream_bfm/stream_bfm.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module stream_bfm
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/aws-fpga/hdk/common/verif/tb/sv/dma_classes.sv" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/aws-fpga/hdk/common/ip/cl_ip/cl_ip.gen/sources_1/ip/cl_hbm/hdl/hbm_v1_0_vl_rfs.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module hbm_top
+INFO: [VRFC 10-311] analyzing module hbm_apb_mst
+INFO: [VRFC 10-311] analyzing module hbm_temp_rd
+INFO: [VRFC 10-311] analyzing module hbm_apb_arbiter
+INFO: [VRFC 10-311] analyzing module hbm_data_fetch
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/ubuntu/EE109-Final-Project/LSTMInferenceHLS/design_top/verif/tests/design_top_base_test.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module design_top_base_test
+WARNING: [VRFC 10-8725] `include directive is not isolated on its own line [/home/ubuntu/EE109-Final-Project/LSTMInferenceHLS/design_top/verif/tests/design_top_base_test.sv:14]
+WARNING: [VRFC 10-9277] overflow of 32-bit signed integer 2147483648; using -2147483648 instead [/home/ubuntu/EE109-Final-Project/LSTMInferenceHLS/design_top/verif/tests/design_top_base_test.sv:100]
+cd /home/ubuntu/EE109-Final-Project/LSTMInferenceHLS/design_top/verif/sim/xsim/design_top_base_test_sv && xelab -m64   --define plusarg_save  --define timeout=1ms  --define AWS_SIM --define USE_64GB_DDR_DIMM=1 --timescale 1ps/1ps --debug typical --relax --mt 8  -L unisims_ver -L unisim -L unifast_ver -L unifast -L unimacro_ver -L unimacro -L secureip -L xpm -L xil_defaultlib -L axi_dwidth_converter_v2_1_31 -L axi_protocol_converter_v2_1_31 -L axi_protocol_checker_v2_0_17 -L hbm2e_pl_v1_0_1 -L noc_hbm_v1_0_0 -L hbm_v1_0_16 -L axi_register_slice_v2_1_31 -L axi_infrastructure_v1_1_0 -L axi_crossbar_v2_1_32 -L axi_clock_converter_v2_1_30 -L fifo_generator_v13_2_10 -L axi_data_fifo_v2_1_30 -L generic_baseblocks_v2_1_2 -L lut_buffer_v2_0_1 -L xsdbm_v3_0_2 -L xdma_v4_1_29 -L xlconstant_v1_1_9 -L smartconnect_v1_0 -sv_lib dpi --snapshot tb xil_defaultlib.tb xil_defaultlib.glbl xil_defaultlib.design_top_base_test
+Vivado Simulator v2024.1
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
+Running: /opt/Xilinx/Vivado/2024.1/bin/unwrapped/lnx64.o/xelab --define plusarg_save --define timeout=1ms --define AWS_SIM --define USE_64GB_DDR_DIMM=1 --timescale 1ps/1ps --debug typical --relax --mt 8 -L unisims_ver -L unisim -L unifast_ver -L unifast -L unimacro_ver -L unimacro -L secureip -L xpm -L xil_defaultlib -L axi_dwidth_converter_v2_1_31 -L axi_protocol_converter_v2_1_31 -L axi_protocol_checker_v2_0_17 -L hbm2e_pl_v1_0_1 -L noc_hbm_v1_0_0 -L hbm_v1_0_16 -L axi_register_slice_v2_1_31 -L axi_infrastructure_v1_1_0 -L axi_crossbar_v2_1_32 -L axi_clock_converter_v2_1_30 -L fifo_generator_v13_2_10 -L axi_data_fifo_v2_1_30 -L generic_baseblocks_v2_1_2 -L lut_buffer_v2_0_1 -L xsdbm_v3_0_2 -L xdma_v4_1_29 -L xlconstant_v1_1_9 -L smartconnect_v1_0 -sv_lib dpi --snapshot tb xil_defaultlib.tb xil_defaultlib.glbl xil_defaultlib.design_top_base_test 
+Using 8 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+WARNING: [VRFC 10-8809] cannot index into scalar type parameter/localparam 'DEBUG_MESSAGES' [/home/ubuntu/aws-fpga/hdk/common/ip/cl_ip/cl_ip.gen/sources_1/ip/cl_ddr4_32g/rtl/cal/ddr4_v2_2_cal_xsdb_bram.sv:234]
+WARNING: [VRFC 10-9543] actual bit length 2 differs from formal bit length 1 for port 'ddr4_ck_t' [/home/ubuntu/aws-fpga/hdk/common/verif/models/fpga/fpga_ddr.svh:117]
+WARNING: [VRFC 10-9543] actual bit length 2 differs from formal bit length 1 for port 'ddr4_ck_c' [/home/ubuntu/aws-fpga/hdk/common/verif/models/fpga/fpga_ddr.svh:118]
+WARNING: [VRFC 10-9543] actual bit length 6 differs from formal bit length 8 for port 's_axi_control_AWADDR' [/home/ubuntu/EE109-Final-Project/LSTMInferenceHLS/design_top/design/design_top.sv:250]
+WARNING: [VRFC 10-9543] actual bit length 6 differs from formal bit length 8 for port 's_axi_control_ARADDR' [/home/ubuntu/EE109-Final-Project/LSTMInferenceHLS/design_top/design/design_top.sv:257]
+WARNING: [VRFC 10-9543] actual bit length 32 differs from formal bit length 3 for port 's_axi_awsize' [/home/ubuntu/aws-fpga/hdk/common/ip/cl_ip/cl_ip.gen/sources_1/ip/axi_register_slice_light/sim/axi_register_slice_light.v:227]
+WARNING: [VRFC 10-9543] actual bit length 32 differs from formal bit length 3 for port 's_axi_arsize' [/home/ubuntu/aws-fpga/hdk/common/ip/cl_ip/cl_ip.gen/sources_1/ip/axi_register_slice_light/sim/axi_register_slice_light.v:252]
+WARNING: [VRFC 10-9543] actual bit length 1 differs from formal bit length 19 for port 'm_axi_awuser' [/home/ubuntu/aws-fpga/hdk/common/shell_stable/design/sh_ddr/sim/sh_ddr.sv:590]
+WARNING: [VRFC 10-9543] actual bit length 1 differs from formal bit length 19 for port 'm_axi_aruser' [/home/ubuntu/aws-fpga/hdk/common/shell_stable/design/sh_ddr/sim/sh_ddr.sv:612]
+WARNING: [VRFC 10-9543] actual bit length 64 differs from formal bit length 36 for port 'c0_ddr4_s_axi_awaddr' [/home/ubuntu/aws-fpga/hdk/common/shell_stable/design/sh_ddr/sim/sh_ddr.sv:990]
+WARNING: [VRFC 10-9543] actual bit length 64 differs from formal bit length 36 for port 'c0_ddr4_s_axi_araddr' [/home/ubuntu/aws-fpga/hdk/common/shell_stable/design/sh_ddr/sim/sh_ddr.sv:1010]
+WARNING: [VRFC 10-8967] first argument of $fatal is invalid; expected 0, 1 or 2 [/home/ubuntu/aws-fpga/hdk/common/verif/models/sh_bfm/sh_bfm.sv:1849]
+WARNING: [VRFC 10-8967] first argument of $fatal is invalid; expected 0, 1 or 2 [/home/ubuntu/aws-fpga/hdk/common/verif/models/sh_bfm/sh_bfm.sv:2007]
+WARNING: [VRFC 10-8967] first argument of $fatal is invalid; expected 0, 1 or 2 [/home/ubuntu/EE109-Final-Project/LSTMInferenceHLS/design_top/verif/tests/cl_dram_hbm_dma_utils.svh:70]
+WARNING: [VRFC 10-8967] first argument of $fatal is invalid; expected 0, 1 or 2 [/home/ubuntu/EE109-Final-Project/LSTMInferenceHLS/design_top/verif/tests/cl_dram_hbm_dma_utils.svh:77]
+WARNING: [VRFC 10-3705] select index 7 into 'dq_temp' is out of bounds [/home/ubuntu/aws-fpga/hdk/common/verif/models/ddr4_model/ddr4_model.sv:1615]
+WARNING: [VRFC 10-3705] select index 7 into 'dq_temp' is out of bounds [/home/ubuntu/aws-fpga/hdk/common/verif/models/ddr4_model/ddr4_model.sv:1617]
+WARNING: [VRFC 10-3705] select index 2 into 'rank' is out of bounds [/home/ubuntu/aws-fpga/hdk/common/ip/cl_ip/cl_ip.gen/sources_1/ip/cl_ddr4_32g/rtl/cal/ddr4_v2_2_cal_mc_odt.sv:148]
+Completed static elaboration
+INFO: [XSIM 43-4329] Assuming default value 1 for the first arguement of $fatal at Line 1849, File /home/ubuntu/aws-fpga/hdk/common/verif/models/sh_bfm/sh_bfm.sv
+INFO: [XSIM 43-4329] Assuming default value 1 for the first arguement of $fatal at Line 2007, File /home/ubuntu/aws-fpga/hdk/common/verif/models/sh_bfm/sh_bfm.sv
+INFO: [XSIM 43-4329] Assuming default value 1 for the first arguement of $fatal at Line 70, File /home/ubuntu/EE109-Final-Project/LSTMInferenceHLS/design_top/verif/tests/cl_dram_hbm_dma_utils.svh
+INFO: [XSIM 43-4329] Assuming default value 1 for the first arguement of $fatal at Line 77, File /home/ubuntu/EE109-Final-Project/LSTMInferenceHLS/design_top/verif/tests/cl_dram_hbm_dma_utils.svh
+INFO: [XSIM 43-4329] Assuming default value 1 for the first arguement of $fatal at Line 93, File /home/ubuntu/EE109-Final-Project/LSTMInferenceHLS/design_top/verif/tests/cl_dram_hbm_dma_utils.svh
+Starting simulation data flow analysis
+make: *** [Makefile:11: hw_sim] Interrupt

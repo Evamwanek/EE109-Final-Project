@@ -154,11 +154,35 @@ int main(int argc, char* argv[]) {
 
     // --- HLS kernel result (sigmoid LUT + tanh approx) ---
     int hls_pred = -1;
+    // Convert float arrays to data_t for HLS kernel
+    data_t* hls_input_seq = new data_t[T_STEPS * INPUT_SZ];
+    data_t* hls_wih0 = new data_t[GATE_H * INPUT_SZ];
+    data_t* hls_whh0 = new data_t[GATE_H * HIDDEN];
+    data_t* hls_bih0 = new data_t[GATE_H];
+    data_t* hls_bhh0 = new data_t[GATE_H];
+    data_t* hls_wih1 = new data_t[GATE_H * HIDDEN];
+    data_t* hls_whh1 = new data_t[GATE_H * HIDDEN];
+    data_t* hls_bih1 = new data_t[GATE_H];
+    data_t* hls_bhh1 = new data_t[GATE_H];
+    data_t* hls_wfc  = new data_t[N_CLASS * HIDDEN];
+    data_t* hls_bfc  = new data_t[N_CLASS];
+
+    for (int i = 0; i < T_STEPS * INPUT_SZ; i++) hls_input_seq[i] = (data_t)input_seq[i];
+    for (int i = 0; i < GATE_H * INPUT_SZ;  i++) hls_wih0[i] = (data_t)wih0[i];
+    for (int i = 0; i < GATE_H * HIDDEN;    i++) hls_whh0[i] = (data_t)whh0[i];
+    for (int i = 0; i < GATE_H;             i++) hls_bih0[i] = (data_t)bih0[i];
+    for (int i = 0; i < GATE_H;             i++) hls_bhh0[i] = (data_t)bhh0[i];
+    for (int i = 0; i < GATE_H * HIDDEN;    i++) hls_wih1[i] = (data_t)wih1[i];
+    for (int i = 0; i < GATE_H * HIDDEN;    i++) hls_whh1[i] = (data_t)whh1[i];
+    for (int i = 0; i < GATE_H;             i++) hls_bih1[i] = (data_t)bih1[i];
+    for (int i = 0; i < GATE_H;             i++) hls_bhh1[i] = (data_t)bhh1[i];
+    for (int i = 0; i < N_CLASS * HIDDEN;   i++) hls_wfc[i]  = (data_t)wfc[i];
+    for (int i = 0; i < N_CLASS;            i++) hls_bfc[i]  = (data_t)bfc[i];
     vadd(
-        input_seq,
-        wih0, whh0, bih0, bhh0,
-        wih1, whh1, bih1, bhh1,
-        wfc, bfc,
+        hls_input_seq,
+        hls_wih0, hls_whh0, hls_bih0, hls_bhh0,
+        hls_wih1, hls_whh1, hls_bih1, hls_bhh1,
+        hls_wfc, hls_bfc,
         &hls_pred
     );
     printf("HLS kernel predicted class: %d\n", hls_pred);

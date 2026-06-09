@@ -1,5 +1,3 @@
-
-
 #include <ap_fixed.h>
 
 #define T_STEPS  50
@@ -14,8 +12,6 @@ typedef ap_fixed<48, 16> acc_t;
 
 // ---------------------------------------------------------------------------
 // Sigmoid LUT — 256 real data_t constants, pre-computed offline.
-// x_i = -6 + i*(12/255), value = sigmoid(x_i) rounded to ap_fixed<32,10>.
-// No bits_to_fixed hacks, no float literals, no runtime init needed.
 // ---------------------------------------------------------------------------
 static const data_t sigmoid_lut[256] = {
     0.0024726391, 0.0025913715, 0.0027160645, 0.0028464794,
@@ -85,26 +81,15 @@ static const data_t sigmoid_lut[256] = {
 };
 
 // ---------------------------------------------------------------------------
-// sigmoid: LUT lookup, fully fixed-point index math, rounded index.
-//
-// SCALE = 255/12 = 21.25 exactly.
-// 21.25 is representable in ap_fixed<16,8> as 5440/2^8 — no float literal.
-// Rounding: add 0.5 before truncation to avoid systematic downward bias.
+// sigmoid: LUT lookup with fixed-point index math
 // ---------------------------------------------------------------------------
 static data_t sigmoid(data_t x) {
     if (x >= (data_t)6)  return sigmoid_lut[255];
     if (x <= (data_t)-6) return sigmoid_lut[0];
 
-    // SCALE = 255/12 = 21.25: assign integer 5440 to ap_fixed<16,8>
-    // ap_fixed<16,8> stores value = bits/2^8, so 5440/256 = 21.25 exactly.
-    ap_fixed<16, 8> scale;
-    scale = 21;           // integer part
-    scale += (ap_fixed<16,8>)1 / (ap_fixed<16,8>)4;  // + 0.25, exact
-
     data_t xshifted = x + (data_t)6;
-
-    // Add 0.5 for rounding before truncation (fixes downward bias)
-    int idx = (int)(xshifted * scale + (data_t)0.5);
+    // SCALE = 255/12 = 21.25, add 0.5 for rounding
+    int idx = (int)(xshifted * (data_t)21.25 + (data_t)0.5);
     if (idx < 0)   idx = 0;
     if (idx > 255) idx = 255;
     return sigmoid_lut[idx];
@@ -116,7 +101,7 @@ static data_t tanh_approx(data_t x) {
 }
 
 // ---------------------------------------------------------------------------
-// Core LSTM inference — zero float, zero float literals
+// Core LSTM inference
 // ---------------------------------------------------------------------------
 static void lstm_inference(
     data_t *input_seq,   // (T_STEPS * INPUT_SZ)
@@ -132,43 +117,80 @@ static void lstm_inference(
     data_t *bfc,         // (N_CLASS)
     int    *pred_out
 ) {
-    data_t h0[HIDDEN] = {0};
-    data_t c0[HIDDEN] = {0};
-    data_t h1[HIDDEN] = {0};
-    data_t c1[HIDDEN] = {0};
+    
+    data_t h0[HIDDEN];
+    data_t c0[HIDDEN];
+    data_t h1[HIDDEN];
+    data_t c1[HIDDEN];
+    #pragma HLS ARRAY_PARTITION variable=h0 complete
+    #pragma HLS ARRAY_PARTITION variable=c0 complete
+    #pragma HLS ARRAY_PARTITION variable=h1 complete
+    #pragma HLS ARRAY_PARTITION variable=c1 complete
 
-    data_t gates0[GATE_H];
-    data_t gates1[GATE_H];
+    for (int i = 0; i < HIDDEN; i++) {
+        h0[i] = (data_t)0;
+        c0[i] = (data_t)0;
+        h1[i] = (data_t)0;
+        c1[i] = (data_t)0;
+    }
 
+    data_t wih0_buf[GATE_H * INPUT_SZ];
+    data_t whh0_buf[GATE_H * HIDDEN];
+    data_t bih0_buf[GATE_H];
+    data_t bhh0_buf[GATE_H];
+    data_t wih1_buf[GATE_H * HIDDEN];
+    data_t whh1_buf[GATE_H * HIDDEN];
+    data_t bih1_buf[GATE_H];
+    data_t bhh1_buf[GATE_H];
+    data_t wfc_buf [N_CLASS * HIDDEN];
+    data_t bfc_buf [N_CLASS];
+
+    for (int i = 0; i < GATE_H * INPUT_SZ; i++) wih0_buf[i] = wih0[i];
+    for (int i = 0; i < GATE_H * HIDDEN;   i++) whh0_buf[i] = whh0[i];
+    for (int i = 0; i < GATE_H;            i++) bih0_buf[i] = bih0[i];
+    for (int i = 0; i < GATE_H;            i++) bhh0_buf[i] = bhh0[i];
+    for (int i = 0; i < GATE_H * HIDDEN;   i++) wih1_buf[i] = wih1[i];
+    for (int i = 0; i < GATE_H * HIDDEN;   i++) whh1_buf[i] = whh1[i];
+    for (int i = 0; i < GATE_H;            i++) bih1_buf[i] = bih1[i];
+    for (int i = 0; i < GATE_H;            i++) bhh1_buf[i] = bhh1[i];
+    for (int i = 0; i < N_CLASS * HIDDEN;  i++) wfc_buf[i]  = wfc[i];
+    for (int i = 0; i < N_CLASS;           i++) bfc_buf[i]  = bfc[i];
+
+   
     for (int t = 0; t < T_STEPS; t++) {
         #pragma HLS loop_tripcount min=50 max=50
+        
+        data_t x_local[INPUT_SZ];
+        for (int k = 0; k < INPUT_SZ; k++) {
+            x_local[k] = input_seq[t * INPUT_SZ + k];
+        }
 
-        data_t *x = input_seq + t * INPUT_SZ;
+        data_t h0_snap[HIDDEN];
+        data_t h1_snap[HIDDEN];
+        for (int i = 0; i < HIDDEN; i++) { h0_snap[i] = h0[i]; h1_snap[i] = h1[i]; }
 
-        // --- Layer 0: gate pre-activations ---
+        // --------------------------------------------------------------
+        // Layer 0: gate pre-activations 
+        // --------------------------------------------------------------
+        data_t gates0[GATE_H];
         for (int g = 0; g < GATES; g++) {
             for (int j = 0; j < HIDDEN; j++) {
                 int row = g * HIDDEN + j;
-
-                // Wide accumulators — bias added inside acc_t before cast down.
-                // Casting to data_t only at the final boundary (FIX from reviewer).
-                acc_t xC = 0;
-                acc_t hC = 0;
+                acc_t xC = (acc_t)bih0_buf[row] + (acc_t)bhh0_buf[row];
                 for (int k = 0; k < INPUT_SZ; k++) {
-                    #pragma HLS pipeline
-                    xC += (acc_t)wih0[row * INPUT_SZ + k] * (acc_t)x[k];
+                    #pragma HLS pipeline II=1
+                    xC += (acc_t)wih0_buf[row * INPUT_SZ + k] * (acc_t)x_local[k];
                 }
+                acc_t hC = 0;
                 for (int k = 0; k < HIDDEN; k++) {
-                    #pragma HLS pipeline
-                    hC += (acc_t)whh0[row * HIDDEN + k] * (acc_t)h0[k];
+                    #pragma HLS pipeline II=1
+                    hC += (acc_t)whh0_buf[row * HIDDEN + k] * (acc_t)h0_snap[k];
                 }
-                // Biases added at full acc_t precision, cast once at end
-                acc_t pre0 = xC + hC + (acc_t)bih0[row] + (acc_t)bhh0[row];
-                gates0[row] = (data_t)pre0;
+                gates0[row] = (data_t)(xC + hC);
             }
         }
 
-        // --- Layer 0: gate activations + state update ---
+        // Layer 0: gate activations + cell/hidden state update
         for (int j = 0; j < HIDDEN; j++) {
             data_t i_gate = sigmoid    (gates0[0 * HIDDEN + j]);
             data_t f_gate = sigmoid    (gates0[1 * HIDDEN + j]);
@@ -179,26 +201,31 @@ static void lstm_inference(
             h0[j] = o_gate * tanh_approx(c0_new);
         }
 
-        // --- Layer 1: gate pre-activations ---
+
+        for (int i = 0; i < HIDDEN; i++) h0_snap[i] = h0[i];
+
+        // --------------------------------------------------------------
+        // Layer 1: gate pre-activations  
+        // --------------------------------------------------------------
+        data_t gates1[GATE_H];
         for (int g = 0; g < GATES; g++) {
             for (int j = 0; j < HIDDEN; j++) {
                 int row = g * HIDDEN + j;
-                acc_t xC = 0;
+                acc_t xC = (acc_t)bih1_buf[row] + (acc_t)bhh1_buf[row];
+                for (int k = 0; k < HIDDEN; k++) {
+                    #pragma HLS pipeline II=1
+                    xC += (acc_t)wih1_buf[row * HIDDEN + k] * (acc_t)h0_snap[k];
+                }
                 acc_t hC = 0;
                 for (int k = 0; k < HIDDEN; k++) {
-                    #pragma HLS pipeline
-                    xC += (acc_t)wih1[row * HIDDEN + k] * (acc_t)h0[k];
+                    #pragma HLS pipeline II=1
+                    hC += (acc_t)whh1_buf[row * HIDDEN + k] * (acc_t)h1_snap[k];
                 }
-                for (int k = 0; k < HIDDEN; k++) {
-                    #pragma HLS pipeline
-                    hC += (acc_t)whh1[row * HIDDEN + k] * (acc_t)h1[k];
-                }
-                acc_t pre1 = xC + hC + (acc_t)bih1[row] + (acc_t)bhh1[row];
-                gates1[row] = (data_t)pre1;
+                gates1[row] = (data_t)(xC + hC);
             }
         }
 
-        // --- Layer 1: gate activations + state update ---
+        // Layer 1: gate activations + cell/hidden state update
         for (int j = 0; j < HIDDEN; j++) {
             data_t i_gate = sigmoid    (gates1[0 * HIDDEN + j]);
             data_t f_gate = sigmoid    (gates1[1 * HIDDEN + j]);
@@ -208,20 +235,22 @@ static void lstm_inference(
             c1[j] = c1_new;
             h1[j] = o_gate * tanh_approx(c1_new);
         }
-    }
+    } // end time loop
 
-    // --- FC layer ---
+    // ------------------------------------------------------------------
+    // FC layer 
+    // ------------------------------------------------------------------
     data_t logits[N_CLASS];
     for (int i = 0; i < N_CLASS; i++) {
-        acc_t dot = 0;
+        acc_t dot = (acc_t)bfc_buf[i];
         for (int j = 0; j < HIDDEN; j++) {
-            #pragma HLS pipeline
-            dot += (acc_t)wfc[i * HIDDEN + j] * (acc_t)h1[j];
+            #pragma HLS pipeline II=1
+            dot += (acc_t)wfc_buf[i * HIDDEN + j] * (acc_t)h1[j];
         }
-        logits[i] = (data_t)(dot + (acc_t)bfc[i]);
+        logits[i] = (data_t)dot;
     }
 
-    // --- Argmax ---
+    // Argmax
     int    max_idx = 0;
     data_t max_val = logits[0];
     for (int i = 1; i < N_CLASS; i++) {
@@ -233,6 +262,9 @@ static void lstm_inference(
     *pred_out = max_idx;
 }
 
+// ---------------------------------------------------------------------------
+// Top-level kernel
+// ---------------------------------------------------------------------------
 extern "C" {
     void vadd(
         data_t *input_seq,
@@ -248,6 +280,9 @@ extern "C" {
         data_t *bfc,
         int    *pred_out
     ) {
+
+#pragma HLS INTERFACE ap_ctrl_hs port=return
+
 #pragma HLS INTERFACE m_axi port=input_seq bundle=gmem0
 #pragma HLS INTERFACE m_axi port=wih0      bundle=gmem0
 #pragma HLS INTERFACE m_axi port=whh0      bundle=gmem0
@@ -260,6 +295,19 @@ extern "C" {
 #pragma HLS INTERFACE m_axi port=wfc       bundle=gmem0
 #pragma HLS INTERFACE m_axi port=bfc       bundle=gmem0
 #pragma HLS INTERFACE m_axi port=pred_out  bundle=gmem0
+
+#pragma HLS INTERFACE s_axilite port=input_seq bundle=control
+#pragma HLS INTERFACE s_axilite port=wih0      bundle=control
+#pragma HLS INTERFACE s_axilite port=whh0      bundle=control
+#pragma HLS INTERFACE s_axilite port=bih0      bundle=control
+#pragma HLS INTERFACE s_axilite port=bhh0      bundle=control
+#pragma HLS INTERFACE s_axilite port=wih1      bundle=control
+#pragma HLS INTERFACE s_axilite port=whh1      bundle=control
+#pragma HLS INTERFACE s_axilite port=bih1      bundle=control
+#pragma HLS INTERFACE s_axilite port=bhh1      bundle=control
+#pragma HLS INTERFACE s_axilite port=wfc       bundle=control
+#pragma HLS INTERFACE s_axilite port=bfc       bundle=control
+#pragma HLS INTERFACE s_axilite port=pred_out  bundle=control
 
         lstm_inference(
             input_seq,
