@@ -37,7 +37,7 @@ module design_top
   
   // ---------- AXI-Lite (master side of the reg-slice) to our bridge ----------
   logic [31:0]  axil_awaddr_m;
-  logic [5:0]   vadd_axil_awaddr;
+  logic [7:0]   vadd_axil_awaddr;
   logic         axil_awvalid_m, axil_awready_m;
   logic [31:0]  axil_wdata_m;
   logic [3:0]   axil_wstrb_m;
@@ -46,7 +46,7 @@ module design_top
   logic         axil_bvalid_m, axil_bready_m;
 
   logic [31:0]  axil_araddr_m;
-  logic [5:0]   vadd_axil_araddr;
+  logic [7:0]   vadd_axil_araddr;
   logic         axil_arvalid_m, axil_arready_m;
   logic [31:0]  axil_rdata_m;
   logic [1:0]   axil_rresp_m;
@@ -355,8 +355,8 @@ module design_top
                            );
 
   // Bridge AXI-Lite shell-side address width (32-bit) to vadd control port (6-bit)
-  assign vadd_axil_awaddr = axil_awaddr_m[5:0];
-  assign vadd_axil_araddr = axil_araddr_m[5:0];
+  assign vadd_axil_awaddr = axil_awaddr_m[7:0];
+  assign vadd_axil_araddr = axil_araddr_m[7:0];
 
   // ==========================================================================
   // vadd 32-bit → 512-bit serializing bridge
