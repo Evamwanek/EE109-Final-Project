@@ -7,8 +7,8 @@
 #define GATE_H   512
 #define N_CLASS  10
 
-typedef ap_fixed<32, 10> data_t;
-typedef ap_fixed<48, 16> acc_t;
+typedef ap_fixed<32, 10, AP_TRN, AP_SAT> data_t;
+typedef ap_fixed<48, 16, AP_TRN, AP_SAT> acc_t;
 
 // ---------------------------------------------------------------------------
 // Sigmoid LUT — 256 real data_t constants, pre-computed offline.
