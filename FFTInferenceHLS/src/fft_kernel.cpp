@@ -80,34 +80,95 @@ void fft_kernel(
             int stride = 1 << (s + 1);
             int tw_step = 1 << (NUM_STAGES - 1 - s);
 
+            #pragma HLS PIPELINE off
             for (int k = 0; k < 512; k++) {
-#pragma HLS PIPELINE II=1
-                int group = k >> s;
-                int pos = k & (half_stride - 1);
+    int group = k >> s;
+    int pos = k & (half_stride - 1);
 
-                int top = group * stride + pos;
-                int bot = top + half_stride;
-                int tw_idx = pos * tw_step;
+    int top = group * stride + pos;
+    int bot = top + half_stride;
+    int tw_idx = pos * tw_step;
 
-                fixed_t w_real = twR[tw_idx];
-                fixed_t w_imag = twI[tw_idx];
+    fixed_t w_real = twR[tw_idx];
+    fixed_t w_imag = twI[tw_idx];
 
-                fixed_t a_real = real[top];
-                fixed_t a_imag = imag[top];
-                fixed_t b_real = real[bot];
-                fixed_t b_imag = imag[bot];
+    fixed_t a_real = real[top];
+    fixed_t a_imag = imag[top];
+    fixed_t b_real = real[bot];
+    fixed_t b_imag = imag[bot];
 
-                fixed_t bw_real =
-                    ((b_real * w_real) - (b_imag * w_imag)) >> FIXED_SHIFT;
+    fixed_t bw_real =
+        ((b_real * w_real) - (b_imag * w_imag)) >> FIXED_SHIFT;
 
-                fixed_t bw_imag =
-                    ((b_real * w_imag) + (b_imag * w_real)) >> FIXED_SHIFT;
+    fixed_t bw_imag =
+        ((b_real * w_imag) + (b_imag * w_real)) >> FIXED_SHIFT;
 
-                out_real[top] = a_real + bw_real;
-                out_imag[top] = a_imag + bw_imag;
-                out_real[bot] = a_real - bw_real;
-                out_imag[bot] = a_imag - bw_imag;
-            }
+    out_real[top] = a_real + bw_real;
+    out_imag[top] = a_imag + bw_imag;
+}
+
+for (int k = 0; k < 512; k++) {
+    int group = k >> s;
+    int pos = k & (half_stride - 1);
+
+    int top = group * stride + pos;
+    int bot = top + half_stride;
+    int tw_idx = pos * tw_step;
+
+    fixed_t w_real = twR[tw_idx];
+    fixed_t w_imag = twI[tw_idx];
+
+    fixed_t a_real = real[top];
+    fixed_t a_imag = imag[top];
+    fixed_t b_real = real[bot];
+    fixed_t b_imag = imag[bot];
+
+    fixed_t bw_real =
+        ((b_real * w_real) - (b_imag * w_imag)) >> FIXED_SHIFT;
+
+    fixed_t bw_imag =
+        ((b_real * w_imag) + (b_imag * w_real)) >> FIXED_SHIFT;
+
+    out_real[bot] = a_real - bw_real;
+    out_imag[bot] = a_imag - bw_imag;
+}
+//             for (int k = 0; k < 512; k++) {
+// //#pragma HLS PIPELINE II=1
+//                 int group = k >> s;
+//                 int pos = k & (half_stride - 1);
+
+//                 int top = group * stride + pos;
+//                 int bot = top + half_stride;
+//                 int tw_idx = pos * tw_step;
+
+//                 fixed_t w_real = twR[tw_idx];
+//                 fixed_t w_imag = twI[tw_idx];
+
+//                 fixed_t a_real = real[top];
+//                 fixed_t a_imag = imag[top];
+//                 fixed_t b_real = real[bot];
+//                 fixed_t b_imag = imag[bot];
+
+//                 fixed_t bw_real =
+//                     ((b_real * w_real) - (b_imag * w_imag)) >> FIXED_SHIFT;
+
+//                 fixed_t bw_imag =
+//                     ((b_real * w_imag) + (b_imag * w_real)) >> FIXED_SHIFT;
+
+//                 // out_real[top] = a_real + bw_real;
+//                 // out_imag[top] = a_imag + bw_imag;
+//                 // out_real[bot] = a_real - bw_real;
+//                 // out_imag[bot] = a_imag - bw_imag;
+//                 fixed_t top_real = a_real + bw_real;
+//                 fixed_t top_imag = a_imag + bw_imag;
+//                 fixed_t bot_real = a_real - bw_real;
+//                 fixed_t bot_imag = a_imag - bw_imag;
+
+//                 out_real[top] = top_real;
+//                 out_imag[top] = top_imag;
+//                 out_real[bot] = bot_real;
+//                 out_imag[bot] = bot_imag;
+//             }
 
             for (int i = 0; i < N; i++) {
 #pragma HLS PIPELINE II=1
